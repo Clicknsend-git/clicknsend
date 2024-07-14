@@ -116,7 +116,7 @@ const Login = () => {
               <Stack spacing={3}>
                 <Box textAlign="center">
                   <Typography fontSize={20} fontWeight={600}>
-                    Hey ! Welcome Back
+                    Hey! Welcome Back
                   </Typography>
                 </Box>
                 <Stack
