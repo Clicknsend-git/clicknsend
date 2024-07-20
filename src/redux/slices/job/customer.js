@@ -100,9 +100,7 @@ const slice = createSlice({
       state.jobHistory.pageSize = action.payload;
     },
     // SET JOB HISTORY END
-
     // ========================================================
-
     // SET JOB DELETE
     setJobDelete(state, action) {
       state.isJobDeleteLoading = false;

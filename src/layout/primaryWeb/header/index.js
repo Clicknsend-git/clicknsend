@@ -39,7 +39,6 @@ import Alert from "@mui/material/Alert";
 // import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 
 import SettingsIcon from "@mui/icons-material/Settings";
-
 const drawerWidth = 240;
 
 const Header = (props) => {
@@ -47,7 +46,7 @@ const Header = (props) => {
   const token = isAccessToken();
 
   const { user, isAuthenticated, logout } = useAuthContext();
-  
+
   const isMobile = useResponsive("down", "md");
   const value = useOffSetTop(10, {
     offset: ["start end", "end end"],
@@ -192,7 +191,9 @@ const Header = (props) => {
               },
             }}
           >
-            <Box component={Link} href="/"
+            <Box
+              component={Link}
+              href="/"
               sx={{
                 display: "inline-block",
                 textDecoration: "none",
@@ -210,7 +211,7 @@ const Header = (props) => {
                   backgroundColor: "transparent",
                   backgroundSize: "cover",
                   marginLeft: "-50px",
-                  marginTop:"3px"
+                  marginTop: "3px",
                 }}
               />
             </Box>
@@ -237,7 +238,7 @@ const Header = (props) => {
                 />
               )}
 
-              {isAuthenticated &&
+              {/* {isAuthenticated &&
                 (user?.user_type == "driver" ? (
                   <Typography
                     sx={{
@@ -305,11 +306,11 @@ const Header = (props) => {
                   >
                     Dashboard
                   </Typography>
-                ))}
+                ))} */}
 
-
-{/* {isAuthenticated &&
-                (user?.user_type == "driver" ? (
+              {isAuthenticated &&
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "customer" ? (
                   <Typography
                     sx={{
                       mx: 1,
@@ -343,24 +344,29 @@ const Header = (props) => {
                     Dashboard
                   </Typography>
                 ) : (
+                null
+                ))}
 
+
+                {isAuthenticated &&
+                (user?.user_type == "customer" && (
                   <Typography
                     sx={{
                       mx: 1,
                       borderBottom: (theme) =>
-                        router.asPath.startsWith("/dashboard")
+                        router.asPath.startsWith("/dashboard/customer/job_posted")
                           ? "2px solid"
                           : "none",
 
                       color: (theme) =>
-                        router.asPath.startsWith("/dashboard")
+                        router.asPath.startsWith("/dashboard/customer/job_posted")
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
-                        router.asPath.startsWith("/dashboard")
+                        router.asPath.startsWith("/dashboard/customer/job_posted")
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
-                      borderBottom: router.asPath.startsWith("/dashboard")
+                      borderBottom: router.asPath.startsWith("/dashboard/customer/job_posted")
                         ? "2px solid"
                         : "",
                       ...theme.typography.subtitle2,
@@ -370,17 +376,122 @@ const Header = (props) => {
                     component={Link}
                     href={
                       user?.user_type === "driver"
-                        ? `/dashboard/${user?.user_type}/active_jobs`
-                        : `/dashboard/${user?.user_type}`
+                        ? `/dashboard/customer/job_posted`
+                        : `/dashboard/customer/job_posted`
                     }
                   >
-                    ..0.00.........
-                    ................................................................................................................................................................................................................................0..........................0
+                    Dashboard
                   </Typography>
-                ))} */}
+                ))}
 
+                {isAuthenticated &&
+                (user?.user_type == "driver" && (
+                  <Typography
+                    sx={{
+                      mx: 1,
+                      borderBottom: (theme) =>
+                        router.asPath.startsWith("/dashboard/driver/job_request")
+                          ? "2px solid"
+                          : "none",
 
-              {isAuthenticated &&
+                      color: (theme) =>
+                        router.asPath.startsWith("/dashboard/driver/job_request")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath.startsWith("/dashboard/driver/job_request")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom: router.asPath.startsWith("/dashboard/driver/job_request")
+                        ? "2px solid"
+                        : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={
+                      user?.user_type === "driver"
+                        ? `/dashboard/driver/job_request`
+                        : `/dashboard/driver/job_request`
+                    }
+                  >
+                    Dashboard
+                  </Typography>
+                ))}
+                
+                {isAuthenticated &&
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "driver" ? (
+                  <Typography
+                    sx={{
+                      mx: 1,
+                      borderBottom: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/job_request")
+                          ? "2px solid"
+                          : "none",
+
+                      color: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/job_request")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/job_request")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom: router.asPath.startsWith("/dashboard/company/driver/job_request")
+                        ? "2px solid"
+                        : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={
+                        `/dashboard/company/driver/job_request`
+                    }
+                  >
+                    Dashboard
+                  </Typography>
+                ) : ( 
+                 null
+                ))}
+                {isAuthenticated &&
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "driver" ? (
+                  <Typography
+                    sx={{
+                      mx: 1,
+                      borderBottom: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/list")
+                          ? "2px solid"
+                          : "none",
+                
+                      color: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/list")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/list")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom: router.asPath.startsWith("/dashboard/company/driver/list")
+                        ? "2px solid"
+                        : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={`/dashboard/company/driver/list`}
+                  >
+                    Driver List
+                  </Typography>
+                ) : (
+                 null
+                ))}
+
+              {/* {isAuthenticated &&
                 (user?.user_type == "customer" ? (
                   <Typography
                     sx={{
@@ -408,12 +519,39 @@ const Header = (props) => {
                   >
                     Active Jobs
                   </Typography>
-                ) : null)}
-
-                
+                ) : null)} */}
 
               {isAuthenticated &&
-                (user?.user_type == "company"  && user?.profile?.company_type === 'driver' ? (
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "driver" ? (
+                  <Typography
+                    sx={{
+                      mx: 1.5,
+                      pr: 1,
+                      borderBottom: (theme) =>
+                        router.asPath === `/dashboard/company/driver/active_jobs` ? "2px solid" : "none",
+                      color: (theme) =>
+                        router.asPath === `/dashboard/company/driver/active_jobs`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath === `/dashboard/company/driver/active_jobs`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom: router.asPath === `/dashboard/company/driver/active_jobs` ? "2px solid" : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={`/dashboard/company/driver/active_jobs`}
+                  >
+                    Active Jobs
+                  </Typography>
+                ) : null)}
+              {/* {isAuthenticated &&
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "customer" ? (
                   <Typography
                     sx={{
                       mx: 1.5,
@@ -428,8 +566,7 @@ const Header = (props) => {
                         router.asPath === `#`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
-                      borderBottom:
-                        router.asPath === `#` ? "2px solid" : "",
+                      borderBottom: router.asPath === `#` ? "2px solid" : "",
                       ...theme.typography.subtitle2,
                       textDecoration: "none",
                       fontSize: "1rem",
@@ -437,62 +574,35 @@ const Header = (props) => {
                     component={Link}
                     href={`#`}
                   >
-                    Job list
+                    Active Jobs
                   </Typography>
                 ) : null)}
-                {isAuthenticated &&
-                (user?.user_type == "company"  && user?.profile?.company_type === 'customer' ? (
-                  <Typography
-                    sx={{
-                      mx: 1.5,
-                      pr: 1,
-                      borderBottom: (theme) =>
-                        router.asPath ===  `/dashboard/company/job_history` ? "2px solid" : "none",
-                      color: (theme) =>
-                        router.asPath ===  `/dashboard/company/job_history`
-                          ? theme.palette.primary.main
-                          : theme.palette.text.primary,
-                      borderColor: (theme) =>
-                        router.asPath ===  `/dashboard/company/job_history`
-                          ? theme.palette.primary.main
-                          : theme.palette.text.primary,
-                      borderBottom:
-                        router.asPath ===  `/dashboard/company/job_history` ? "2px solid" : "",
-                      ...theme.typography.subtitle2,
-                      textDecoration: "none",
-                      fontSize: "1rem",
-                    }}
-                    component={Link}
-                    href={ `/dashboard/company/job_history`}
-                  >
-                   Active Jobs
-                  </Typography>
-                ) : null)}
-
+                {console.log(theme)} */}
               {isAuthenticated &&
-                (user?.user_type == "company" ? (
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "customer" ? (
                   <Typography
                     sx={{
                       mx: 1.5,
                       pr: 1,
                       borderBottom: (theme) =>
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/company/job_history`
                           ? "2px solid"
                           : "none",
                       color: (theme) =>
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/company/job_history`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/company/job_history`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderBottom:
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/company/job_history`
                           ? "2px solid"
                           : "",
                       ...theme.typography.subtitle2,
@@ -500,37 +610,33 @@ const Header = (props) => {
                       fontSize: "1rem",
                     }}
                     component={Link}
-                    href={`/dashboard/customer/job_post_form/create`}
+                    href={`/dashboard/company/job_history`}
                   >
-                    Add Jobs
+                    Job History
                   </Typography>
                 ) : null)}
 
               {/* add button in driver login show */}
-              {isAuthenticated &&
+              {/* {isAuthenticated &&
                 (user?.user_type == "driver" ? (
                   <Typography
                     sx={{
                       mx: 1.5,
                       pr: 1,
                       borderBottom: (theme) =>
-                        router.asPath ===
-                        `/dashboard/driver/job_request`
+                        router.asPath === `/dashboard/driver/job_request`
                           ? "2px solid"
                           : "none",
                       color: (theme) =>
-                        router.asPath ===
-                        `/dashboard/driver/job_request`
+                        router.asPath === `/dashboard/driver/job_request`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
-                        router.asPath ===
-                        `/dashboard/driver/job_request`
+                        router.asPath === `/dashboard/driver/job_request`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderBottom:
-                        router.asPath ===
-                        `/dashboard/driver/job_request`
+                        router.asPath === `/dashboard/driver/job_request`
                           ? "2px solid"
                           : "",
                       ...theme.typography.subtitle2,
@@ -542,7 +648,7 @@ const Header = (props) => {
                   >
                     View Jobs
                   </Typography>
-                ) : null)}
+                ) : null)} */}
 
               {/* add button in driver login show */}
               {isAuthenticated &&
@@ -552,23 +658,19 @@ const Header = (props) => {
                       mx: 1.5,
                       pr: 1,
                       borderBottom: (theme) =>
-                        router.asPath ===
-                        `/dashboard/driver/job_history`
+                        router.asPath === `/dashboard/driver/job_history`
                           ? "2px solid"
                           : "none",
                       color: (theme) =>
-                        router.asPath ===
-                        `/dashboard/driver/job_history`
+                        router.asPath === `/dashboard/driver/job_history`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
-                        router.asPath ===
-                        `/dashboard/driver/job_history`
+                        router.asPath === `/dashboard/driver/job_history`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderBottom:
-                        router.asPath ===
-                        `/dashboard/driver/job_history`
+                        router.asPath === `/dashboard/driver/job_history`
                           ? "2px solid"
                           : "",
                       ...theme.typography.subtitle2,
@@ -589,23 +691,19 @@ const Header = (props) => {
                       mx: 1.5,
                       pr: 1,
                       borderBottom: (theme) =>
-                        router.asPath ===
-                        `/dashboard/customer/job_history`
+                        router.asPath === `/dashboard/customer/job_history`
                           ? "2px solid"
                           : "none",
                       color: (theme) =>
-                        router.asPath ===
-                        `/dashboard/customer/job_history`
+                        router.asPath === `/dashboard/customer/job_history`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
-                        router.asPath ===
-                        `/dashboard/customer/job_history`
+                        router.asPath === `/dashboard/customer/job_history`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderBottom:
-                        router.asPath ===
-                        `/dashboard/customer/job_history`
+                        router.asPath === `/dashboard/customer/job_history`
                           ? "2px solid"
                           : "",
                       ...theme.typography.subtitle2,
@@ -644,53 +742,53 @@ const Header = (props) => {
                     ...theme.typography.subtitle2,
                     textDecoration: "none",
                     fontSize: "1rem",
-                   }}
+                  }}
                   component={Link}
                   href={`/${user?.user_type}/profile`}
                 >
                   Profile
                 </Typography>
               )}
-              
-              {isAuthenticated && 
-              (user?.user_type == "driver" ? (
-                <Typography
-                  sx={{
-                    // mx: 1.5,
-                    pr: 1,
-                    borderBottom: (theme) =>
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? "2px solid"
-                        : "none",
 
-                    color: (theme) =>
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? theme.palette.primary.main
-                        : theme.palette.text.primary,
-                    borderColor: (theme) =>
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? theme.palette.primary.main
-                        : theme.palette.text.primary,
-                    borderBottom:
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? "2px solid"
-                        : "",
-                    ...theme.typography.subtitle2,
-                    textDecoration: "none",
-                    fontSize: "1rem",
-                  }}
-                  component={Link}
-                  href={`/dashboard/${user?.user_type}/subscription`}
-                >
-                  Subscription
-                </Typography>
-              ) : null )}
+              {isAuthenticated &&
+                (user?.user_type == "driver" ? (
+                  <Typography
+                    sx={{
+                      // mx: 1.5,
+                      pr: 1,
+                      borderBottom: (theme) =>
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? "2px solid"
+                          : "none",
 
-{/* {isAuthenticated && 
+                      color: (theme) =>
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom:
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? "2px solid"
+                          : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={`/dashboard/${user?.user_type}/subscription`}
+                  >
+                    Subscription
+                  </Typography>
+                ) : null)}
+
+              {/* {isAuthenticated && 
               (user?.user_type == "company" ? (
                 <Typography
                   sx={{
@@ -728,43 +826,83 @@ const Header = (props) => {
                 </Typography>
               ) : null )} */}
 
-              {isAuthenticated && 
-              (user?.user_type == "company" && user?.company_id  === '0' ? (
-                <Typography
-                  sx={{
-                    // mx: 1.5,
-                    pr: 1,
-                    borderBottom: (theme) =>
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? "2px solid"
-                        : "none",
+              {isAuthenticated &&
+                (user?.user_type == "company" &&  user?.profile?.company_type == 'customer'   ? (
+                  <Typography
+                    sx={{
+                      // mx: 1.5,
+                      pr: 1,
+                      borderBottom: (theme) =>
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? "2px solid"
+                          : "none",
 
-                    color: (theme) =>
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? theme.palette.primary.main
-                        : theme.palette.text.primary,
-                    borderColor: (theme) =>
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? theme.palette.primary.main
-                        : theme.palette.text.primary,
-                    borderBottom:
-                      router.asPath ===
-                      `/dashboard/${user?.user_type}/subscription`
-                        ? "2px solid"
-                        : "",
-                    ...theme.typography.subtitle2,
-                    textDecoration: "none",
-                    fontSize: "1rem",
-                  }}
-                  component={Link}
-                  href={`/dashboard/${user?.user_type}/subscription`}
-                >
-                  Subscription
-                </Typography>
-              ) : null )}
+                      color: (theme) =>
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom:
+                        router.asPath ===
+                        `/dashboard/${user?.user_type}/subscription`
+                          ? "2px solid"
+                          : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={ `/dashboard/${user?.user_type}/subscription`}
+                    // href={`/dashboard/${user?.user_type}/subscription`}
+                  >
+                    Subscription
+                  </Typography>
+                ) : null)}
+
+                {isAuthenticated &&
+                (user?.user_type == "company" &&  user?.profile?.company_type == 'driver'   ? (
+                  <Typography
+                    sx={{
+                      // mx: 1.5,
+                      pr: 1,
+                      borderBottom: (theme) =>
+                        router.asPath ===
+                        `/dashboard/company/driver/subscription`
+                          ? "2px solid"
+                          : "none",
+
+                      color: (theme) =>
+                        router.asPath ===
+                        `/dashboard/company/driver/subscription`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath ===
+                        `/dashboard/company/driver/subscription`
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom:
+                        router.asPath ===
+                        `/dashboard/company/driver/subscription`
+                          ? "2px solid"
+                          : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={ `/dashboard/company/driver/subscription`}
+                    // href={`/dashboard/${user?.user_type}/subscription`}
+                  >
+                    Subscription
+                  </Typography>
+                ) : null)}
 
               {isAuthenticated && (
                 <Box
@@ -809,9 +947,8 @@ const Header = (props) => {
                 <div>
                   <Button
                     variant="outlined"
-                    sx={{ color: "#000", ml: 0.8, mr: 1.5, fontSize: '1rem'  }}
+                    sx={{ color: "#000", ml: 0.8, mr: 1.5, fontSize: "1rem" }}
                     onClick={() => router.push("/contact_us")}
-
                   >
                     Contact us
                   </Button>
@@ -827,7 +964,7 @@ const Header = (props) => {
                   }}
                 >
                   <Button
-                    sx={{ width: "100px", fontSize: "1rem"}}
+                    sx={{ width: "100px", fontSize: "1rem" }}
                     variant="contained"
                     onClick={handleAuth}
                   >
@@ -839,7 +976,7 @@ const Header = (props) => {
                 <>
                   <Box
                     direction="row"
-                    // spacing={0.5}
+                    spacing={0.5}
                     alignItems="center"
                     sx={{ cursor: "pointer" }}
                     onClick={handleClick}
@@ -855,11 +992,135 @@ const Header = (props) => {
                     />
                   </Box>
                   <Menu
-                    sx={{ marginTop: "10px",background: "red",}}
+                    sx={{ marginTop: "10px" }}
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
+                    {/* <Link
+                      href="/profile"
+                      passHref
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem
+                        sx={{
+                          color: "#212b36",
+                          fontWeight: "500",
+                          lineHeight: "1.5",
+                        }}
+                        onClick={() => handleMenuItemClick("profile")}
+                      >
+                        Jobs
+                      </MenuItem>
+                    </Link> */}
+
+                    <Link
+                      href="/invoice"
+                      passHref
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem
+                        sx={{
+                          color: "#212b36",
+                          fontWeight: "500",
+                          lineHeight: "1.5",
+                        }}
+                        onClick={() => handleMenuItemClick("invoice")}
+                      >
+                        Invoice
+                      </MenuItem>
+                    </Link>
+                    {user?.user_type == "driver" && (
+                      <Link
+                        href="/StripeConnectionPage"
+                        passHref
+                        style={{ textDecoration: "none" }}
+                      >
+                        <MenuItem
+                          sx={{
+                            color: "#212b36",
+                            fontWeight: "500",
+                            lineHeight: "1.5",
+                          }}
+                          onClick={() =>
+                            handleMenuItemClick("StripeConnectionPage")
+                          }
+                        >
+                          Stripe Connection
+                        </MenuItem>
+                      </Link>
+                    )}
+                    {user?.user_type == "company"  && user?.profile?.company_type === 'driver' && (
+                      <Link
+                        href="/StripeConnectionPage"
+                        passHref
+                        style={{ textDecoration: "none" }}
+                      >
+                        <MenuItem
+                          sx={{
+                            color: "#212b36",
+                            fontWeight: "500",
+                            lineHeight: "1.5",
+                          }}
+                          onClick={() =>
+                            handleMenuItemClick("StripeConnectionPage")
+                          }
+                        >
+                          Stripe Connection
+                        </MenuItem>
+                      </Link>
+                    )}
+                    <Link
+                      href="/payment"
+                      passHref
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem
+                        sx={{
+                          color: "#212b36",
+                          fontWeight: "500",
+                          lineHeight: "1.5",
+                        }}
+                        onClick={() => handleMenuItemClick("payment")}
+                      >
+                        Pending payment
+                      </MenuItem>
+                    </Link>
+                    <Link
+                      href={`/${user?.user_type}/profile`}
+                      passHref
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem
+                        sx={{
+                          color: "#212b36",
+                          fontWeight: "500",
+                          lineHeight: "1.5",
+                        }}
+                        onClick={() => handleMenuItemClick("account")}
+                      >
+                        settings(my profile)
+                      </MenuItem>
+                    </Link>
+
+                    <Link
+                      href="/contact_us"
+                      passHref
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MenuItem
+                        sx={{
+                          color: "#212b36",
+                          fontWeight: "500",
+                          lineHeight: "1.5",
+                        }}
+                        onClick={() => handleMenuItemClick("account")}
+                      >
+                        Contact us
+                      </MenuItem>
+                    </Link>
+
+                    <Divider />
                     <div
                       style={{
                         display: "flex",
@@ -876,8 +1137,6 @@ const Header = (props) => {
                         {isAuthenticated ? "Log Out" : "Log in"}
                       </Button>
                     </div>
-
-                         
                   </Menu>{" "}
                 </>
               )}
@@ -890,8 +1149,7 @@ const Header = (props) => {
               sx={{ ml: 2, display: { sm: "none" } }}
             >
               {/* set css according to the logo */}
-              <MenuIcon style={{ fontSize: '40px', marginBottom: '12px' }} />
-
+              <MenuIcon style={{ fontSize: "40px", marginBottom: "12px" }} />
             </IconButton>
           </Toolbar>
         </Container>

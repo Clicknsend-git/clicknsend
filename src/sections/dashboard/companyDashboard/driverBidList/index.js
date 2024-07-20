@@ -146,7 +146,7 @@ const BidList = () => {
       .get(`api/auth/jobs/accept-bid/${id}`)
       .then((response) => {
         if (response.status === 200) {
-          router.push("/dashboard/customer/job_posted");
+          router.push("/dashboard/company/job_posted");
           // succes
           enqueueSnackbar(
             <Alert
@@ -154,7 +154,7 @@ const BidList = () => {
                 width: "100%",
                 padding: "30px",
                 backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
+                background: "#ff7533 ", 
                 fontSize: "19px",
                 fontWeight: 800,
                 lineHeight: "30px"
@@ -246,7 +246,7 @@ const BidList = () => {
                       <Stack
                         alignItems="center"
                         onClick={() =>
-                          router.push("/dashboard/customer/job_posted")
+                          router.push("/dashboard/company/job_posted")
                         }
                         mr={2}
                         sx={{
@@ -443,7 +443,7 @@ const BidList = () => {
                                           fontSize={16}
                                           fontWeight={600}
                                         >
-                                          ${elem?.ammount}
+                                          <Iconify icon="bi:currency-pound" />{elem?.ammount}
                                         </Typography>
                                       </Box>
                                       <Stack direction="row" spacing={1}>
@@ -505,7 +505,7 @@ const BidList = () => {
                                       fontSize={14}
                                       fontWeight={400}
                                     >
-                                      Job Success Rate :
+                                      Job Success Rate1 :
                                     </Typography>
                                   </Box>
                                   <Box>

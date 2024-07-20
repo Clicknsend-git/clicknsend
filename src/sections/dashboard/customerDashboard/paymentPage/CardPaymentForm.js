@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
   Container,
-  
+  Typography,
   Grid,
   TextField,
-  
+  Button,
   Card,
   Snackbar,
   CardContent,
@@ -17,10 +17,13 @@ import { useRouter } from "next/router";
 import axiosInstance from "@/utils/axios";
 import { useAuthContext } from "@/auth/useAuthContext";
 import OTPVerification from "../subscription/OTPVerification";
-import { Modal,  Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 
 
-const CardPaymentForm = ({ paymentDetails, setShowPayment,amountDetails }) => {
+const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { user } = useAuthContext();
   const router = useRouter();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -99,17 +102,19 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment,amountDetails }) => {
         errors.expiryDate = "Card has expired!";
       }
     }
+
     if (!values.cvv) {
       errors.cvv = "CVV is required!";
     } else if (values.cvv.length !== 3) {
       errors.cvv = "CVV must be 3 digits!";
     }
+
     if (!values.nameOnCard) {
       errors.nameOnCard = "Name on card is required!";
     }
+
     return errors;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validate(formValues);
@@ -140,28 +145,39 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment,amountDetails }) => {
             setShowPayment(false);
           }, 1500);
         }
-  }catch (error) {
-    if (error.response) {
-      const { data } = error.response;
-      setFormErrors(data.errors);
-    } else {
-      console.error("An error occurred:", error.message);
-    }
-  }
+      } catch (error) {
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "20px",
+              backdropFilter: "blur(8px)",
+              background: "#ff7533 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px"
+            }}
+            icon={false}
+            severity="success"
+          >
+            {error.response.data.error}
+          </Alert>,
+          {
+            variant: "success",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
+      }
     }
   };
 
   if (showOTP) {
     return <OTPVerification setShowOTPVerification={setShowOTP} />;
   }
-
-const amount = Number(amountDetails?.ammount)
-  const extra = (10 / 100) * amount;
-
-const finalAmount =    amount + extra;
-const vat = (20 / 100) * finalAmount;
-const total = finalAmount + vat;
-console.log("An error occurred:",finalAmount,amount);
 
   return (
     <Card sx={{ paddingBottom: "120px" }}>
@@ -196,17 +212,6 @@ console.log("An error occurred:",finalAmount,amount);
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
-          // "&::before": {
-          //   content: '""',
-          //   backgroundImage:
-          //     "linear-gradient(to left, rgba(77,39,63,0) 0%, #463b46 160%)",
-          //   position: "absolute",
-          //   top: 0,
-          //   left: 0,
-          //   bottom: 0,
-          //   right: 0,
-          //   zIndex: 7,
-          // },
         }}
       >
         <CardContent
@@ -228,7 +233,6 @@ console.log("An error occurred:",finalAmount,amount);
             zIndex: 9,
           }}
         >
-          {/* <CardContentOverlay> */}
           <Stack spacing={4}>
             <Typography
               gutterBottom
@@ -240,37 +244,9 @@ console.log("An error occurred:",finalAmount,amount);
             >
               {paymentDetails.name}
             </Typography>
-            {/* <Typography variant="body1" component="p" color="common.white">
-              Choose the right plan made for you
-            </Typography> */}
           </Stack>
-          
-        </CardContent>
-        
-      </Box>
-      <Box>
-<CardContent>
-<TableContainer component={Paper} sx={{ width: 'auto', flex: 1, ml: 4 }}>
-                <Table sx={tableStyles}>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell sx={tableCellStyles}>Driver Bid </TableCell>
-                      <TableCell sx={tableCellStyles}>{finalAmount}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell sx={tableCellStyles}>VAT</TableCell>
-                      <TableCell sx={tableCellStyles}>{vat}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell sx={tableCellStyles}>Total</TableCell>
-                      <TableCell sx={tableCellStyles}>{ total }</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
         </CardContent>
       </Box>
-
       <Container maxWidth="md">
         <Typography
           variant="h4"
@@ -288,16 +264,10 @@ console.log("An error occurred:",finalAmount,amount);
           }}
         >
           <CardContent>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              mb={2}
-            >
+            <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
               <CreditCardIcon fontSize="large" style={{ color: "#ff7533" }} />
             </Box>
-
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -312,26 +282,24 @@ console.log("An error occurred:",finalAmount,amount);
                       inputMode: "numeric",
                       pattern: "[0-9]*",
                     }}
-                    value={formValues.cardNumber}
+                    value={formValues?.cardNumber}
                     onChange={handleChange}
-                    error={!!formErrors.cardNumber}
-                    helperText={formErrors.cardNumber}
+                    error={!!formErrors?.cardNumber}
+                    helperText={formErrors?.cardNumber}
                   />
                 </Grid>
-
                 <Grid item xs={6}>
                   <TextField
                     label="Expiry Date (MM/YY)"
                     variant="outlined"
                     fullWidth
                     name="expiryDate"
-                    value={formValues.expiryDate}
+                    value={formValues?.expiryDate}
                     onChange={handleChange}
-                    error={!!formErrors.expiryDate}
-                    helperText={formErrors.expiryDate}
+                    error={!!formErrors?.expiryDate}
+                    helperText={formErrors?.expiryDate}
                   />
                 </Grid>
-
                 <Grid item xs={6}>
                   <TextField
                     label="CVV"
@@ -343,26 +311,24 @@ console.log("An error occurred:",finalAmount,amount);
                       inputMode: "numeric",
                       pattern: "[0-9]*",
                     }}
-                    value={formValues.cvv}
+                    value={formValues?.cvv}
                     onChange={handleChange}
-                    error={!!formErrors.cvv}
-                    helperText={formErrors.cvv}
+                    error={!!formErrors?.cvv}
+                    helperText={formErrors?.cvv}
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <TextField
                     label="Name on Card"
                     variant="outlined"
                     fullWidth
                     name="nameOnCard"
-                    value={formValues.nameOnCard}
+                    value={formValues?.nameOnCard}
                     onChange={handleChange}
-                    error={!!formErrors.nameOnCard}
-                    helperText={formErrors.nameOnCard || " "}
+                    error={!!formErrors?.nameOnCard}
+                    helperText={formErrors?.nameOnCard || " "}
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -377,7 +343,11 @@ console.log("An error occurred:",finalAmount,amount);
                   Complete payment
                   </Button>
                 </Grid>
-                <Button fullWidth  variant="text" onClick={() => setShowPayment(false)}>
+                <Button
+                  fullWidth
+                  variant="text"
+                  onClick={() => setShowPayment(false)}
+                >
                   Back to Plans
                 </Button>
               </Grid>
@@ -390,43 +360,3 @@ console.log("An error occurred:",finalAmount,amount);
 };
 
 export default CardPaymentForm;
-
-const modalStyles = {
-  box: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80%',
-    maxHeight: '90vh',
-    overflowY: 'auto',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 1,
-  },
-};
-
-const containerStyle = {
-  maxWidth: '950px',
-  margin: '20px auto',
-  padding: '20px',
-};
-
-const pdfContainerStyle = {
-  border: '2px solid #ddd',
-  padding: '20px',
-  borderRadius: '8px',
-};
-
-const tableStyles = {
-  '& .MuiTableCell-root': {
-    border: '1px solid #ddd',
-  },
-};
-
-const tableCellStyles = {
-  border: '1px solid #ddd',
-  padding: '8px',
-  textAlign: 'center',
-};

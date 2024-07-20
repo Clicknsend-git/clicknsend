@@ -342,15 +342,14 @@ const SubscriptionsPage = () => {
 
                                 <Stack alignItems="center">
                                 {isActivePlan ? (
-                                  <Button
-                                    fullWidth
-                                    variant="contained"
-                                    width="min-content"
-                                    sx={{ px: 5 }}
-                                      // onClick={() => handleCheckout(plan)}
-                                  >
-                                    Activate Plan
-                                  </Button>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      sx={{ px: 5 }}
+                                      onClick={() => handleCheckout(plan)}
+                                    >
+                                      Activate Plan
+                                    </Button>
                                   ) : (
                                     <Button
                                       fullWidth

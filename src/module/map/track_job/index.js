@@ -1,4 +1,4 @@
-import React, { useEffect, useRef }from "react";
+import React from "react";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -26,9 +26,6 @@ function TrackGoogleMaps({ data = [] }) {
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
   });
-
-  const mapRef = useRef(null);
-
   // const initialCenter = { lat: 0, lng: 0 };
   // const [state, setState] = React.useState({
   //   defaultZoom: 5,
@@ -53,24 +50,11 @@ function TrackGoogleMaps({ data = [] }) {
     return { lat: avgLat, lng: avgLng };
   }
 
-
-  useEffect(() => {
-    if (mapRef.current && data.length > 0) {
-      const bounds = new window.google.maps.LatLngBounds();
-      data.forEach((elem) => {
-        bounds.extend({ lat: parseFloat(elem.from.lat), lng: parseFloat(elem.from.lng) });
-        bounds.extend({ lat: parseFloat(elem.to.lat), lng: parseFloat(elem.to.lng) });
-      });
-      mapRef.current.fitBounds(bounds);
-    }
-  }, [data]);
-
   return isLoaded ? (
     <GoogleMap
     mapContainerStyle={containerStyle}
     center={initialCenter}
     zoom={5}
-    onLoad={(map) => (mapRef.current = map)}
   >
     {data.map((elem, index) => (
       <React.Fragment key={index}>

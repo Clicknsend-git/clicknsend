@@ -23,17 +23,19 @@ export default function GuestGuard({ children }) {
 
   const { isAuthenticated, isInitialized, user } = useAuthContext();
 
-  console.log("user  mmmmmmmmmm", user);
+  console.log("user   user", user);
 
   useEffect(() => {
     if (isAuthenticated) {
       if (user && user?.user_type) {
         if (user?.user_type === "customer") {
-          push("/dashboard/customer/job_posted");
+         push("/dashboard/customer/job_posted");
         } else if (user.user_type === "driver") {
           push("/dashboard/driver/active_jobs");
-        } else if (user.user_type === "company") {
-          push("/dashboard/company");
+        } else if (user?.user_type === "company" && user?.company?.company_type === "customer" ) {
+          push("/dashboard/company/job_posted");
+        }else if (user?.user_type === "company" && user?.company?.company_type === "driver" ) {
+          push("/dashboard/company/driver/job_request");
         }
       }
     }

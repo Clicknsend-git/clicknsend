@@ -27,6 +27,7 @@ import { useSnackbar } from "notistack";
 import Alert from "@mui/material/Alert";
 import React, { useEffect, useState } from "react";
 import CardPaymentForm from "../paymentPage/CardPaymentForm";
+
 const BidList = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -235,6 +236,7 @@ const BidList = () => {
     setAmountDetails(item);
     setShowPayment(true);
   };
+
 
   return (
     <React.Fragment>
@@ -474,7 +476,7 @@ const BidList = () => {
                                           fontSize={16}
                                           fontWeight={600}
                                         >
-                                          £ {total}
+                                          £ {elem?.ammount}
                                         </Typography>
                                       </Box>
                                       <Stack direction="row" spacing={1}>
@@ -497,7 +499,7 @@ const BidList = () => {
                                             setStartChat(elem?.id)
                                           }
                                         >
-                                          {elem?.status === 1 
+                                           {elem?.status === 1 
   ? "Accepted"
   : elem?.status === 4
   ? "Declined"
@@ -560,7 +562,7 @@ const BidList = () => {
                                       color="#5D5D5D"
                                       fontSize={14}
                                       fontWeight={600}
-                                      
+                                      g
                                     >
                                       {elem?.jobpercent} %
                                     </Typography>
@@ -629,7 +631,7 @@ const BidList = () => {
               </Grid>
             )}
             <Grid item md={6}>
-              <Box sx={{ position: "sticky", top: 85, display: "block" }}>
+              <Box sx={{ position: "sticky", top: 75, display: "block" }}>
                 <TrackGoogleMaps data={mapData} />
               </Box>
             </Grid>

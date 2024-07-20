@@ -374,7 +374,6 @@ const DriverPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] =React.useState(false);
-  // const [OTPSubmitVerifed, setOTPSubmitVerified] = React.useState(false);
 
   
   const handleOpenClose = () => {
@@ -485,11 +484,9 @@ const DriverPage = () => {
       return errors;
     },
     onSubmit: async (values, { setErrors }) => {
-
-      
       setLoading(true); 
       let url, formData;
-      let newPhoneNumber = values?.mobile?.replace(/^0+/, "");
+      
       if (values.user_type === "driver") {
         url = "api/user/driver-register";
         let driverFormData = new FormData();

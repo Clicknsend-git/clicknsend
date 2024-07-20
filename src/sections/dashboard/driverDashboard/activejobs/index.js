@@ -90,14 +90,26 @@ const DashboardJobPost = () => {
   const [reviewOpen, setReviewOpen] = React.useState(false);
   const handleReviewOpen = (id) => setReviewOpen(id);
   const handleReviewClose = () => setReviewOpen(false);
+
   const [storeInvoiceNumber, setStoreInvoiceNumber] = React.useState();
 
+  const [loader, setLoader] = React.useState(false);
   const [addItemInvoiceData, setAddItemInvoiceData] = React.useState([]);
+
 
   const formData = useFormik({
     initialValues: {
       id: "",
       driver_id: user?.id,
+    },
+  });
+
+  const formDataInvoice = useFormik({
+    initialValues: {
+      // user_id: items?.user_id,
+        invoice_number: storeInvoiceNumber?.invoice_number,
+        // job_id: items?.accept_bid?.job_id,
+        sign_image:'www.img.com'
     },
   });
 
@@ -228,52 +240,50 @@ const DashboardJobPost = () => {
     };
   fetchdata();
 }, []);
+console.log('storeInvoiceNumber',storeInvoiceNumber,addItemInvoiceData);
 
-// useEffect ( ()  => {
-  const HandleAddSendInvoices =  async () => {
-    const initialValues =  {
-          user_id: addItemInvoiceData?.user_id,
-            invoice_number: storeInvoiceNumber?.invoice_number,
-            job_id: addItemInvoiceData.id,
-            sign_image:'www.img.com'
-        }
-      await axiosInstance
-          .post("api/auth/invoice/add-send",initialValues)
-          .then((response) => {
-            if (response.status === 200) {
-              enqueueSnackbar(
-                <Alert
-                  style={{
-                    width: "100%",
-                    padding: "30px",
-                    backdropFilter: "blur(8px)",
-                    background: "#ff7533 ",
-                    fontSize: "19px",
-                    fontWeight: 800,
-                    lineHeight: "30px",
-                  }}
-                  icon={false}
-                  severity="success"
-                >
-                  {response?.data?.message}
-                </Alert>,
-                {
-                  variant: "success",
-                  iconVariant: true,
-                  anchorOrigin: {
-                    vertical: "top",
-                    horizontal: "center",
-                  },
-                }
-              );
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
-    
-// },[reviewOpen] )
+const HandleAddSendInvoices =  async () => {
+  const initialValues =  {
+        user_id: addItemInvoiceData?.driver_id,
+          invoice_number: storeInvoiceNumber?.invoice_number,
+          job_id: addItemInvoiceData.id,
+          sign_image:'www.img.com'
+      }
+    await axiosInstance
+        .post("api/auth/invoice/add-send",initialValues)
+        .then((response) => {
+          if (response.status === 200) {
+            enqueueSnackbar(
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  backdropFilter: "blur(8px)",
+                  background: "#ff7533 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="success"
+              >
+                {response?.data?.message}
+              </Alert>,
+              {
+                variant: "success",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
 
 // const HandleAddSendInvoice = async () => {
 //     await axiosInstance
@@ -319,7 +329,6 @@ const DashboardJobPost = () => {
 //   };
   
   const completeJobApi = async () => {
-console.log('aaaaaa',formData.values);
     await axiosInstance
       .post("api/auth/jobs/complete-job", formData.values)
       .then((response) => {
@@ -370,10 +379,19 @@ console.log('aaaaaa',formData.values);
             }
           );
           handleClose(true);
+
+          setTimeout(() => {
+            HandleAddSendInvoices();
+          }, 9000);
+          
+         
         }
       })
       .catch((error) => {
         console.log(error);
+        setTimeout(() => {
+          HandleAddSendInvoices();
+        }, 9000);
       });
   };
 
@@ -399,7 +417,7 @@ console.log('aaaaaa',formData.values);
       await axiosInstance
         .post("api/auth/rating/add", formik.values)
         .then((response) => {
-          HandleAddSendInvoices()
+          // HandleAddSendInvoices()
           if (response.status === 200) {
             setReviewOpen(false);
             enqueueSnackbar(
@@ -887,7 +905,7 @@ console.log('aaaaaa',formData.values);
                                       </>
                                     ) : elem.status === 2 ? (
                                       <>
-                                         {elem.is_paid === 0 &&  elem?.created_by == 'customer' ? (
+                                        {elem.is_paid === 0 &&  elem?.created_by == 'customer' ? (
                                           <Button
                                             fullWidth
                                             color="info"
@@ -930,7 +948,7 @@ console.log('aaaaaa',formData.values);
                                             <Iconify icon="carbon:task-complete" />
                                           }
                                           onClick={() => {
-                                            // HandleAddSendInvoices();
+                                            // HandleAddSendInvoices(elem);
                                             formData.setFieldValue(
                                               "id",
                                               elem?.bid_id
@@ -1030,17 +1048,7 @@ console.log('aaaaaa',formData.values);
                               {/* <Typography variant="subtitle2">
                               Total Spend: $30K+
                             </Typography> */}
-                              <Typography
-                                variant="subtitle2"
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "flex-start",
-                                }}
-                              >
-                                Customer Spend:{" "}
-                                <Iconify icon="bi:currency-pound" />
-                                {elem?.spentmoney}+
-                              </Typography>
+                             
                             </Stack>
                           </Box>
                         </CardContent>

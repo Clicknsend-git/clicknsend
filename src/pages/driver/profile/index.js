@@ -27,11 +27,11 @@ const MyProfilePage = () => {
   const formik = useFormik({
     initialValues: {
       user_name: "",
-      address: "",
       user_type: "driver",
       email: "",
       mobile: "",
       plan_name: "",
+      address: "",
       company_certificate: "",
       company_certificate_url: "",
       company_vat: "",
@@ -61,26 +61,25 @@ const MyProfilePage = () => {
     },
     validate: (values) => {},
     onSubmit: async (values) => {
-      console.log('values values', values);
-  
-      let profileFormData = new FormData();
-      profileFormData.append("user_name", values?.user_name);
-      profileFormData.append("user_type", values?.user_type);
-      profileFormData.append("email", values?.email);
-      profileFormData.append("mobile", values?.mobile);
-      profileFormData.append("profile_img", values?.profile_img);
-      profileFormData.append("plan_name", values?.plan_name);
-      profileFormData.append("licence_front", values?.licence_front);
-      profileFormData.append("licence_back", values?.licence_back);
-      profileFormData.append("address_proof", values?.address_proof);
-      profileFormData.append("insurance_cert", values?.insurance_cert);
-      profileFormData.append("transit_cert", values?.transit_cert);
-      profileFormData.append("liability_cert", values?.liability_cert);
-      profileFormData.append("vehicle_cert", values?.vehicle_cert);
-      profileFormData.append("v5c_cert", values?.v5c_cert);
-      profileFormData.append("dvia_cert", values?.dvia_cert);
-      profileFormData.append("nationality_cert", values?.nationality_cert);
-  
+      let formData = new FormData();
+      formData.append("user_name", values?.user_name);
+      formData.append("user_type", values?.user_type);
+      formData.append("email", values?.email);
+      formData.append("mobile", values?.mobile);
+      formData.append("profile_img", values?.profile_img);
+      formData.append("plan_name", values?.plan_name);
+      formData.append("licence_front", values?.licence_front);
+      formData.append("licence_back", values?.licence_back);
+      formData.append("address_proof", values?.address_proof);
+      formData.append("insurance_cert", values?.insurance_cert);
+      formData.append("transit_cert", values?.transit_cert);
+      formData.append("liability_cert", values?.liability_cert);
+      formData.append("vehicle_cert", values?.vehicle_cert);
+      formData.append("v5c_cert", values?.v5c_cert);
+      formData.append("dvia_cert", values?.dvia_cert);
+      formData.append("nationality_cert", values?.nationality_cert);
+      formData = formData;
+
       const addressFormData = new FormData();
       addressFormData.append("address", values.address);
       addressFormData.append("state", values.state);
@@ -89,16 +88,15 @@ const MyProfilePage = () => {
       addressFormData.append("lat", values.lat);
       addressFormData.append("long", values.long);
   
-      console.log(profileFormData, 'addressFormData', addressFormData);
-  
       try {
         const [profileResponse, addressResponse] = await Promise.all([
-          axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, profileFormData),
+          axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData),
           axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData),
         ]);
-        console.log('addressFormData', addressFormData, 'profileResponse', profileResponse);
+        console.log('addressFormData',addressFormData,'profileFormData',profileFormData)
   
         if (profileResponse?.status === 200) {
+          // succes
           enqueueSnackbar(
             <Alert
               style={{
@@ -113,7 +111,7 @@ const MyProfilePage = () => {
               icon={false}
               severity="success"
             >
-              {profileResponse?.data?.message}
+              {response?.data?.message}
             </Alert>,
             {
               variant: "success",
@@ -125,35 +123,37 @@ const MyProfilePage = () => {
             }
           );
         } else {
-          enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                filter: blur("8px"),
-                background: "#ffe9d5 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px",
-              }}
-              icon={false}
-              severity="error"
-            >
-              {profileResponse?.data?.error}
-            </Alert>,
-            {
-              variant: "error",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
+              // error
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "30px",
+              filter: blur("8px"),
+              background: "#ffe9d5 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px",
+            }}
+            icon={false}
+            severity="error"
+          >
+            {response?.data?.error}
+          </Alert>,
+          {
+            variant: "error",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
         }
   
         if (addressResponse?.status === 200) {
-          enqueueSnackbar(
+           // succes
+           enqueueSnackbar(
             <Alert
               style={{
                 width: "100%",
@@ -167,7 +167,7 @@ const MyProfilePage = () => {
               icon={false}
               severity="success"
             >
-              {addressResponse?.data?.message}
+              {response?.data?.message}
             </Alert>,
             {
               variant: "success",
@@ -179,31 +179,32 @@ const MyProfilePage = () => {
             }
           );
         } else {
-          enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                filter: blur("8px"),
-                background: "#ffe9d5 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px",
-              }}
-              icon={false}
-              severity="error"
-            >
-              {addressResponse?.data?.error}
-            </Alert>,
-            {
-              variant: "error",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
+              // error
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "30px",
+              filter: blur("8px"),
+              background: "#ffe9d5 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px",
+            }}
+            icon={false}
+            severity="error"
+          >
+            {response?.data?.error}
+          </Alert>,
+          {
+            variant: "error",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
         }
   
         getProfile();
@@ -211,6 +212,7 @@ const MyProfilePage = () => {
         const { response } = error;
         if (response?.status === 422) {
           console.log("response", response.data.error);
+          // eslint-disable-next-line no-unused-vars
           for (const [key] of Object.entries(values)) {
             if (response.data.error[key]) {
               setErrors({ [key]: response.data.error[key][0] });
@@ -218,36 +220,36 @@ const MyProfilePage = () => {
           }
         }
         if (response?.data?.status === 406) {
-          enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                filter: blur("8px"),
-                background: "#ffe9d5 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px",
-              }}
-              icon={false}
-              severity="error"
-            >
-              {response?.data?.error}
-            </Alert>,
-            {
-              variant: "error",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
+              // error
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "30px",
+              filter: blur("8px"),
+              background: "#ffe9d5 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px",
+            }}
+            icon={false}
+            severity="error"
+          >
+            {response?.data?.error}
+          </Alert>,
+          {
+            variant: "error",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
         }
       }
     },
   });
-  
 
   async function getProfile() {
     setLoader(true);
@@ -266,7 +268,7 @@ const MyProfilePage = () => {
           formik.setFieldValue("mobile", newData?.mobile);
 
           formik.setFieldValue("plan_name", newData?.plan_name);
-          formik.setFieldValue("address", newData?.profile?.address);
+
           formik.setFieldValue(
             "profile_img_url",
             `${newData?.profile?.base_url}${newData?.profile?.profile_img}`
@@ -275,7 +277,7 @@ const MyProfilePage = () => {
           formik.setFieldValue("profile_img", newData?.profile?.profile_img);
 
           formik.setFieldValue(
-            "driving_license_url_front",
+            "licence_front_url",
             `${newData?.profile?.base_url}${newData?.profile?.licence_front}`
           );
 
@@ -285,7 +287,7 @@ const MyProfilePage = () => {
           );
 
           formik.setFieldValue(
-            "driving_license_url_back",
+            "licence_back_url",
             `${newData?.profile?.base_url}${newData?.profile?.licence_back}`
           );
 
@@ -346,7 +348,7 @@ const MyProfilePage = () => {
             "dvia_cert_url",
             `${newData?.profile?.base_url}${newData?.profile?.dvia_cert}`
           );
-
+          formik.setFieldValue("address", newData?.profile?.address);
           formik.setFieldValue("dvia_cert", newData?.profile?.dvia_cert);
 
           formik.setFieldValue(
@@ -370,6 +372,8 @@ const MyProfilePage = () => {
   React.useEffect(() => {
     getProfile();
   }, [user, user?.id]);
+
+  // console.log("formik.values.licence_front", formik.values.licence_front.name)                                   
 
   const Content = () => {
     return (
@@ -403,6 +407,9 @@ const MyProfilePage = () => {
                     URL.createObjectURL(e.target.files[0])
                   );
                 }}
+                helperText={
+                  formik.touched.licence_front && formik.errors.licence_front
+                }
               />
             )}
 

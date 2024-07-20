@@ -1,7 +1,7 @@
 import AuthGuard from "@/auth/AuthGuard";
 import SubscriptionDialog from "@/components/dialog/subscriptionDialog";
 import { PrimaryWebLayout } from "@/layout";
-import DashboardJobPost from "@/sections/dashboard/customerDashboard/jobPosted";
+import DashboardJobPost from "@/sections/dashboard/customerCompanyDashBoard/jobPosted";
 import { useFormik } from "formik";
 
 const DashboardPageNext = () => {

@@ -42,7 +42,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const DriverRegister = ({ formik, open, handleOpenClose }) => {
+const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) => {
   const VehicleTypeTruck = [
     {
       label: "7.5t",
@@ -123,7 +123,6 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
     },
   ];
   const { enqueueSnackbar } = useSnackbar();
-  const [verifyedNumber, setVerifyedNumber] = React.useState(false);
 
   const [vehicle, setVehicle] = React.useState([]);
   const router = useRouter();
@@ -232,12 +231,11 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
     },
     validate: (values) => {},
     onSubmit: async (values) => {
-      console.log("formik.values formik.values formik.values :", formik.values.mobile);
+      // console.log("formik.values formik.values formik.values :", formik.values.mobile);
 
       try {
         let newPhoneNumber = formik?.values?.mobile?.replace(/^0+/, "");
-        console.log(newPhoneNumber);
-
+        console.log('newPhoneNumber',newPhoneNumber);
         const url = "/api/user/send-otp";
         const formData = {
           email: `${newPhoneNumber}`,
@@ -351,6 +349,7 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
   });
 
   const handleValitateLoginOTP = async () => {
+    const mobileValue = `${selectedCoutry}${formik.values.mobile}`;
     const formData = {
       email: formik.values.mobile,
       otp: formik?.values?.otp,
@@ -385,7 +384,6 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
             },
           }
         );
-        setVerifyedNumber(true);
         setShowResend(false);
         setOpens(false); // Open the dialog when response status is 200
         setValidateOTP(false);
@@ -433,7 +431,7 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
     let formData;
 
     formData = {
-      email: `${selectedCoutry}${formik.values.mobile}`,
+      email: `${formik.values.mobile}`,
       type: "mobile",
       logged: "no",
     };
@@ -790,7 +788,7 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
                           variant="contained"
                           color="primary"
                           disabled={isButtonDisabled || formik.values.mobile.length !== 11} // Set disabled state
-                          sx={{ width: "100px", marginLeft: "10px" }}
+                          sx={{ width: "110px", marginLeft: "10px" }}
                           onClick={() => {
                             reformik.handleSubmit();
                             setIsButtonDisabled(true); // Disable button after click
@@ -1163,8 +1161,6 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                      disabled={!verifyedNumber}
-
                       >
                         <Typography px="1.5em">Register Now</Typography>
                       </Button>
@@ -1281,7 +1277,7 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
             {/* change this */}
             <Box>
               <Typography sx={{ fontSize: "16px" }}>
-                Didn&apos;t receive OTP?
+                Didn&apos;t receive OTP?{" "}
                 {!showResendLink && (
                   <Typography
                     color="primary"
@@ -1298,7 +1294,7 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
                     component="span"
                     fontWeight={500}
                     sx={{ cursor: "pointer", fontSize: "15px" }}
-                    onClick={handleReSendLoginOTP1}
+                    onClick={handleReSendLoginOTP}
                   >
                     Resend OTP
                   </Typography>
@@ -1318,10 +1314,9 @@ const DriverRegister = ({ formik, open, handleOpenClose }) => {
             <Button
               variant="contained"
               color="dark"
-              // onClick={() => {
-              //   onClose();
-              //   handleClose();
-              // }}
+              onClick={() => {
+                setOpens(true);              
+              }}
             >
               Close
             </Button>

@@ -681,6 +681,7 @@ const StepTwo = ({
                                     />
                                   </Box>
                                 </Grid>
+                                {console.log('productIndex productIndex',productIndex,addressIndex)}
 
                                 <Grid item md={12}>
                                   <GoogleAutocomplete
