@@ -582,7 +582,7 @@ const StepTwo = ({
                       fontSize={15}
                       fontWeight={400}
                     >
-                      Add Address Details
+                      Add Address Details1
                     </Typography>
                   </Box>
                   <Box sx={{ my: 4 }}>
@@ -590,7 +590,6 @@ const StepTwo = ({
                       productItem?.address?.length > 0 &&
                       productItem?.address
                         .sort((a, b) => {
-                          
                           // Sorting logic: "drop" type comes first
                           if (a.type !== "drop" && b.type === "drop") {
                             return -1; // a comes first
@@ -602,7 +601,7 @@ const StepTwo = ({
                         })
                         .map((addressItem, addressIndex) => (
                           <Box key={productIndex} sx={{ mt: 4 }}>
-                            {console.log(productItem,addressItem,"df")}
+                            {console.log(productItem, addressItem, "df")}
                             <Card
                               sx={{
                                 borderRadius: "0px",
@@ -649,6 +648,7 @@ const StepTwo = ({
                                     </Typography>
                                   </Stack>
                                 </Grid>
+
                                 <Grid item md={12}>
                                   <Box>
                                     <TextBox
@@ -681,7 +681,11 @@ const StepTwo = ({
                                     />
                                   </Box>
                                 </Grid>
-                                {console.log('productIndex productIndex',productIndex,addressIndex)}
+                                {console.log(
+                                  "productIndex productIndex",
+                                  productIndex,
+                                  addressIndex
+                                )}
 
                                 <Grid item md={12}>
                                   <GoogleAutocomplete
@@ -742,8 +746,42 @@ const StepTwo = ({
                                     }
                                   />
                                 </Grid>
+
+                                {/* company Name */}
+
+                                <Grid item md={12}>
+                                  <Box>
+                                    <TextBox
+                                      fullWidth
+                                      label="Company Name"
+                                      placeholder="Enter Company Name"
+                                      value={
+                                        formik.values.items[productIndex]
+                                          ?.address[addressIndex]?.company
+                                      }
+                                      name={`items[${productIndex}].address[${addressIndex}].company`}
+                                      onChange={(e) => {
+                                        const enteredCompanyName =
+                                          e.target.value;
+                                        formik.setFieldValue(
+                                          `items[${productIndex}].address[${addressIndex}].company`,
+                                          enteredCompanyName
+                                        );
+                                      }}
+                                      size="small"
+                                      helperText={
+                                        !isEmpty(formik.touched) &&
+                                        formik?.errors?.items &&
+                                        formik?.errors?.items[productIndex]
+                                          ?.address[addressIndex]?.company
+                                      }
+                                    />
+                                  </Box>
+                                </Grid>
                               </Grid>
-                              {addressItem?.type == "drop" && (productItem?.address?.length-1 === addressIndex) ? (
+                              {addressItem?.type == "drop" &&
+                              productItem?.address?.length - 1 ===
+                                addressIndex ? (
                                 <Button
                                   variant="contained"
                                   color="primary"
@@ -756,7 +794,12 @@ const StepTwo = ({
                               ) : (
                                 addressItem?.null
                               )}
-                              {addressItem?.type == "pickup"&&((productItem?.address?.filter(flr=>flr.type==="pickup").length-1 === addressIndex))  ? (
+                              {addressItem?.type == "pickup" &&
+                              productItem?.address?.filter(
+                                (flr) => flr.type === "pickup"
+                              ).length -
+                                1 ===
+                                addressIndex ? (
                                 <Button
                                   variant="contained"
                                   color="primary"
