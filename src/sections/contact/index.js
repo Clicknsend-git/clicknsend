@@ -55,6 +55,7 @@ const ContactSection = ({ formik }) => {
             height: "100%",
           }}
         >
+          
           {/* <Container sx={{ width: "100%", height: "100%" }}>
             <Grid container sx={{ width: "100%", height: "100%" }}>
               <Grid item md={8}></Grid>
@@ -65,6 +66,7 @@ const ContactSection = ({ formik }) => {
               ></Grid>
             </Grid>
           </Container> */}
+
         </Box>
         <Container>
           <Box sx={{ mb: 12 }}>
