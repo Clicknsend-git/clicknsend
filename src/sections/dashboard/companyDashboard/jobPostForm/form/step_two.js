@@ -742,8 +742,39 @@ const StepTwo = ({
                                     }
                                   />
                                 </Grid>
+                                <Grid item md={12}>
+                                  <Box>
+                                    <TextBox
+                                      fullWidth
+                                      label="Company Name"
+                                      placeholder="Enter Company Name"
+                                      value={
+                                        formik.values.items[productIndex]
+                                          ?.address[addressIndex]?.company
+                                      }
+                                      name={`items[${productIndex}].address[${addressIndex}].company`}
+                                      onChange={(e) => {
+                                        const enteredCompanyName =
+                                          e.target.value;
+                                        formik.setFieldValue(
+                                          `items[${productIndex}].address[${addressIndex}].company`,
+                                          enteredCompanyName
+                                        );
+                                      }}
+                                      size="small"
+                                      helperText={
+                                        !isEmpty(formik.touched) &&
+                                        formik?.errors?.items &&
+                                        formik?.errors?.items[productIndex]
+                                          ?.address[addressIndex]?.company
+                                      }
+                                    />
+                                  </Box>
+                                </Grid>
                               </Grid>
-                              {addressItem?.type == "drop" && (productItem?.address?.length-1 === addressIndex) ? (
+                              {addressItem?.type == "drop" &&
+                              productItem?.address?.length - 1 ===
+                                addressIndex ? (
                                 <Button
                                   variant="contained"
                                   color="primary"
@@ -756,7 +787,12 @@ const StepTwo = ({
                               ) : (
                                 addressItem?.null
                               )}
-                              {addressItem?.type == "pickup"&&((productItem?.address?.filter(flr=>flr.type==="pickup").length-1 === addressIndex))  ? (
+                              {addressItem?.type == "pickup" &&
+                              productItem?.address?.filter(
+                                (flr) => flr.type === "pickup"
+                              ).length -
+                                1 ===
+                                addressIndex ? (
                                 <Button
                                   variant="contained"
                                   color="primary"

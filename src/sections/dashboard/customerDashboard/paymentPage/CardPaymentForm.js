@@ -220,7 +220,7 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
           onClose={() => setOpenSnackbar(false)}
           severity="success"
         >
-          Purchase plan successful!!
+          Driver Payment successful!!
         </MuiAlert>
       </Snackbar>
       <Box
@@ -280,7 +280,7 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
           gutterBottom
           style={{ marginBottom: "2rem", color: "#333", paddingTop: "25px" }}
         >
-          Pay with card 1
+          Pay with card 
         </Typography>
         <div style={{ padding: "30px ", }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>

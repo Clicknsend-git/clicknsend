@@ -539,7 +539,7 @@ const ChangePasswordModal = () => {
               icon={false}
               severity="error"
             >
-              {response?.data?.error.new_password}
+              {response?.data?.error}
             </Alert>,
             {
               variant: "error",
