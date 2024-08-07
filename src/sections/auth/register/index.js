@@ -70,7 +70,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
   const [validateOTP, setValidateOTP] = React.useState(true);
   const [successMessage, setSuccessMessage] = React.useState(false);
 
-  const [selectedCoutry, setSelectedCountry] = React.useState();
+  const [selectedCoutry, setSelectedCountry] = React.useState('+44');
 
   useEffect(()=>{
     setIsButtonDisabled(false)
@@ -1059,6 +1059,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                       variant="contained"
                       type="submit"
                       color="primary"
+                      disabled={!successMessage}
                     >
                       Sign up
                     </Button>

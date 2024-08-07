@@ -135,7 +135,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
   const [selected, setSelected] = React.useState("GB");
   const [validateOTP, setValidateOTP] = React.useState(true);
   const [successMessage, setSuccessMessage] = React.useState(false);
-  const [selectedCoutry, setSelectedCountry] = React.useState();
+  const [selectedCoutry, setSelectedCountry] = React.useState('+44');
 
   //ButtonDisabled
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
@@ -1161,6 +1161,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                         fullWidth
                         variant="contained"
                         color="primary"
+                        disabled={!successMessage}
                       >
                         <Typography px="1.5em">Register Now</Typography>
                       </Button>
