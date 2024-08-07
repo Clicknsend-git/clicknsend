@@ -786,7 +786,7 @@ const DocumentModal = ({ formik }) => {
               </Stack>
             </Grid>{" "}
 
-            {/* <Grid item md={4}>
+           <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
                   Vehicle Certificate
@@ -880,7 +880,7 @@ const DocumentModal = ({ formik }) => {
                   </Card>
                 )}
               </Stack>
-            </Grid>{" "} */}
+            </Grid>{" "} 
 
 
             <Grid item md={4}>
