@@ -19,7 +19,7 @@ const PrimaryHomePage = () => {
       {/* <Faqs/> */}
       {/* <Testimonials/> */}
       {/* <NewTestimonial /> */}
-    </React.Fragment>
+    </React.Fragment> 
   );
 };
 
