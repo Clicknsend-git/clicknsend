@@ -140,6 +140,32 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
           customerInitialValues
         );
         if (CustomerResponse?.status === 200) {
+            // succes
+            enqueueSnackbar(
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  backdropFilter: "blur(8px)",
+                  background: "#ff7533 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px"
+                }}
+                icon={false}
+                severity="success"
+              >
+                {CustomerResponse?.data?.message}
+              </Alert>,
+              {
+                variant: "success",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
           setOpenSnackbar(true);
           setTimeout(() => {
             setShowPayment(false);
@@ -254,8 +280,29 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
           gutterBottom
           style={{ marginBottom: "2rem", color: "#333", paddingTop: "25px" }}
         >
-          Pay with card
+          Pay with card 1
         </Typography>
+        <div style={{ padding: "30px ", }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <tbody>
+          <tr>
+            <td style={{ border: "1px solid #ddd", padding: "8px" }}>Driver Bid Amount</td>
+            <td style={{ border: "1px solid #ddd", padding: "8px",display: "flex",justifyContent: "center", }}>Smith</td>
+            {/* <td style={{ border: "1px solid #ddd", padding: "8px" }}>50</td> */}
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid #ddd", padding: "8px" }}>Tax [ 20% ]</td>
+            <td style={{ border: "1px solid #ddd", padding: "8px",display: "flex",justifyContent: "center", }}>Jackson</td>
+            {/* <td style={{ border: "1px solid #ddd", padding: "8px" }}>94</td> */}
+          </tr>
+          <tr>
+            <td style={{ border: "1px solid #ddd", padding: "8px" }}>Total Amount </td>
+            <td style={{ border: "1px solid #ddd", padding: "8px",display: "flex",justifyContent: "center", }}>Doe</td>
+            {/* <td style={{ border: "1px solid #ddd", padding: "8px" }}>80</td> */}
+          </tr>
+        </tbody>
+      </table>
+      </div>
         <Card
           variant="outlined"
           style={{
