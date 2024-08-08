@@ -373,8 +373,8 @@ const SubscriptionsPage = () => {
                   <Grid container spacing={6}>
                     {data &&
                       data?.length > 0 &&
-                      data.map((plan, index) => {
-                        const isActivePlan = activePlan.plan_id === plan.id;
+                      data?.map((plan, index) => {
+                        const isActivePlan = activePlan?.plan_id === plan?.id;
                         return (
                           <Grid item md={4} key={index}>
                             <Card

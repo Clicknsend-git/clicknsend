@@ -179,14 +179,14 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
               padding: "20px",
               backdropFilter: "blur(8px)",
               background: "#ff7533 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px"
+              fontSize: "14px",
+              fontWeight: 600,
+              // lineHeight: "30px"
             }}
             icon={false}
             severity="success"
           >
-            {error.response.data.error}
+            {error.response.data.message}
           </Alert>,
           {
             variant: "success",

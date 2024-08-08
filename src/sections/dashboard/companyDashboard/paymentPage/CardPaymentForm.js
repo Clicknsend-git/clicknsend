@@ -17,11 +17,13 @@ import { useRouter } from "next/router";
 import axiosInstance from "@/utils/axios";
 import { useAuthContext } from "@/auth/useAuthContext";
 import OTPVerification from "../subscription/OTPVerification";
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 
 
 const CardPaymentForm = ({customerInvoiceAndSubscription, paymentDetails, setShowPayment }) => {
   console.log('customerInvoiceAndSubscription customerInvoiceAndSubscription',customerInvoiceAndSubscription,paymentDetails);
-
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const router = useRouter();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -159,6 +161,31 @@ const CardPaymentForm = ({customerInvoiceAndSubscription, paymentDetails, setSho
         }
         
         if (CustomerResponse?.status === 200) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                backdropFilter: "blur(8px)",
+                background: "#ff7533 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px"
+              }}
+              icon={false}
+              severity="success"
+            >
+              {CustomerResponse?.data?.message}
+            </Alert>,
+            {
+              variant: "success",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
           setOpenSnackbar(true);
           setTimeout(() => {
             setShowPayment(false);
