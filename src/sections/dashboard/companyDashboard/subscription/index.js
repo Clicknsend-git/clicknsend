@@ -300,7 +300,7 @@ const SubscriptionsPage = () => {
                                       fullWidth
                                       variant="contained"
                                       sx={{ px: 5 }}
-                                      onClick={() => handleCheckout(plan)}
+                                      // onClick={() => handleCheckout(plan)}
                                     >
                                       Activate Plan
                                     </Button>

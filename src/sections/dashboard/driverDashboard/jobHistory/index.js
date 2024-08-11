@@ -1,6 +1,7 @@
 import { SelectBox, TextBox } from "@/components/form";
 import Iconify from "@/components/iconify/Iconify";
 import { Add, Search } from "@mui/icons-material";
+import ViewInvoiceModal from "../../../../pages/Modals/Viewinvoicemodal";
 import {
   Autocomplete,
   Box,
@@ -73,7 +74,12 @@ const JobHistory = ({ formik }) => {
   const [search, setSearch] = React.useState("");
   const [date, setDate] = React.useState("");
   const [storeInvoiceNumber, setStoreInvoiceNumber] = React.useState();
+  const [invoiceDetails, setInvoiceDetails] = useState('');
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
   const handlePageChange = (event, value) => {
     dispatch(setJobHistoryPage(value));
   };
@@ -159,6 +165,17 @@ console.log('(storeInvoiceNumber)',storeInvoiceNumber)
 
   }
 
+  const handleClickShowInvoice = async (value ) => {
+    try {
+      const response = await axiosInstance.get(`/api/auth/invoice/view/${value}`);
+      if (response.status === 200) {
+        setInvoiceDetails(response.data);
+        openModal();
+      }
+    } catch (error) {
+      console.log("Error fetching invoice", error);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -618,7 +635,7 @@ console.log('(storeInvoiceNumber)',storeInvoiceNumber)
                                     </Button>
                                   </Box>
                                   {
-                                    elem.is_paid == 0 &&
+                                    elem.is_paid == 0 ?
                                    <Box>
                                     <Button
                                       sx={{ fontWeight: 500 }}
@@ -630,6 +647,16 @@ console.log('(storeInvoiceNumber)',storeInvoiceNumber)
                                     >
                                       Invoice Item
                                     </Button>
+                                  </Box> :
+                                  <Box sx={{ my: 2 }}>
+                                <Button
+                                  sx={{ fontWeight: 500,color : '#000',border: '1px solid #000' }}
+                                  fullWidth
+                                  variant="outlined"
+                                  onClick={() => handleClickShowInvoice(elem.invoice_id)}
+                                >
+                                  View Invoice
+                                </Button>
                                   </Box> 
                                    }
                                 </Stack>
@@ -730,6 +757,13 @@ console.log('(storeInvoiceNumber)',storeInvoiceNumber)
               </Stack>
             </Box>
           </Box>
+          {invoiceDetails && (
+        <ViewInvoiceModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          invoiceDetails={invoiceDetails}
+        />
+      )}
         </Container>
       </Box>
       <Dialog fullScreen open={openPDf}>

@@ -19,7 +19,7 @@ import { useAuthContext } from "@/auth/useAuthContext";
 import OTPVerification from "../subscription/OTPVerification";
 
 
-const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
+const CardPaymentForm = ({customerInvoiceAndSubscription, paymentDetails, setShowPayment }) => {
   const { user } = useAuthContext();
   const router = useRouter();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -119,10 +119,20 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
     if (Object.keys(errors).length === 0) {
       const [expMonth, expYear] = formValues.expiryDate.split("/");
 
-  
       const customerInitialValues = {
+        user_id: paymentDetails?.job?.user_id,
+        invoice_id: paymentDetails?.id,
+        email: user?.email,
+        number: formValues?.cardNumber,
+        exp_month: Number(expMonth),
+        exp_year: Number(expYear),
+        cvc: Number(formValues?.cvv),
+        name: formValues?.nameOnCard,
+      };
+
+      const customerInitialValuesSubscription = {
         user_id: user?.id,
-        invoice_id: paymentDetails?.invoice_id,
+        plan_id: paymentDetails?.id,
         email: user?.email,
         number: formValues?.cardNumber,
         exp_month: Number(expMonth),
@@ -131,11 +141,46 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
         name: formValues?.nameOnCard,
       };
       try {
-        const CustomerResponse = await axiosInstance.post(
-          `api/auth/payment/company-invoice-payment`,
-          customerInitialValues
-        );
+        let CustomerResponse;
+
+        if (customerInvoiceAndSubscription === 'companySubscriptionPlan') {
+          CustomerResponse = await axiosInstance.post(
+            `api/auth/payment/purchase-plan/${user?.id}`,
+            customerInitialValuesSubscription
+          );
+        } else if (customerInvoiceAndSubscription === 'companyInvoicePayment') {
+          CustomerResponse = await axiosInstance.post(
+            `api/auth/payment/company-invoice-payment`,
+            customerInitialValues
+          );
+        }
+        
         if (CustomerResponse?.status === 200) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                backdropFilter: "blur(8px)",
+                background: "#ff7533 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px"
+              }}
+              icon={false}
+              severity="success"
+            >
+              {CustomerResponse?.data?.message}
+            </Alert>,
+            {
+              variant: "success",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
           setOpenSnackbar(true);
           setTimeout(() => {
             setShowPayment(false);

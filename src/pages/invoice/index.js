@@ -119,6 +119,21 @@ const InvoicePage = () => {
   const handleDueDateChange = (event) => {
     setDueDate(event.target.value);
   };
+  const isDateInRange = (date, fromDate, toDate) => {
+    const selectedDate = new Date(date).setHours(0, 0, 0, 0);
+    const start = fromDate ? new Date(fromDate).setHours(0, 0, 0, 0) : null;
+    const end = toDate ? new Date(toDate).setHours(23, 59, 59, 999) : null;
+
+    if (start && end) {
+        return selectedDate >= start && selectedDate <= end;
+    } else if (start) {
+        return selectedDate >= start;
+    } else if (end) {
+        return selectedDate <= end;
+    } else {
+        return true;
+    }
+};
 
   const handleShowEntriesChange = (event) => {
     setShowEntries(event.target.value);
@@ -229,15 +244,35 @@ const InvoicePage = () => {
     }
   };
 
+  // const indexOfLastRow = currentPage * showEntries;
+  // const indexOfFirstRow = indexOfLastRow - showEntries;
+  // const currentRows = data
+  //   .filter((item) =>
+  //     Object.values(item).some((value) =>
+  //       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  //     )
+  //   )
+  //   .slice(indexOfFirstRow, indexOfLastRow);
+
+  const filterData = (data) => {
+    return data.filter((item) => {
+        const invoiceDateMatch = isDateInRange(item.created_at, invoiceDate, dueDate);
+        const searchMatch =
+            item.invoice_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.job.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.amount.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.job_id.toString().includes(searchTerm.toLowerCase()) ||
+            new Date(item.created_at).toLocaleDateString().includes(searchTerm.toLowerCase());
+
+        return invoiceDateMatch && searchMatch;
+    });
+};
+  const filteredData = filterData(data);
+
   const indexOfLastRow = currentPage * showEntries;
   const indexOfFirstRow = indexOfLastRow - showEntries;
-  const currentRows = data
-    .filter((item) =>
-      Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    )
-    .slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+
 
     const calculateDueDate = (createdAt) => {
       const createdDate = new Date(createdAt);
