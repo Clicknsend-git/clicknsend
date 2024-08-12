@@ -203,7 +203,7 @@ const Header = (props) => {
                 component="img"
                 width={300}
                 height={80}
-                src="/newlogo.png"
+                src="/faviconweb.png"
                 alt="Logo"
                 loading="lazy"
                 sx={{

@@ -36,7 +36,7 @@ const Footer = () => {
                 component="img"
                 width={186}
                 height={57}
-                src="/logo.png"
+                src="/faviconweb.png"
                 alt="Logo"
                 loading="lazy"
                 sx={{
