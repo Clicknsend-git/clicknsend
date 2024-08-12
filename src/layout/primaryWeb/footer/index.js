@@ -34,8 +34,8 @@ const Footer = () => {
             <Grid item lg={3} md={3} sm={12} xs={12}>
               <Box
                 component="img"
-                width={186}
-                height={57}
+                width={200}
+                height={100}
                 src="/faviconweb.png"
                 alt="Logo"
                 loading="lazy"
