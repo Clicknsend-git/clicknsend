@@ -183,36 +183,123 @@ const DashboardJobPost = () => {
     setV5cCerts(prevCerts => prevCerts.filter((_, i) => i !== index));
   };
   // Start Job Api
+  // const startJobApi = async () => {
+  //   const formDataa = new FormData();
+  //   v5cCerts.forEach(cert => formDataa.append('item_image[]', cert.file));
+  //   formDataa.append('type', 'pick');
+
+  // try {
+  //     const [response1, response2] = await Promise.all([
+  //       axiosInstance.post("api/auth/driver/item-images", formDataa),
+  //       axiosInstance.post("api/auth/jobs/start-job", formData.values)
+  //     ]);
+
+  //     if (response1.status === 200 && response2.status === 200) {
+  //       enqueueSnackbar(
+  //         <Alert
+  //           style={{
+  //             width: "100%",
+  //             padding: "30px",
+  //             backdropFilter: "blur(8px)",
+  //             background: "#ff7533 ",
+  //             fontSize: "19px",
+  //             fontWeight: 800,
+  //             lineHeight: "30px",
+  //           }}
+  //           icon={false}
+  //           severity="success"
+  //         >
+  //           {response?.data?.message}
+  //         </Alert>,
+  //         {
+  //           variant: "success",
+  //           iconVariant: true,
+  //           anchorOrigin: {
+  //             vertical: "top",
+  //             horizontal: "center",
+  //           },
+  //         }
+  //       );
+  //       setStartOpen(false);
+  //       dispatch(
+  //         getJobActive({
+  //           user_id: user?.id,
+  //           type: user?.user_type,
+  //           lat: 0,
+  //           long: 0,
+  //         })
+  //       );
+  //       handleClose(true);
+  //     }
+  //   } catch (error) {
+  //     const { response } = error;
+  //     console.log(error);
+  //   }
+  // };
+
   const startJobApi = async () => {
-    const formDataa = new FormData();
-    v5cCerts.forEach(cert => formDataa.append('item_image[]', cert.file));
-    formDataa.append('type', 'pick');
+    await axiosInstance
+      .post("api/auth/jobs/start-job", formData.values)
+      .then((response) => {
+        if (response.status === 200) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                backdropFilter: "blur(8px)",
+                background: "#ff7533 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="success"
+            >
+              {response?.data?.message}
+            </Alert>,
+            {
+              variant: "success",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+          setStartOpen(false);
+          dispatch(
+            getJobActive({
+              user_id: user?.id,
+              type: user?.user_type,
+              lat: 0,
+              long: 0,
+            })
+          );
+          handleClose(true);
+        }
+      })
+      .catch((error) => {
+        const { response } = error;
 
-  try {
-      const [response1, response2] = await Promise.all([
-        axiosInstance.post("api/auth/driver/item-images", formDataa),
-        axiosInstance.post("api/auth/jobs/start-job", formData.values)
-      ]);
-
-      if (response1.status === 200 && response2.status === 200) {
         enqueueSnackbar(
           <Alert
             style={{
               width: "100%",
               padding: "30px",
-              backdropFilter: "blur(8px)",
-              background: "#ff7533 ",
+              filter: blur("8px"),
+              background: "#ffe9d5 ",
               fontSize: "19px",
               fontWeight: 800,
               lineHeight: "30px",
             }}
             icon={false}
-            severity="success"
+            severity="error"
           >
-            {response?.data?.message}
+            {response?.data?.error}
           </Alert>,
           {
-            variant: "success",
+            variant: "error",
             iconVariant: true,
             anchorOrigin: {
               vertical: "top",
@@ -220,21 +307,8 @@ const DashboardJobPost = () => {
             },
           }
         );
-        setStartOpen(false);
-        dispatch(
-          getJobActive({
-            user_id: user?.id,
-            type: user?.user_type,
-            lat: 0,
-            long: 0,
-          })
-        );
-        handleClose(true);
-      }
-    } catch (error) {
-      const { response } = error;
       console.log(error);
-    }
+    })
   };
 
   useEffect(() => {
@@ -1197,8 +1271,9 @@ const HandleAddSendInvoices =  async () => {
                     bgcolor: "background.paper",
                     border: "1px solid #f5f5f5",
                     boxShadow: 24,
-                    padding: '25px',
-                    width: '60%',
+                    p: 4,
+                    // padding: '25px',
+                    // width: '60%',
                   }}
                   component="form"
                   noValidate
@@ -1207,7 +1282,7 @@ const HandleAddSendInvoices =  async () => {
                     Are you sure you have Start the job?
                   </Typography>
                   
-                <Grid item md={4} sx={4} xs={4}>
+                {/* <Grid item md={4} sx={4} xs={4}>
       <Stack textAlign={"center"}>
         <Typography sx={{ marginBottom: "10px",fontWeight: '600', }} textAlign="center" variant="body2" component="p" mb={1}>
           Upload PickUp Images
@@ -1287,8 +1362,8 @@ const HandleAddSendInvoices =  async () => {
         ))}
         </Grid>   
       </Stack>
-      {/* <button onClick={completeJobApi}>Complete Job</button> */}
-    </Grid>
+      <button onClick={completeJobApi}>Complete Job</button> 
+    </Grid> */}
 
                   <Stack direction="row" spacing={8}>
                     <Button

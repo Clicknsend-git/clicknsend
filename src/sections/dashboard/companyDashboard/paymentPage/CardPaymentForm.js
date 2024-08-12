@@ -208,22 +208,7 @@ const CardPaymentForm = ({customerInvoiceAndSubscription, paymentDetails, setSho
 
   return (
     <Card sx={{ paddingBottom: "120px" }}>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        style={{ top: "100px" }}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          onClose={() => setOpenSnackbar(false)}
-          severity="success"
-        >
-          Purchase plan successful!!
-        </MuiAlert>
-      </Snackbar>
+     
       <Box
         sx={{
           position: "relative",
