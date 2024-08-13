@@ -18,8 +18,9 @@ import axiosInstance from "@/utils/axios";
 import { useAuthContext } from "@/auth/useAuthContext";
 import OTPVerification from "../subscription/OTPVerification";
 import Alert from "@mui/material/Alert";
-
+import { useSnackbar } from "notistack";
 const CardPaymentForm = ({customerInvoiceAndSubscription, paymentDetails, setShowPayment }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const router = useRouter();
   const [openSnackbar, setOpenSnackbar] = useState(false);
