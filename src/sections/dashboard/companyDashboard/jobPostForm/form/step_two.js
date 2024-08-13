@@ -750,14 +750,14 @@ const StepTwo = ({
                                       placeholder="Enter Company Name"
                                       value={
                                         formik.values.items[productIndex]
-                                          ?.address[addressIndex]?.company
+                                          ?.address[addressIndex]?.company_name
                                       }
-                                      name={`items[${productIndex}].address[${addressIndex}].company`}
+                                      name={`items[${productIndex}].address[${addressIndex}].company_name`}
                                       onChange={(e) => {
                                         const enteredCompanyName =
                                           e.target.value;
                                         formik.setFieldValue(
-                                          `items[${productIndex}].address[${addressIndex}].company`,
+                                          `items[${productIndex}].address[${addressIndex}].company_name`,
                                           enteredCompanyName
                                         );
                                       }}
