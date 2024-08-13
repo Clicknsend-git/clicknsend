@@ -78,7 +78,6 @@ const MyProfilePage = () => {
       formData.append("v5c_cert", values?.v5c_cert);
       formData.append("dvia_cert", values?.dvia_cert);
       formData.append("nationality_cert", values?.nationality_cert);
-      formData = formData;
 
       const addressFormData = new FormData();
       addressFormData.append("address", values.address);
@@ -90,7 +89,7 @@ const MyProfilePage = () => {
   
       try {
 
-        const profileResponse = axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData)
+        const profileResponse = await axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData)
         console.log("profileResponse", profileResponse);
   
         if (profileResponse?.status === 200) {

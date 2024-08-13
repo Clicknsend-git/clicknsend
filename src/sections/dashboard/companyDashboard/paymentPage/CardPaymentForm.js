@@ -147,7 +147,7 @@ const CardPaymentForm = ({customerInvoiceAndSubscription, paymentDetails, setSho
         name: formValues?.nameOnCard,
       };
       try {
-        let CustomerResponse;
+        let CustomerResponse = '';
 
         if (customerInvoiceAndSubscription === 'companySubscriptionPlan') {
           CustomerResponse = await axiosInstance.post(
