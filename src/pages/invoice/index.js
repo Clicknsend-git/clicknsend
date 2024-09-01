@@ -359,11 +359,11 @@ const InvoicePage = () => {
               <TableCell>Job ID</TableCell>
               <TableCell>Job Title</TableCell>
               <TableCell>Invoice Date</TableCell>
-             { user?.user_type === "company" && user?.profile?.company_type === "customer" &&  <TableCell>Due Date</TableCell>  }
+             {/* { user?.user_type === "company" && user?.profile?.company_type === "customer" && user?.status === 0 &&  <TableCell>Due Date</TableCell>  } */}
               <TableCell>Status</TableCell>
               {/* <TableCell>Action</TableCell> */}
               <TableCell>amount</TableCell>
-              { user?.user_type === "company" && user?.profile?.company_type === "customer" &&  <TableCell>late amount</TableCell> }
+              {/* { user?.user_type === "company" && user?.profile?.company_type === "customer" && user?.status === 0 &&   <TableCell>late amount</TableCell> } */}
               <TableCell style={{textAlign:'center'}}>Action </TableCell>
             </TableRow>
           </TableHead>
@@ -376,34 +376,12 @@ const InvoicePage = () => {
                 <TableCell>{row.invoice_number}</TableCell>
                 <TableCell>{row.job_id}</TableCell>
                 <TableCell>{row.job.name}</TableCell>
-                <TableCell >   { user?.user_type === "company" && user?.profile?.company_type === "customer"  && row?.job?.is_paid === 0 ?  <Button   variant="contained"
-                    color="primary"
-                    onClick={() =>  handleClickCompanyPayment(row)} >{new Date(row.created_at).toLocaleDateString()} Before</Button> : <> {new Date(row.created_at).toLocaleDateString()} </> } </TableCell>
-
-
-               { user?.user_type === "company" && user?.profile?.company_type === "customer" && row?.job?.is_paid === 0  ?   <TableCell> <Button   variant="contained"
-                    color="primary"
-                    onClick={() =>  handleClickCompanyPayment(row)} >{calculateDueDate(row.created_at)} After</Button> </TableCell> :<TableCell> Paid </TableCell>}
-                <TableCell>{row.job.status}</TableCell>
+                <TableCell>{new Date(row.created_at).toLocaleDateString()} </TableCell>
+                <TableCell>{row.status === 0 ? 'Unpaid' : 'Paid'}  </TableCell>
                 <TableCell>{row.amount}</TableCell>
-                { user?.user_type === "company" && user?.profile?.company_type === "customer" &&     <TableCell>
-                  {/* <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => viewInvoice(row.id)}
-                  >
-                    View Invoice
-                  </Button> */}.
+                {/* { user?.user_type === "company" && user?.profile?.company_type === "customer" && row?.job?.is_paid === 0  &&     <TableCell>
                   {Number(row.amount) + 60}
-                  {/* <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => sendInvoice(row.id)}
-                    style={{ marginLeft: 8 }}
-                  >
-                    Send Invoice
-                  </Button> */}
-                </TableCell> }
+                </TableCell> } */}
                 <TableCell style={{display:'flex',justifyContent:"center",alignItems:'center'}}><Button
                     variant="contained"
                     color="primary"
@@ -428,6 +406,22 @@ const InvoicePage = () => {
                   >
                     Send Invoice
                   </Button>   }
+                  <TableCell >   { user?.user_type === "company" && user?.profile?.company_type === "customer"  && row?.job?.is_paid === 0  &&  <Button   variant="contained"
+                    color="primary"
+                    onClick={() =>  handleClickCompanyPayment(row)} >{new Date(row.created_at).toLocaleDateString()} Before</Button>
+                      
+                    
+                    } </TableCell>
+
+                   {/* <> {new Date(row.created_at).toLocaleDateString()} </>  */}
+
+               { user?.user_type === "company" && user?.profile?.company_type === "customer" && row?.job?.is_paid === 0   &&  <TableCell> <Button   variant="contained"
+                    color="primary"
+                    onClick={() =>  handleClickCompanyPayment(row)} >{calculateDueDate(row.created_at)} After</Button>
+                     {/* </TableCell>
+                     :<TableCell> {row.status === 0 ? 'Unpaid' : 'Paid'
+                    }   */}
+                    </TableCell>}
                   </TableCell>
               </TableRow>
               ))} </> : <>

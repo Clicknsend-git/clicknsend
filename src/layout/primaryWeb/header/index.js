@@ -1070,22 +1070,31 @@ const Header = (props) => {
                         </MenuItem>
                       </Link>
                     )}
-                    <Link
-                      href="/payment"
+                    { 
+  (
+    (user?.user_type == "company" && user?.profile?.company_type == 'customer') ||
+    user?.user_type == "driver" ||
+    (user?.user_type == "company" && user?.profile?.company_type == 'driver')
+  ) && (
+    <Link
+                      href="/PendingPayment"
                       passHref
                       style={{ textDecoration: "none" }}
-                    >
-                      <MenuItem
-                        sx={{
-                          color: "#212b36",
-                          fontWeight: "500",
-                          lineHeight: "1.5",
-                        }}
-                        onClick={() => handleMenuItemClick("payment")}
-                      >
-                        Pending payment
-                      </MenuItem>
-                    </Link>
+    >
+      <MenuItem
+        sx={{
+          color: "#212b36",
+          fontWeight: "500",
+          lineHeight: "1.5",
+        }}
+        onClick={() => handleMenuItemClick("payment")}
+      >
+        Pending payment
+      </MenuItem>
+    </Link>
+  )
+}
+
                     <Link
                       href={`/${user?.user_type}/profile`}
                       passHref

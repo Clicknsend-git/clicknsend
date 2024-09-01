@@ -34,6 +34,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import CountUp from "react-countup";
 import axiosInstance from "@/utils/axios";
+import CardPaymentForm from '../paymentPage/CardPaymentForm'
 
 const JobHistory = ({ formik }) => {
   const router = useRouter();
@@ -54,6 +55,8 @@ const JobHistory = ({ formik }) => {
   const [invoiceDetails, setInvoiceDetails] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const [showPayment, setShowPayment] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState(null);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
@@ -83,10 +86,16 @@ const JobHistory = ({ formik }) => {
     }
   };
 
+  const handleClickCompanyPayment = (row) => {
+    setShowPayment(true)
+    setPaymentDetails(row)
+  };
   return (
     <React.Fragment>
       <Box py={3} pb={12}>
         <Container>
+        {!showPayment ? (
+          <>
           <Box py={5}>
             <DashboardCard jobPost={data?.length} />
           </Box>
@@ -529,14 +538,28 @@ const JobHistory = ({ formik }) => {
                                 </Button>
                               </Box>
                               <Box sx={{ my: 2 }}>
+                              {  
+                                elem?.is_paid === 0 ? 
+
                                 <Button
-                                  sx={{ fontWeight: 500,color : '#000',border: '1px solid #000' }}
+                                  // sx={{ fontWeight: 500,color : '#000',border: '1px solid #000' }}
                                   fullWidth
-                                  variant="outlined"
+                                  variant="contained"
+                                  onClick={() =>  handleClickCompanyPayment(elem)}
+                                >
+                                 Pay
+                                </Button>
+
+                                :
+
+                                <Button
+                                  // sx={{ fontWeight: 500,color : '#000',border: '1px solid #000' }}
+                                  fullWidth
+                                  variant="contained"
                                   onClick={() => handleClickShowInvoice(elem.invoice_id)}
                                 >
                                   View Invoice
-                                </Button>
+                                </Button>}
                               </Box>
                             </Grid>
                           </Grid>
@@ -648,6 +671,14 @@ const JobHistory = ({ formik }) => {
               </Stack>
             </Box>
           </Box>
+          </>
+          ) : (
+            <CardPaymentForm
+              customerInvoiceAndSubscription={'companyInvoicePayment'}
+              paymentDetails={paymentDetails}
+              setShowPayment={setShowPayment}
+            /> // Render the PaymentPage component when showPayment is true
+          )}
         </Container>
         {invoiceDetails && (
         <ViewInvoiceModal

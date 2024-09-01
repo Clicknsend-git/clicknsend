@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { Modal, Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { CenterFocusStrongOutlined } from '@mui/icons-material';
+
+
 
 export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails}) {
   const invoiceRef = useRef();
@@ -39,35 +40,24 @@ export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails}) {
             
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h6">Invoice To:</Typography>
-                <Paper variant="outlined" sx={{ p: 2, marginTop: 9}}>
-                  <Typography><strong>VIRENDER SINGH</strong></Typography>
-                  <Typography>Member ID: 162302</Typography>
-                  <Typography>732 Great Northern Road Flat E</Typography>
-                  <Typography>Aberdeen AB24 2GF</Typography>
-                  <Typography>UK</Typography>
-                </Paper>
+
+                <Typography variant="h6" sx={{ mt: 2 }}>Member Id: {invoiceDetails.invoice?.job_id}</Typography>
               </Box>
               <Box sx={{ flex: 1, textAlign: 'right' }}>
                 
                 <Typography variant="h5" sx={{ mt: 2 }}>INVOICE</Typography>
                 <Typography variant="h6">ClickNSend LTD</Typography>
-                <Typography>51 MADELEINE CLOSE</Typography>
-                <Typography>ROMFORD</Typography>
-                <Typography>RM6 4BJ</Typography>
-                <Typography>UK</Typography>
+                <Typography>51 MADELEINE CLOSE ROMFORD,RM6 4BJ,UK</Typography>
                 <Box sx={{ lineHeight: 1.5, mt: 1 }}>
                   <Typography>Tel.: +447538340033</Typography>
                   <Typography>Email: CAGTRANSPORT@outlook.com</Typography>
                 </Box>
-                <Typography variant="h6" sx={{ mt: 2 }}>Member ID: 162302</Typography>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-              {/* <Typography><strong>CX Ref: 21256240</strong></Typography> */}
-              <Box sx={{ textAlign: '' }}>
+                <Typography variant="h6" sx={{ mt: 2 }}>Member ID: {invoiceDetails.invoice?.job_id}</Typography>
                 <Typography><strong>Invoice No : {invoiceDetails?.invoice?.invoice_number}</strong></Typography>
                 <Typography><strong>Invoice Date: {invoiceDetails.invoice?.created_at}</strong></Typography>
               </Box>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             </Box>
             <TableContainer component={Paper}>
               <Table sx={tableStyles}>
@@ -84,30 +74,26 @@ export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails}) {
                     <TableCell sx={tableCellStyles}>1</TableCell>
                     <TableCell sx={tableCellStyles}>
                       <Typography>
-                        <strong>Date Ordered:</strong> 08 Jun 2020<br />
-                        <strong>Our Ref:</strong> 21256240<br />
-                        <strong>Pick up from:</strong> ROC PRIVATE CLINIC, 3rd floor, 45 Queen anne st, Marylebone, LONDON, W1G 6JF<br />
-                        <strong>Vehicle:</strong>{" "}{invoiceDetails.job?.vehicle}<br />
-                        <strong>Stop:</strong> 1 Pickup: Hounslow<br />
-                        <strong>Pickup:</strong> Hounslow<br />
-                        <strong>Delivered to:</strong> THE DOCTORS LABOR LABORATORY, 1 MABLEDON PLACE, THE HOLA BUILDING, LONDON, WC1H 9AX<br />
-                        <strong>On:</strong> 09 Jun 2020<br /><br />
-                        <strong>Received by:</strong> Mark<br />
-                        <strong>Left at:</strong> Goods Inwards<br />
-                        <strong>Delivered at:</strong> 18:20 09 Jun 2020
+                        <strong>Date Ordered:</strong> {invoiceDetails.invoice?.created_at}<br />
+                        <strong>Your job:</strong> {invoiceDetails.invoice.job?.name}<br />
+                        <strong>Pick up from:</strong> {}<br />
+                        <strong>Vehicle type:</strong> {invoiceDetails.invoice.job?.vehical_type}<br />
+                        <strong>Vehical:</strong> {invoiceDetails.invoice.job?.vehicle}<br/>
+                        <strong>Delivered to:</strong>{}<br />
+                        <strong>Vehicle type:</strong> {invoiceDetails.invoice.job?.vehical_type}<br />
+                        <strong>Vehical:</strong> {invoiceDetails.invoice.job?.vehicle}<br />
                       </Typography>
                     </TableCell>
-                    <TableCell sx={tableCellStyles}>£{invoiceDetails.amount}</TableCell>
-                    <TableCell sx={tableCellStyles}>£{invoiceDetails.amount}</TableCell>
+                    <TableCell sx={tableCellStyles}>£{invoiceDetails?.invoice?.amount}</TableCell>
+                    <TableCell sx={tableCellStyles}>£{invoiceDetails?.invoice?.amount}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
 
-            <Box sx={{ display: 'contents', justifyContent: 'space-between', mt: 4 }}>
+            <Box sx={{ display: 'contents', justifyContent: 'space-between', mt: 5, padding: 10 }}>
               <Box sx={{ textAlign: 'center', flex: 1 }}>
-                <Typography><strong>Please ensure payment is received by 10 Jun 2024</strong></Typography>
-                <Typography>Payment terms: 30 Days (From Invoice)</Typography>
+                <Typography><strong>Please make the payment first to start the job</strong></Typography>
               </Box>
               <TableContainer component={Paper} sx={{ width: 'auto', flex: 1, ml: 4 }}>
                 <Table sx={tableStyles}>
@@ -131,20 +117,10 @@ export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails}) {
             <Box sx={{ mt: 4 }}>
               <Typography variant="h6" component="div" sx={{ borderBottom: '1px solid #ccc', pb: 1 }}>Notes</Typography>
               <Paper variant="outlined" sx={{ p: 2, mt: 2 }}>
-                <Typography>ITS A 6 COVID 19 KIT AND SOME PPE PICK UP FROM W1G 6JF DELIVER TO UB3 3HG HEATHROW INN HOTEL WAIT 10 MIN AND THEN TAKE THAT KIT BACK TO WC1H 9AX. PLEASE TEXT OR E QUOTE. THANKS</Typography>
+              <Typography>{invoiceDetails.invoice.job?.description}</Typography>
               </Paper>
             </Box>
-            <Box sx={{ mt: 4 }}>
-              <Typography variant="h6" component="div" sx={{ borderBottom: '1px solid #ccc', pb: 1 }}>Bank details</Typography>
-              <Paper variant="outlined" sx={{ p: 2, mt: 2 }}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography><strong>Bank Name:</strong> Tide</Typography>
-                  <Typography><strong>Account Holder Name:</strong> CAIGTRANSPORT LTD</Typography>
-                  <Typography><strong>Sort Code:</strong> 04-06-05</Typography>
-                  <Typography><strong>Account Number:</strong> 14017307</Typography>
-                </Box>
-              </Paper>
-            </Box>
+          
             <Box sx={{ textAlign: 'center', mt: 4 }}>
               <Typography><strong>VAT :</strong> GB 355509879</Typography>
               <hr />
@@ -198,6 +174,3 @@ const tableCellStyles = {
   border: '1px solid #ddd',
   padding: '8px',
 };
-
-
-
