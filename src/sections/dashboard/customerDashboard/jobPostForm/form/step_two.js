@@ -691,6 +691,11 @@ const StepTwo = ({
                                     name={`items[${productIndex}].address[${addressIndex}].address`}
                                     value={addressItem?.address}
                                     onSelect={(address, lat, long) => {
+                                      {addressItem?.type == "pickup" &&
+                                        console.log('lat',lat,long) 
+                                      formik.setFieldValue(`lat`,lat)
+                                      formik.setFieldValue(`long`,long)
+                                      }
                                       formik.setFieldValue(
                                         `items[${productIndex}].address[${addressIndex}].address`,
                                         address

@@ -1,26 +1,38 @@
 import { TextBox } from "@/components/form";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, FormHelperText } from "@mui/material"; // Import required components
 
 const StepOne = ({ formik }) => {
   return (
     <>
-      <Box mb={2}>
-        <Typography fontSize={16} fontWeight={500}>
-          Enter Job Title
-        </Typography>
-      </Box>
+    <Box mb={2}>
+   <Typography fontSize={16} fontWeight={500}>
+    Enter Job Post
+  </Typography> 
+</Box>
       <Box>
-        <TextBox
-          fullWidth
-          placeholder={"Job Title"}
-          label="Job Title"
-          size={"small"}
-          value={formik.values.name}
-          name={`name`}
-          onChange={formik.handleChange}
-          helperText={formik.touched.name && formik.errors.name}
-        />
-      </Box>
+  <FormControl component="fieldset">
+    <RadioGroup
+      aria-label="jobType"
+      name="name"
+      value={formik.values.name}
+      onChange={formik.handleChange}
+    >
+      <FormControlLabel
+        value="Hotshot"
+        control={<Radio size="small" />}
+        label="Hotshot"
+      />
+      <FormControlLabel
+        value="Budget"
+        control={<Radio size="small" />}
+        label="Budget"
+      />
+    </RadioGroup>
+    {formik.touched.jobType && formik.errors.jobType && (
+      <FormHelperText>{formik.errors.jobType}</FormHelperText>
+    )}
+  </FormControl>
+</Box>
     </>
   );
 };

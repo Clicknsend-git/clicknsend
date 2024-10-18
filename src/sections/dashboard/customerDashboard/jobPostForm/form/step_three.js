@@ -163,13 +163,13 @@ const StepThree = ({ formik }) => {
             />
           </Box>
         </Grid> */}
-        <Grid item md={12}>
+         <Grid item md={12}>
           <Box>
             <TextBox
               fullWidth
               label="Important Note:"
               name={`description`}
-              value={formik?.values?.description}
+              value={formik?.values?.description || ''} // Defaults to empty string
               onChange={formik.handleChange}
               size={"small"}
               multiline={true}

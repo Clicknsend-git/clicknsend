@@ -42,7 +42,10 @@ import {
   setJobActivePage,
 } from "@/redux/slices/job/driver";
 import TextMaxLine from "@/components/text-max-line";
-
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 const DashboardJobPost = () => {
   const dispatch = useDispatch();
   const {
@@ -65,6 +68,9 @@ const DashboardJobPost = () => {
     );
   }, [page]);
   const router = useRouter();
+  const {
+    Driver: { pageCounts, data: driverData, pages, pageSizes },
+  } = useSelector((state) => state.companyJob);
   const { user } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const [layout, setLayout] = useState(false);
@@ -72,9 +78,9 @@ const DashboardJobPost = () => {
   const [open, setOpen] = React.useState(false);
   // const [openPDf, setOpenPDF] = React.useState(false);
   const [select, setSelect] = React.useState("new");
-
+  const [driverInfo, setDriverInfo] = useState(null);
   const [pageData, setPageData] = React.useState({});
-
+  const [age, setAge] = React.useState('');
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const handleConfirmOpen = (id) => setConfirmOpen(id);
   const handleCofirmClose = () => setConfirmOpen(false);
@@ -559,6 +565,132 @@ const HandleAddSendInvoices =  async () => {
   // useEffect(() => {
   //   formik.setFieldValue("driver_id", user?.id);
   // }, [user, user?.id]);
+
+  const handleChange = async (event, job_requests_data) => {
+    const selectedValue = event.target.value;
+    setAge(selectedValue);
+    console.log("age age job_requests_data", age, job_requests_data);
+  
+    // Find the selected user
+    const selectedUser = driverInfo?.data?.find(user => user.id === selectedValue);
+    console.log("selectedUser selectedUser", selectedUser);
+  
+    const initialValue = {
+      id: job_requests_data?.id,
+      user_id: driverId,
+      driver_id: selectedUser?.user_id,
+    };
+  
+    if (selectedUser) {
+      try {
+        const response = await axiosInstance.post("api/auth/company/assign-job", initialValue);
+  
+        if (response?.status === 200) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                backdropFilter: "blur(8px)",
+                background: "#ff7533 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px"
+              }}
+              icon={false}
+              severity="success"
+            >
+              {response?.data?.message}
+            </Alert>,
+            {
+              variant: "success",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        } else {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        }
+      } catch (error) {
+        const { response } = error;
+        let status = [406, 404];
+  
+        if (response.status === 422) {
+          for (const [key, value] of Object.entries(response.data.error)) {
+            setErrors(prevErrors => ({ ...prevErrors, [key]: value[0] }));
+          }
+        }
+  
+        if (status.includes(response?.status)) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        }
+      }
+    }
+  
+    console.log("Selected Username:", selectedUser);
+  };
+  // Update local state with driver data
+  useEffect(() => {
+    if (driverData) {
+      setDriverInfo({
+        pageCounts: pageCounts,
+        data: driverData,
+        pages: pages,
+        pageSizes: pageSizes
+      });
+    }
+  }, []);
   return (
     <React.Fragment>
       <Box py={3} pb={12}>
@@ -575,7 +707,7 @@ const HandleAddSendInvoices =  async () => {
                     fontWeight={600}
                     color="primary"
                   >
-                    Active Jobs
+                    Active Jobs 1
                   </Typography>
 
                   <Box
@@ -981,7 +1113,7 @@ const HandleAddSendInvoices =  async () => {
                                             fontWeight: 500,
                                           }}
                                         >
-                                          Confirm Job
+                                          Confirm Job 
                                         </Button>
                                         {/* {elem.is_paid === 0 && (
                                           <Button
@@ -1057,7 +1189,7 @@ const HandleAddSendInvoices =  async () => {
                                       </>
                                     )}
                                   </Box>
-
+                                
                                   {/* <Box>
                                   <Button
                                     sx={{ fontWeight: 500 }}
@@ -1124,7 +1256,7 @@ const HandleAddSendInvoices =  async () => {
                             <Stack
                               direction="row"
                               alignItems="center"
-                              justifyContent="space-between"
+                              justifyContent="flex-end"
                             >
                               <Typography
                                 variant="subtitle2"
@@ -1133,8 +1265,29 @@ const HandleAddSendInvoices =  async () => {
                                   alignItems: "flex-start",
                                 }}
                               >
-                                {/* Job Budget: <Iconify icon="bi:currency-pound" /> */}
-                                {/* {elem?.budget} */}
+                                {elem?.status == 0 || elem?.status == 1 && ( 
+                          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                             {/* Transfer Job to Other Driver */}
+                            <InputLabel id="demo-select-small-label">User</InputLabel>
+                            <Select
+                              labelId="demo-select-small-label"
+                              id="demo-select-small"
+                              value={age}
+                              label="User"
+                              onChange={(event) =>  handleChange(event,job_requests_data)}
+                            >
+                              <MenuItem value="">
+                                <em>None</em>
+                              </MenuItem>
+                              {driverInfo?.data?.map((driver) => (
+                                <MenuItem key={driver?.id} value={driver?.id}>
+                                {console.log('driverdriver',driver)}
+                                  {driver?.user_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        )}
                               </Typography>
                               {/* <Typography variant="subtitle2">
                               Total Spend: $30K+

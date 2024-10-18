@@ -220,6 +220,8 @@ const PostJob = () => {
       items: [product],
       // budget: "",
       description: "",
+      lat:"",
+      long:'',
     },
 
     validate: (values) => {
@@ -241,9 +243,9 @@ const PostJob = () => {
       // if (!values.budget) {
       //   errors.budget = "Job budget is required";
       // }
-      if (!values.description) {
-        errors.description = "Description is required";
-      }
+      // if (!values.description) {
+      //   errors.description = "Description is required";
+      // } 
 
       return errors;
     },
@@ -601,7 +603,7 @@ console.log('values values',values)
     }
   }, [id]);
 
-  console.log("formik", formik);
+  console.log("formik JobPostForm", formik);
 
   return (
     <AuthGuard>

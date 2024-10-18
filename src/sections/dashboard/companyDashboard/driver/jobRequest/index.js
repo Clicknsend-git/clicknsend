@@ -1543,7 +1543,7 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                 job_requests_data = jobRequest
               }});
 
-console.log('job_requests_data,',job_requests_data);
+// console.log('job_requests_data,',job_requests_data);
                   return (
                     <React.Fragment key={index}>
                         <Grid container rowSpacing={0}>

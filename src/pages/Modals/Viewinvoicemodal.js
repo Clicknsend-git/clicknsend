@@ -104,11 +104,13 @@ export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails}) {
                     </TableRow>
                     <TableRow>
                       <TableCell sx={tableCellStyles}>VAT</TableCell>
-                      <TableCell sx={tableCellStyles}>£14.00</TableCell>
+                      <TableCell sx={tableCellStyles}>£{invoiceDetails?.invoice?.amount*18/100}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell sx={tableCellStyles}>Total</TableCell>
-                      <TableCell sx={tableCellStyles}>£84.00</TableCell>
+                      <TableCell sx={tableCellStyles}>
+    £{(Number(invoiceDetails?.invoice?.amount || 0) + (Number(invoiceDetails?.invoice?.amount || 0) * 18 / 100)).toFixed(2)}
+  </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>

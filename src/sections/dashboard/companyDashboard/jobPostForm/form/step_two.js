@@ -681,7 +681,7 @@ const StepTwo = ({
                                     />
                                   </Box>
                                 </Grid>
-                                {console.log('productIndex productIndex',productIndex,addressIndex)}
+                                {/* {console.log('productI?ndex productIndex',productIndex,addressIndex)} */}
 
                                 <Grid item md={12}>
                                   <GoogleAutocomplete
@@ -691,6 +691,11 @@ const StepTwo = ({
                                     name={`items[${productIndex}].address[${addressIndex}].address`}
                                     value={addressItem?.address}
                                     onSelect={(address, lat, long) => {
+                                      {addressItem?.type == "pickup" &&
+                                      console.log('lat',lat,long) 
+                                    formik.setFieldValue(`lat`,lat)
+                                    formik.setFieldValue(`long`,long)
+                                    }
                                       formik.setFieldValue(
                                         `items[${productIndex}].address[${addressIndex}].address`,
                                         address
