@@ -707,7 +707,7 @@ const HandleAddSendInvoices =  async () => {
                     fontWeight={600}
                     color="primary"
                   >
-                    Active Jobs 1
+                    Active Jobs
                   </Typography>
 
                   <Box
