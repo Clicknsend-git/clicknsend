@@ -99,6 +99,10 @@ const GoogleAutocomplete = (props) => {
         value={value}
         onChange={(e) => props.onChange(e)}
         onSelect={(e) => handleSelect(e)}
+
+        searchOptions={{
+          componentRestrictions: { country: "uk" }, // Restrict to UK
+        }}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
 {/* 

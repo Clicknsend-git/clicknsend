@@ -144,7 +144,7 @@ const SubscriptionsPage = () => {
               color="white"
               variant="h2"
             >
-              Our Subscription Plans
+              Our Subscription Plans1
             </Typography>
             <Typography variant="body1" component="p" color="common.white">
               Choose the right plan made for you
@@ -203,7 +203,7 @@ const SubscriptionsPage = () => {
                                   justifyContent="center"
                                 >
                                   <Typography variant="h3">
-                                    ${elem?.price}
+                                  £{elem?.price}
                                   </Typography>
                                   <Typography variant="body1" fontWeight={400}>
                                     /month

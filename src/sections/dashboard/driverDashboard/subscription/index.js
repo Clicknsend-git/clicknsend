@@ -408,7 +408,7 @@ const SubscriptionsPage = () => {
                                   justifyContent="center"
                                 >
                                   <Typography variant="h3">
-                                    ${plan.price}
+                                  £{plan.price}
                                   </Typography>
                                   <Typography variant="body1" fontWeight={400}>
                                     /month
