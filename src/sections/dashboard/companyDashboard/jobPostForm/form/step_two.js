@@ -690,12 +690,41 @@ const StepTwo = ({
                                     labelname="Address"
                                     name={`items[${productIndex}].address[${addressIndex}].address`}
                                     value={addressItem?.address}
+                                    // onSelect={(address, lat, long) => {
+                                    //   {addressItem?.type == "pickup" &&
+                                    //   console.log('lat',lat,long) 
+                                    // formik.setFieldValue(`lat`,lat)
+                                    // formik.setFieldValue(`long`,long)
+                                    // }
+                                    //   formik.setFieldValue(
+                                    //     `items[${productIndex}].address[${addressIndex}].address`,
+                                    //     address
+                                    //   );
+                                    //   formik.setFieldValue(
+                                    //     `items[${productIndex}].address[${addressIndex}].lat`,
+                                    //     lat
+                                    //   );
+                                    //   formik.setFieldValue(
+                                    //     `items[${productIndex}].address[${addressIndex}].long`,
+                                    //     long
+                                    //   );
+                                    // }}
+
                                     onSelect={(address, lat, long) => {
                                       {addressItem?.type == "pickup" &&
-                                      console.log('lat',lat,long) 
-                                    formik.setFieldValue(`lat`,lat)
-                                    formik.setFieldValue(`long`,long)
-                                    }
+                                        console.log('lat',lat,long)
+
+
+                      // for lat long contation                   
+             if(addressItem?.type !== "drop"){
+              formik.setFieldValue(`lat`,lat)
+              formik.setFieldValue(`long`,long)
+             }
+                                     
+
+
+
+                                      }
                                       formik.setFieldValue(
                                         `items[${productIndex}].address[${addressIndex}].address`,
                                         address
@@ -709,6 +738,7 @@ const StepTwo = ({
                                         long
                                       );
                                     }}
+
                                     onChange={(e) => {
                                       formik.setFieldValue(
                                         `items[${productIndex}].address[${addressIndex}].address`,
