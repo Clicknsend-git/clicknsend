@@ -24,7 +24,8 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import React, { useState, useEffect } from "react";
 
 const ViewJobHistory = () => {
@@ -75,30 +76,30 @@ const ViewJobHistory = () => {
             formik.handleReset();
             setReviewOpen(false);
             enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px"
-              }}
-              icon={false}
-              severity="success"
-            >
-              {response?.data?.message}
-            </Alert>,
-            {
-              variant: "success",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  backdropFilter: "blur(8px)",
+                  background: "#ff7533 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="success"
+              >
+                {response?.data?.message}
+              </Alert>,
+              {
+                variant: "success",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
             getJobDetail();
             handleClose(true);
           }
@@ -136,7 +137,9 @@ const ViewJobHistory = () => {
   }, [user, user?.id, id]);
 
   const handleEditRating = async (ratings) => {
-    const customerRating = ratings.find((rating) => rating.given_by === "customer");
+    const customerRating = ratings.find(
+      (rating) => rating.given_by === "customer"
+    );
     await axiosInstance
       .get(`api/auth/rating/view/${customerRating.id}`)
       .then((response) => {
@@ -151,7 +154,7 @@ const ViewJobHistory = () => {
         console.log("error", error);
       });
   };
-  
+
   const createUpdateRatingSubmit = async (id, values) => {
     await axiosInstance
       .post(`api/auth/rating/update/${id}`, values)
@@ -169,7 +172,7 @@ const ViewJobHistory = () => {
                 background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -193,7 +196,7 @@ const ViewJobHistory = () => {
         console.log(error);
       });
   };
-  
+
   const onSubmitUpdateRating = async (values) => {
     if (ratingById && ratingById.id) {
       createUpdateRatingSubmit(ratingById.id, values);
@@ -201,7 +204,7 @@ const ViewJobHistory = () => {
       console.log("Rating ID not available");
     }
   };
-  
+
   // Rating list api
   const formikUpdateRating = useFormik({
     initialValues: {
@@ -223,8 +226,7 @@ const ViewJobHistory = () => {
     },
     onSubmit: onSubmitUpdateRating,
   });
-  
- 
+
   return (
     <React.Fragment>
       <Box mt={10} pb={12}>
@@ -424,12 +426,12 @@ const ViewJobHistory = () => {
                   <Box my={3}>
                     <Box textAlign="right">
                       {ratings &&
-                     ratings.some((item) => item.id === item.id) && ratings.some((item) => item.given_by === "customer" ) ? (
+                      ratings.some((item) => item.id === item.id) &&
+                      ratings.some((item) => item.given_by === "customer") ? (
                         <Button
                           variant="outlined"
                           onClick={() => handleEditRating(ratings)}
                         >
-                     
                           Edit Rating
                         </Button>
                       ) : (
@@ -443,7 +445,7 @@ const ViewJobHistory = () => {
                     </Box>
                     <Box>
                       <Typography textAlign="center" variant="h4">
-                        Rating & Reviews
+                        Rating & Reviews11
                       </Typography>
                     </Box>
                   </Box>
@@ -451,41 +453,65 @@ const ViewJobHistory = () => {
                     ratings?.length > 0 &&
                     ratings.map((item, index) => {
                       return (
-                        <Box key={index}>
-                          <Stack spacing={3} direction="row" py={2}>
-                            <Box
-                              component="img"
-                              src={`${item?.user?.base_url}${item?.user?.profile_img}`}
-                              width={60}
-                              height={60}
-                              sx={{ objectFit: "cover" }}
-                            />
-                            <Stack direction="column">
-                              <Box>
-                                <Typography
-                                  fontSize={16}
-                                  fontWeight={500}
-                                  color="primary"
-                                >
-                                  {item?.user?.user_name}
-                                </Typography>
-                              </Box>
-                              <Box>
-                                <Rating
-                                  value={item?.rating}
-                                  readOnly
-                                  size="small"
-                                />
-                              </Box>
-                              <Box>
-                                <Typography fontSize={14}>
-                                  {item?.review}
-                                </Typography>
-                              </Box>
+                        <>
+                          <Box key={index}>
+                            <Stack spacing={3} direction="row" py={2}>
+                              <Box
+                                component="img"
+                                src={`${item?.user?.base_url}${item?.user?.profile_img}`}
+                                width={60}
+                                height={60}
+                                sx={{ objectFit: "cover" }}
+                              />
+                              <Stack direction="column">
+                                <Box>
+                                  <Typography
+                                    fontSize={16}
+                                    fontWeight={500}
+                                    color="primary"
+                                  >
+                                    {item?.user?.user_name}
+                                  </Typography>
+                                </Box>
+                                <Box>
+                                  <Rating
+                                    value={item?.rating}
+                                    readOnly
+                                    size="small"
+                                  />
+                                </Box>
+                                <Box>
+                                  <Typography fontSize={14}>
+                                    {item?.review}
+                                  </Typography>
+                                </Box>
+                              </Stack>
                             </Stack>
-                          </Stack>
-                          <Divider />
-                        </Box>
+                            <Divider />
+                          </Box>
+
+                          {/* add sign */}
+
+                          <Box key={index}>
+                            <h5>Signature</h5>
+                            <Stack spacing={3} direction="row" py={2}>
+                              {console.log("Base URL:", item?.user?.base_url)}
+                              {console.log(
+                                "Delivered Sign:",
+                                item?.user?.delivered_sign
+                              )}
+                              <Box
+                                component="img"
+                                src={`${item?.user?.base_url}${item?.user?.delivered_sign}`}
+                                width={60}
+                                height={60}
+                                sx={{ objectFit: "cover" }}
+                              />
+                            </Stack>
+                            <Divider />
+                          </Box>
+                          
+                        </>
                       );
                     })}
                 </Box>
@@ -614,9 +640,7 @@ const ViewJobHistory = () => {
         </DialogContent>
       </Dialog>
 
-
       {/* edit */}
-
 
       <Dialog
         open={reviewIdOpen}
@@ -625,7 +649,11 @@ const ViewJobHistory = () => {
         fullWidth={true}
       >
         <DialogContent sx={{ my: 3 }}>
-          <Box component="form" noValidate onSubmit={formikUpdateRating.handleSubmit}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={formikUpdateRating.handleSubmit}
+          >
             <Box align="right">
               <Iconify
                 icon="basil:cross-solid"
@@ -644,10 +672,13 @@ const ViewJobHistory = () => {
             <Stack spacing={1}>
               <Box>
                 <Rating
-                  value={ formikUpdateRating.values.rating}
+                  value={formikUpdateRating.values.rating}
                   onChange={formikUpdateRating.handleChange}
                   name="rating"
-                  helperText={formikUpdateRating.touched.rating && formikUpdateRating.errors.rating}
+                  helperText={
+                    formikUpdateRating.touched.rating &&
+                    formikUpdateRating.errors.rating
+                  }
                 />
               </Box>
               <Box>
@@ -660,7 +691,10 @@ const ViewJobHistory = () => {
                   rows="4"
                   value={formikUpdateRating.values.review}
                   onChange={formikUpdateRating.handleChange}
-                  helperText={formikUpdateRating.touched.review && formikUpdateRating.errors.review}
+                  helperText={
+                    formikUpdateRating.touched.review &&
+                    formikUpdateRating.errors.review
+                  }
                 />
               </Box>
             </Stack>

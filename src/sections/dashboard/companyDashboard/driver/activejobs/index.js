@@ -42,10 +42,10 @@ import {
   setJobActivePage,
 } from "@/redux/slices/job/driver";
 import TextMaxLine from "@/components/text-max-line";
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 const DashboardJobPost = () => {
   const dispatch = useDispatch();
   const {
@@ -80,7 +80,7 @@ const DashboardJobPost = () => {
   const [select, setSelect] = React.useState("new");
   const [driverInfo, setDriverInfo] = useState(null);
   const [pageData, setPageData] = React.useState({});
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const handleConfirmOpen = (id) => setConfirmOpen(id);
   const handleCofirmClose = () => setConfirmOpen(false);
@@ -103,7 +103,6 @@ const DashboardJobPost = () => {
   const [loader, setLoader] = React.useState(false);
   const [addItemInvoiceData, setAddItemInvoiceData] = React.useState([]);
 
-
   const formData = useFormik({
     initialValues: {
       id: "",
@@ -114,9 +113,9 @@ const DashboardJobPost = () => {
   const formDataInvoice = useFormik({
     initialValues: {
       // user_id: items?.user_id,
-        invoice_number: storeInvoiceNumber?.invoice_number,
-        // job_id: items?.accept_bid?.job_id,
-        sign_image:'www.img.com'
+      invoice_number: storeInvoiceNumber?.invoice_number,
+      // job_id: items?.accept_bid?.job_id,
+      sign_image: "www.img.com",
     },
   });
 
@@ -177,16 +176,16 @@ const DashboardJobPost = () => {
 
   const handleV5cCertChange = (e) => {
     const newFiles = Array.from(e.target.files);
-    const newV5cCerts = newFiles.map(file => ({
+    const newV5cCerts = newFiles.map((file) => ({
       file,
-      url: URL.createObjectURL(file)
+      url: URL.createObjectURL(file),
     }));
 
-    setV5cCerts(prevCerts => [...prevCerts, ...newV5cCerts]);
+    setV5cCerts((prevCerts) => [...prevCerts, ...newV5cCerts]);
   };
 
   const handleRemoveV5cCert = (index) => {
-    setV5cCerts(prevCerts => prevCerts.filter((_, i) => i !== index));
+    setV5cCerts((prevCerts) => prevCerts.filter((_, i) => i !== index));
   };
   // Start Job Api
   // const startJobApi = async () => {
@@ -313,8 +312,8 @@ const DashboardJobPost = () => {
             },
           }
         );
-      console.log(error);
-    })
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -322,13 +321,12 @@ const DashboardJobPost = () => {
   }, [user, user?.id]);
 
   React.useEffect(() => {
-
     const fetchdata = async () => {
       await axiosInstance
         .get("api/auth/invoice/number")
         .then((response) => {
           if (response.status === 200) {
-            setStoreInvoiceNumber(response?.data) 
+            setStoreInvoiceNumber(response?.data);
           }
         })
         .catch((error) => {
@@ -336,95 +334,95 @@ const DashboardJobPost = () => {
           console.log(error);
         });
     };
-  fetchdata();
-}, []);
+    fetchdata();
+  }, []);
 
-const HandleAddSendInvoices =  async () => {
-  const initialValues =  {
-        user_id: addItemInvoiceData?.driver_id,
-          invoice_number: storeInvoiceNumber?.invoice_number,
-          job_id: addItemInvoiceData.id,
-          sign_image:'www.img.com'
-      }
+  const HandleAddSendInvoices = async () => {
+    const initialValues = {
+      user_id: addItemInvoiceData?.driver_id,
+      invoice_number: storeInvoiceNumber?.invoice_number,
+      job_id: addItemInvoiceData.id,
+      sign_image: "www.img.com",
+    };
     await axiosInstance
-        .post("api/auth/invoice/add-send",initialValues)
-        .then((response) => {
-          if (response.status === 200) {
-            enqueueSnackbar(
-              <Alert
-                style={{
-                  width: "100%",
-                  padding: "30px",
-                  backdropFilter: "blur(8px)",
-                  background: "#ff7533 ",
-                  fontSize: "19px",
-                  fontWeight: 800,
-                  lineHeight: "30px",
-                }}
-                icon={false}
-                severity="success"
-              >
-                {response?.data?.message}
-              </Alert>,
-              {
-                variant: "success",
-                iconVariant: true,
-                anchorOrigin: {
-                  vertical: "top",
-                  horizontal: "center",
-                },
-              }
-            );
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  }
+      .post("api/auth/invoice/add-send", initialValues)
+      .then((response) => {
+        if (response.status === 200) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                backdropFilter: "blur(8px)",
+                background: "#ff7533 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="success"
+            >
+              {response?.data?.message}
+            </Alert>,
+            {
+              variant: "success",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-// const HandleAddSendInvoice = async () => {
-//     await axiosInstance
-//       .post("api/auth/invoice/add-send",
-//       {
-//         user_id: '',
-//         invoice_number: storeInvoiceNumber?.invoice_number,
-//         job_id: '',
-//         sign_image:'www.img.com'
-//       },)
-//       .then((response) => {
-//         if (response.status === 200) {
-//           enqueueSnackbar(
-//             <Alert
-//               style={{
-//                 width: "100%",
-//                 padding: "30px",
-//                 backdropFilter: "blur(8px)",
-//                 background: "#ff7533 ",
-//                 fontSize: "19px",
-//                 fontWeight: 800,
-//                 lineHeight: "30px",
-//               }}
-//               icon={false}
-//               severity="success"
-//             >
-//               {response?.data?.message}
-//             </Alert>,
-//             {
-//               variant: "success",
-//               iconVariant: true,
-//               anchorOrigin: {
-//                 vertical: "top",
-//                 horizontal: "center",
-//               },
-//             }
-//           );
-//         }
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-  
+  // const HandleAddSendInvoice = async () => {
+  //     await axiosInstance
+  //       .post("api/auth/invoice/add-send",
+  //       {
+  //         user_id: '',
+  //         invoice_number: storeInvoiceNumber?.invoice_number,
+  //         job_id: '',
+  //         sign_image:'www.img.com'
+  //       },)
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           enqueueSnackbar(
+  //             <Alert
+  //               style={{
+  //                 width: "100%",
+  //                 padding: "30px",
+  //                 backdropFilter: "blur(8px)",
+  //                 background: "#ff7533 ",
+  //                 fontSize: "19px",
+  //                 fontWeight: 800,
+  //                 lineHeight: "30px",
+  //               }}
+  //               icon={false}
+  //               severity="success"
+  //             >
+  //               {response?.data?.message}
+  //             </Alert>,
+  //             {
+  //               variant: "success",
+  //               iconVariant: true,
+  //               anchorOrigin: {
+  //                 vertical: "top",
+  //                 horizontal: "center",
+  //               },
+  //             }
+  //           );
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   };
+
   const completeJobApi = async () => {
     await axiosInstance
       .post("api/auth/jobs/complete-job", formData.values)
@@ -432,7 +430,7 @@ const HandleAddSendInvoices =  async () => {
         if (response.status === 200) {
           setCompleteOpen(false);
           setReviewOpen(true);
-    handleReviewOpen(true);
+          handleReviewOpen(true);
           dispatch(
             getJobActive({
               user_id: user?.id,
@@ -480,8 +478,6 @@ const HandleAddSendInvoices =  async () => {
           setTimeout(() => {
             HandleAddSendInvoices();
           }, 6000);
-          
-         
         }
       })
       .catch((error) => {
@@ -570,21 +566,26 @@ const HandleAddSendInvoices =  async () => {
     const selectedValue = event.target.value;
     setAge(selectedValue);
     console.log("age age job_requests_data", age, job_requests_data);
-  
+
     // Find the selected user
-    const selectedUser = driverInfo?.data?.find(user => user.id === selectedValue);
+    const selectedUser = driverInfo?.data?.find(
+      (user) => user.id === selectedValue
+    );
     console.log("selectedUser selectedUser", selectedUser);
-  
+
     const initialValue = {
       id: job_requests_data?.id,
       user_id: driverId,
       driver_id: selectedUser?.user_id,
     };
-  
+
     if (selectedUser) {
       try {
-        const response = await axiosInstance.post("api/auth/company/assign-job", initialValue);
-  
+        const response = await axiosInstance.post(
+          "api/auth/company/assign-job",
+          initialValue
+        );
+
         if (response?.status === 200) {
           enqueueSnackbar(
             <Alert
@@ -595,7 +596,7 @@ const HandleAddSendInvoices =  async () => {
                 background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -641,13 +642,13 @@ const HandleAddSendInvoices =  async () => {
       } catch (error) {
         const { response } = error;
         let status = [406, 404];
-  
+
         if (response.status === 422) {
           for (const [key, value] of Object.entries(response.data.error)) {
-            setErrors(prevErrors => ({ ...prevErrors, [key]: value[0] }));
+            setErrors((prevErrors) => ({ ...prevErrors, [key]: value[0] }));
           }
         }
-  
+
         if (status.includes(response?.status)) {
           enqueueSnackbar(
             <Alert
@@ -677,7 +678,7 @@ const HandleAddSendInvoices =  async () => {
         }
       }
     }
-  
+
     console.log("Selected Username:", selectedUser);
   };
   // Update local state with driver data
@@ -687,7 +688,7 @@ const HandleAddSendInvoices =  async () => {
         pageCounts: pageCounts,
         data: driverData,
         pages: pages,
-        pageSizes: pageSizes
+        pageSizes: pageSizes,
       });
     }
   }, []);
@@ -784,6 +785,16 @@ const HandleAddSendInvoices =  async () => {
                             >
                               {elem?.description}
                             </Typography> */}
+                          </Box>
+
+                          <Box sx={{ width: "90%" }}>
+                            <TextMaxLine
+                              line={2}
+                              color="common.black"
+                              fontSize={17}
+                            >
+                              Distance: {`${elem?.distance?.toFixed(1)} miles`}
+                            </TextMaxLine>
                           </Box>
                         </Stack>
                         <Divider />
@@ -1113,7 +1124,7 @@ const HandleAddSendInvoices =  async () => {
                                             fontWeight: 500,
                                           }}
                                         >
-                                          Confirm Job 
+                                          Confirm Job
                                         </Button>
                                         {/* {elem.is_paid === 0 && (
                                           <Button
@@ -1128,7 +1139,8 @@ const HandleAddSendInvoices =  async () => {
                                       </>
                                     ) : elem.status === 2 ? (
                                       <>
-                                        {elem.is_paid === 0 &&  elem?.created_by == 'customer' ? (
+                                        {elem.is_paid === 0 &&
+                                        elem?.created_by == "customer" ? (
                                           <Button
                                             fullWidth
                                             color="info"
@@ -1189,7 +1201,7 @@ const HandleAddSendInvoices =  async () => {
                                       </>
                                     )}
                                   </Box>
-                                
+
                                   {/* <Box>
                                   <Button
                                     sx={{ fontWeight: 500 }}
@@ -1202,26 +1214,30 @@ const HandleAddSendInvoices =  async () => {
                                     Give Review
                                   </Button>
                                 </Box> */}
-                                  {elem?.status != 0 && elem?.status != 1 && elem?.is_paid == 1  && (
-                                    <Box>
-                                      <Button
-                                        color="secondary"
-                                        fullWidth
-                                        variant="outlined"
-                                        startIcon={<Iconify icon="gg:track" />}
-                                        onClick={() =>
-                                          router.push(
-                                            `/dashboard/company/driver/track_job/${elem.bid_id}`
-                                          )
-                                        }
-                                        sx={{
-                                          fontWeight: 500,
-                                        }}
-                                      >
-                                        Track Job
-                                      </Button>
-                                    </Box>
-                                  )}
+                                  {elem?.status != 0 &&
+                                    elem?.status != 1 &&
+                                    elem?.is_paid == 1 && (
+                                      <Box>
+                                        <Button
+                                          color="secondary"
+                                          fullWidth
+                                          variant="outlined"
+                                          startIcon={
+                                            <Iconify icon="gg:track" />
+                                          }
+                                          onClick={() =>
+                                            router.push(
+                                              `/dashboard/company/driver/track_job/${elem.bid_id}`
+                                            )
+                                          }
+                                          sx={{
+                                            fontWeight: 500,
+                                          }}
+                                        >
+                                          Track Job
+                                        </Button>
+                                      </Box>
+                                    )}
                                   {/* <Box>
                                     <Button
                                       sx={{ fontWeight: 500 }}
@@ -1265,34 +1281,47 @@ const HandleAddSendInvoices =  async () => {
                                   alignItems: "flex-start",
                                 }}
                               >
-                                {elem?.status == 0 || elem?.status == 1 && ( 
-                          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                             {/* Transfer Job to Other Driver */}
-                            <InputLabel id="demo-select-small-label">User</InputLabel>
-                            <Select
-                              labelId="demo-select-small-label"
-                              id="demo-select-small"
-                              value={age}
-                              label="User"
-                              onChange={(event) =>  handleChange(event,job_requests_data)}
-                            >
-                              <MenuItem value="">
-                                <em>None</em>
-                              </MenuItem>
-                              {driverInfo?.data?.map((driver) => (
-                                <MenuItem key={driver?.id} value={driver?.id}>
-                                {console.log('driverdriver',driver)}
-                                  {driver?.user_name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        )}
+                                {elem?.status == 0 ||
+                                  (elem?.status == 1 && (
+                                    <FormControl
+                                      sx={{ m: 1, minWidth: 120 }}
+                                      size="small"
+                                    >
+                                      {/* Transfer Job to Other Driver */}
+                                      <InputLabel id="demo-select-small-label">
+                                        User
+                                      </InputLabel>
+                                      <Select
+                                        labelId="demo-select-small-label"
+                                        id="demo-select-small"
+                                        value={age}
+                                        label="User"
+                                        onChange={(event) =>
+                                          handleChange(event, job_requests_data)
+                                        }
+                                      >
+                                        <MenuItem value="">
+                                          <em>None</em>
+                                        </MenuItem>
+                                        {driverInfo?.data?.map((driver) => (
+                                          <MenuItem
+                                            key={driver?.id}
+                                            value={driver?.id}
+                                          >
+                                            {console.log(
+                                              "driverdriver",
+                                              driver
+                                            )}
+                                            {driver?.user_name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  ))}
                               </Typography>
                               {/* <Typography variant="subtitle2">
                               Total Spend: $30K+
                             </Typography> */}
-                             
                             </Stack>
                           </Box>
                         </CardContent>
@@ -1431,11 +1460,18 @@ const HandleAddSendInvoices =  async () => {
                   component="form"
                   noValidate
                 >
-                  <Typography sx={{ marginBottom: "10px",fontWeight: '700',fontSize: '18px', }} mb={2}>
+                  <Typography
+                    sx={{
+                      marginBottom: "10px",
+                      fontWeight: "700",
+                      fontSize: "18px",
+                    }}
+                    mb={2}
+                  >
                     Are you sure you have Start the job?
                   </Typography>
-                  
-                {/* <Grid item md={4} sx={4} xs={4}>
+
+                  {/* <Grid item md={4} sx={4} xs={4}>
       <Stack textAlign={"center"}>
         <Typography sx={{ marginBottom: "10px",fontWeight: '600', }} textAlign="center" variant="body2" component="p" mb={1}>
           Upload PickUp Images

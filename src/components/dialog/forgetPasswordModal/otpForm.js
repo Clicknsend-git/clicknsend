@@ -16,12 +16,20 @@ import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import OTPInput from "react-otp-input";
 import { PasswordBox } from "@/components/form";
 
-export const OTPForm = ({ formik,showOTP,onOtpChange  }) => {
-  console.log('aaaaaaaaaaa',formik) 
+// export const OTPForm = ({ formik,showOTP,onOtpChange  }) => {
+//   console.log('aaaaaaaaaaa',formik) 
+//   const handleOtpChange = (e) => {
+//     formik.setFieldValue("otp", e);
+//     onOtpChange(e);
+//   };
+
+
+export const OTPForm = ({ formik, showOTP, onOtpChange = () => {} }) => {
   const handleOtpChange = (e) => {
     formik.setFieldValue("otp", e);
-    onOtpChange(e);
+    onOtpChange(e); // Safely call the provided function
   };
+
 
   return (
     <React.Fragment>
@@ -114,3 +122,6 @@ export const OTPForm = ({ formik,showOTP,onOtpChange  }) => {
     </React.Fragment>
   );
 };
+
+
+

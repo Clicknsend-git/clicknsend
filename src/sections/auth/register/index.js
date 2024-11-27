@@ -290,7 +290,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
     //   "Mobile Number Before Rendering",
     //   `${selectedCoutry}${formik.values.mobile}`
     // );
-
+    console.log(formik?.values,"formikvalues")
     const formData = {
       email: formik?.values?.mobile,
       otp: formik?.values?.otp,
@@ -1131,7 +1131,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
           {/* <Box component="form" onSubmit={formik.handleSubmit}> */}
           <DialogHeader
             // onClose={on Close}
-            title={"OTP Verification"}
+            title={"OTP Verification 11"}
             showResend={showResend}
             // handleClose={handleClose}
           />
@@ -1153,7 +1153,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                 }`}
               </Typography>
             </Stack>
-            <OTPForm formik={reformik} showOTP={showOTP} onOtpChange={handleOtpChange} />
+            <OTPForm formik={formik} showOTP={showOTP} onOtpChange={handleOtpChange} />
 
             <Box>
               <Typography sx={{ fontSize: "16px" }}>

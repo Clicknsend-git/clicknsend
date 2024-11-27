@@ -484,7 +484,7 @@ const HandleAddSendInvoices =  async () => {
                     fontWeight={600}
                     color="primary"
                   >
-                    Active Jobs
+                    Active Jobs11
                   </Typography>
 
                   <Box
@@ -550,18 +550,24 @@ const HandleAddSendInvoices =  async () => {
                             >
                               {elem?.description}
                             </TextMaxLine>
-                            {/* <Typography
-                              color="common.black"
-                              fontSize={17}
-                              sx={{
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                              }}
-                              fontWeight={500}
-                            >
-                              {elem?.description}
-                            </Typography> */}
+                        
                           </Box>
+
+
+                          {/* add distance box */}
+
+                          <Box sx={{ width: "90%" }}>
+  <TextMaxLine
+    line={2}
+    color="common.black"
+    fontSize={17}
+  >
+    Distance: {`${elem?.distance?.toFixed(1)} miles`}
+  </TextMaxLine>
+</Box>
+
+
+
                         </Stack>
                         <Divider />
                         <CardContent>
