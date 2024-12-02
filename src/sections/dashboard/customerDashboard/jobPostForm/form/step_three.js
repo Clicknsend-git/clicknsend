@@ -21,50 +21,50 @@ const VehicleTypeTruck = [
     value: "26t",
   },
   {
-    label: "Trailer",
-    value: "Trailer",
+    label: "trailer",
+    value: "trailer",
   },
   {
-    label: "Attic",
-    value: "Attic",
+    label: "attic",
+    value: "attic",
   },
 ];
 const VehicleTypeVan = [
   {
-    label: "Small van",
-    value: "Small van",
+    label: "small van",
+    value: "small van",
   },
   {
     label: "SWB 2.4 m ",
     value: "SWB 2.4 m ",
   },
   {
-    label: "Medium 3 m",
-    value: "Medium 3 m",
+    label: "medium 3 m",
+    value: "medium 3 m",
   },
   {
-    label: "Lwb 4m",
-    value: "Lwb 4m",
+    label: "lwb 4m",
+    value: "lwb 4m",
   },
   {
     label: "XLWB",
     value: "XLWB",
   },
   {
-    label: "Moterbike",
-    value: "Moterbike",
+    label: "moterbike",
+    value: "moterbike",
   },
   {
-    label: "Car",
-    value: "Car",
+    label: "car",
+    value: "car",
   },
   {
-    label: "Drop side",
-    value: "Drop side",
+    label: "drop side",
+    value: "drop side",
   },
   {
-    label: "Curtain side",
-    value: "Curtain side",
+    label: "curtain side",
+    value: "curtain side",
   },
   
 ];
@@ -74,12 +74,12 @@ const VehicleType = [
     value: 0,
   },
   {
-    label: "Vans",
+    label: "vans",
     value: "van",
   },
 
   {
-    label: "Trucks/ lorrys",
+    label: "trucks/ lorrys",
     value: "truck",
   },
 ];

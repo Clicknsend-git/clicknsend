@@ -493,7 +493,7 @@ const ViewJobHistory = () => {
                           {/* add sign */}
 
                           <Typography textAlign="center" variant="h4" mt={2}>
-                            Delivered_sign
+                            Delivered_sign2
                           </Typography>
 
                           <Box key={index}>
@@ -504,9 +504,11 @@ const ViewJobHistory = () => {
                                 "Delivered Sign:",
                                 item?.user?.delivered_sign
                               )}
+                              
+                              {console.log("item?.product?.delivered_sign")}
                               <Box
                                 component="img"
-                                src={`${item?.user?.base_url}${item?.user?.delivered_sign}`}
+                                src={item?.product?.delivered_sign}
                                 width={60}
                                 height={60}
                                 sx={{ objectFit: "cover" }}

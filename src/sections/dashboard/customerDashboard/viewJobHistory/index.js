@@ -445,7 +445,7 @@ const ViewJobHistory = () => {
                     </Box>
                     <Box>
                       <Typography textAlign="center" variant="h4">
-                        Rating & Reviews11
+                        Rating & Reviews
                       </Typography>
                     </Box>
                   </Box>

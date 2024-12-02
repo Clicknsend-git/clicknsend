@@ -262,6 +262,8 @@ const ViewJobHistory = () => {
                     jobDetail?.ratings?.length > 0 &&
                     jobDetail?.ratings?.map((item, index) => {
                       return (
+                        <>
+                        
                         <Box key={index}> 
                           <Stack spacing={3} direction="row" py={2}>
                             <Box
@@ -297,6 +299,29 @@ const ViewJobHistory = () => {
                           </Stack>
                           <Divider />
                         </Box>
+
+                        <Typography textAlign="center" variant="h4" mt={2}>
+                            Delivered_sign1
+                          </Typography>
+                          <Box key={index}>
+                            <h4>Signature 1</h4>
+                            <Stack spacing={3} direction="row" py={2}>
+                              {console.log("Base URL:", item?.user?.base_url)}
+                              {console.log(
+                                "Delivered Sign:",
+                                item?.user?.delivered_sign
+                              )}
+                              <Box
+                                component="img"
+                                src={`${item?.user?.delivered_sign}`}
+                                width={60}
+                                height={60}
+                                sx={{ objectFit: "cover" }}
+                              />
+                            </Stack>
+                            <Divider />
+                          </Box>
+                        </>
                       );
                     })}
                 </Box>
