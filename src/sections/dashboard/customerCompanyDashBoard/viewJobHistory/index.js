@@ -445,7 +445,7 @@ const ViewJobHistory = () => {
                     </Box>
                     <Box>
                       <Typography textAlign="center" variant="h4">
-                        Rating & Reviews11
+                        Rating & Reviews
                       </Typography>
                     </Box>
                   </Box>
@@ -492,8 +492,12 @@ const ViewJobHistory = () => {
 
                           {/* add sign */}
 
+                          <Typography textAlign="center" variant="h4" mt={2}>
+                            Delivered_sign
+                          </Typography>
+
                           <Box key={index}>
-                            <h5>Signature</h5>
+                            <h4>Signature 2</h4>
                             <Stack spacing={3} direction="row" py={2}>
                               {console.log("Base URL:", item?.user?.base_url)}
                               {console.log(

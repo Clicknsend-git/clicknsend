@@ -405,8 +405,9 @@ const HandleAddSendInvoices =  async () => {
     },
     validate: (values) => {
       const errors = {};
-      if (!values.review) {
-        errors.review = "Note is required";
+      // if (!values.review) {  remove note required
+      if (values.review) {
+        errors.review = "Note is required11";
       }
       if (!values.rating) {
         errors.rating = "Rating is required";
@@ -1277,8 +1278,8 @@ const HandleAddSendInvoices =  async () => {
                     onSubmit={formik.handleSubmit}
                   >
                     <Stack spacing={2}>
-                      <Typography textAlign="left" variant="p">
-                        Image of the item
+                      {/* <Typography textAlign="left" variant="p">
+                        Image of the itemqq
                       </Typography>
                       {!formik.values.company_certificate && (
                         <TextBox
@@ -1313,7 +1314,7 @@ const HandleAddSendInvoices =  async () => {
                             },
                           }}
                         />
-                      )}
+                      )} */}
 
                       {formik.values.company_certificate_url && (
                         <Card sx={{ width: "max-content" }}>
