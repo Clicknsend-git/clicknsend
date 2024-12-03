@@ -52,7 +52,7 @@ const ViewJobHistory = () => {
     }
   }, [id]);
 
-
+  const baseurl = "https://evsexpres.com/public/assets/";
 
   return (
     <React.Fragment>
@@ -254,75 +254,98 @@ const ViewJobHistory = () => {
                   <Box my={3}>
                     <Box>
                       <Typography textAlign="center" variant="h4">
-                        Rating & Reviews 11
+                        Rating & Reviews 1
                       </Typography>
                     </Box>
                   </Box>
+
                   {jobDetail?.ratings &&
                     jobDetail?.ratings?.length > 0 &&
                     jobDetail?.ratings?.map((item, index) => {
                       return (
                         <>
-                        <Box key={index}> 
-                          <Stack spacing={3} direction="row" py={2}>
-                            <Box
-                              component="img"
-                              src={`${item?.user?.base_url}${item?.user?.profile_img}`}
-                              width={60}
-                              height={60}
-                              sx={{ objectFit: "cover" }}
-                            />
-                            <Stack direction="column">
-                              <Box>
-                                <Typography
-                                  fontSize={16}
-                                  fontWeight={500}
-                                  color="primary"
-                                >
-                                  {item?.user?.user_name}
-                                </Typography>
-                              </Box>
-                              <Box>
-                                <Rating
-                                  value={item?.rating}
-                                  readOnly
-                                  size="small"
-                                />
-                              </Box>
-                              <Box>
-                                <Typography fontSize={14}>
-                                  {item?.review}
-                                </Typography>
-                              </Box>
-                            </Stack>
-                          </Stack>
-                          <Divider />
-                        </Box>
-
-                        <Typography textAlign="center" variant="h4" mt={2}>
-                            Delivered_sign
-                          </Typography>
                           <Box key={index}>
-                            <h4>Signature 1</h4>
                             <Stack spacing={3} direction="row" py={2}>
-                              {console.log("Base URL:", item?.user?.base_url)}
-                              {console.log(
-                                "Delivered Sign:",
-                                item?.user?.delivered_sign
-                              )}
-                              <Box
+                              {/* <Box
                                 component="img"
-                                src={`${item?.user?.base_url}${item?.user?.delivered_sign}`}
+                                src={`${item?.user?.base_url}${item?.user?.profile_img}`}
                                 width={60}
                                 height={60}
                                 sx={{ objectFit: "cover" }}
-                              />
+                              /> */}
+                              <Stack direction="column">
+                                <Box>
+                                  <Typography
+                                    fontSize={16}
+                                    fontWeight={500}
+                                    color="primary"
+                                  >
+                                    {item?.user?.user_name}
+                                  </Typography>
+                                </Box>
+                                <Box>
+                                  <Rating
+                                    value={item?.rating}
+                                    readOnly
+                                    size="small"
+                                  />
+                                </Box>
+                                <Box>
+                                  <Typography fontSize={14}>
+                                    {item?.review}
+                                  </Typography>
+                                </Box>
+                              </Stack>
                             </Stack>
                             <Divider />
                           </Box>
+
+                          <Typography textAlign="center" variant="h4" mt={2}>
+                            Delivered_sign 
+                          </Typography>
+                          {jobDetail?.pickup &&
+                            jobDetail?.pickup?.length > 0 &&
+                            jobDetail?.pickup.map((item, index) => {
+                              return (
+                                <TableRow
+                                  key={`jobDetail${index}`}
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                  }}
+                                >
+                                  <TableCell>
+                                    <Typography component="div" variant="body2">
+                                      <span
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: "1.1em",
+                                        }}
+                                      >
+                                        Delivered_to :
+                                      </span>{" "}
+                                      {item?.item?.delivered_to}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Box>
+                                      <Box
+                                        component="img"
+                                        m="auto"
+                                        src={`${baseurl}${item?.item?.delivered_sign}`}
+                                        width={150}
+                                        sx={{
+                                          border: "1px solid #000",
+                                          borderRadius: "5px",
+                                        }}
+                                      />
+                                    </Box>
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
                         </>
-
-
                       );
                     })}
                 </Box>
@@ -401,3 +424,19 @@ const ViewJobHistory = () => {
 };
 
 export default ViewJobHistory;
+
+{
+  /* <Typography textAlign="center" variant="h4" mt={2}>
+Delivered_sign
+</Typography>
+{ console.log( "Delivered Sign:", `${baseurl}$
+{item?.item?.delivered_sign}` )}
+<Box>
+<Box
+  component="img"
+  m="auto"
+  src={`${baseurl}${item?.item?.delivered_sign}`}
+  width={80}
+/>
+</Box> */
+}

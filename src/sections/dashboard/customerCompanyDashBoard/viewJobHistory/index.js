@@ -227,6 +227,8 @@ const ViewJobHistory = () => {
     onSubmit: onSubmitUpdateRating,
   });
 
+  const baseurl = "https://evsexpres.com/public/assets/";
+
   return (
     <React.Fragment>
       <Box mt={10} pb={12}>
@@ -456,13 +458,13 @@ const ViewJobHistory = () => {
                         <>
                           <Box key={index}>
                             <Stack spacing={3} direction="row" py={2}>
-                              <Box
+                              {/* <Box
                                 component="img"
                                 src={`${item?.user?.base_url}${item?.user?.profile_img}`}
                                 width={60}
                                 height={60}
                                 sx={{ objectFit: "cover" }}
-                              />
+                              /> */}
                               <Stack direction="column">
                                 <Box>
                                   <Typography
@@ -493,29 +495,50 @@ const ViewJobHistory = () => {
                           {/* add sign */}
 
                           <Typography textAlign="center" variant="h4" mt={2}>
-                            Delivered_sign2
+                            Delivered_sign
                           </Typography>
-
-                          <Box key={index}>
-                            <h4>Signature 2</h4>
-                            <Stack spacing={3} direction="row" py={2}>
-                              {console.log("Base URL:", item?.user?.base_url)}
-                              {console.log(
-                                "Delivered Sign:",
-                                item?.user?.delivered_sign
-                              )}
-                              
-                              {console.log("item?.product?.delivered_sign")}
-                              <Box
-                                component="img"
-                                src={item?.product?.delivered_sign}
-                                width={60}
-                                height={60}
-                                sx={{ objectFit: "cover" }}
-                              />
-                            </Stack>
-                            <Divider />
-                          </Box>
+                          {jobDetail?.pickup &&
+                            jobDetail?.pickup?.length > 0 &&
+                            jobDetail?.pickup.map((item, index) => {
+                              return (
+                                <TableRow
+                                  key={`jobDetail${index}`}
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                  }}
+                                >
+                                  <TableCell>
+                                    <Typography component="div" variant="body2">
+                                      <span
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: "1.1em",
+                                        }}
+                                      >
+                                        Delivered_to :
+                                      </span>{" "}
+                                      {item?.item?.delivered_to}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Box>
+                                      <Box
+                                        component="img"
+                                        m="auto"
+                                        src={`${baseurl}${item?.item?.delivered_sign}`}
+                                        width={150}
+                                        sx={{
+                                          border: "1px solid #000",
+                                          borderRadius: "5px",
+                                        }}
+                                      />
+                                    </Box>
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
                           
                         </>
                       );
