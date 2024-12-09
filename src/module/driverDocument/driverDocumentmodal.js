@@ -121,7 +121,7 @@ const DocumentModal = ({ formik }) => {
           }}
         >
           <Grid container spacing={4}>
-            <Grid item md={4}>
+            {/* <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
                   Driver Photo
@@ -213,7 +213,7 @@ const DocumentModal = ({ formik }) => {
                   </Card>
                 )}
               </Stack>
-            </Grid>
+            </Grid> */}
             <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
@@ -786,7 +786,7 @@ const DocumentModal = ({ formik }) => {
               </Stack>
             </Grid>{" "}
 
-           <Grid item md={4}>
+           {/* <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
                   Vehicle Certificate
@@ -880,7 +880,7 @@ const DocumentModal = ({ formik }) => {
                   </Card>
                 )}
               </Stack>
-            </Grid>{" "} 
+            </Grid>{" "}  */}
 
 
             <Grid item md={4}>
@@ -1076,7 +1076,7 @@ const DocumentModal = ({ formik }) => {
             <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
-                  Nationality Proof Certificate
+                National insurance number certificate
                 </Typography>
                 {!formik.values.nationality_cert && (
                   <TextBox

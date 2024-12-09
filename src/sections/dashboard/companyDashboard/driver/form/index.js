@@ -161,7 +161,7 @@ const DriverJobForm = ({ formik }) => {
                               </Grid>
                             </>
                           )}
-                          <Grid item md={4}>
+                          {/* <Grid item md={4}>
                             <Stack textAlign={"center"}>
                               <Typography textAlign="left" variant="p">
                                 Driver Photo
@@ -248,7 +248,7 @@ const DriverJobForm = ({ formik }) => {
                                   </Card>
                                 )}
                             </Stack>
-                          </Grid>
+                          </Grid> */}
                           <Grid item md={4}>
                             <Stack textAlign={"center"}>
                               <Typography textAlign="left" variant="p">
@@ -777,10 +777,10 @@ const DriverJobForm = ({ formik }) => {
                                 )}
                             </Stack>
                           </Grid>{" "}
-                          <Grid item md={4}>
+                          {/* <Grid item md={4}>
                             <Stack textAlign={"center"}>
                               <Typography textAlign="left" variant="p">
-                                Vehicle Certificate
+                                Vehicle Certificateqq
                               </Typography>
                               {!formik.values.vehicle_cert && (
                                 <TextBox
@@ -864,7 +864,7 @@ const DriverJobForm = ({ formik }) => {
                                   </Card>
                                 )}
                             </Stack>
-                          </Grid>{" "}
+                          </Grid>{" "} */}
                           <Grid item md={4}>
                             <Stack textAlign={"center"}>
                               <Typography textAlign="left" variant="p">
@@ -956,7 +956,7 @@ const DriverJobForm = ({ formik }) => {
                           <Grid item md={4}>
                             <Stack textAlign={"center"}>
                               <Typography textAlign="left" variant="p">
-                                Dvia Certificate
+                                DVLA Certificate
                               </Typography>
                               {!formik.values.dvia_cert && (
                                 <TextBox
@@ -1044,7 +1044,7 @@ const DriverJobForm = ({ formik }) => {
                           <Grid item md={4}>
                             <Stack textAlign={"center"}>
                               <Typography textAlign="left" variant="p">
-                                Nationality Proof Certificate
+                              National Insurance Number
                               </Typography>
                               {!formik.values.nationality_cert && (
                                 <TextBox
