@@ -12,6 +12,7 @@ export const MENU_PATH = {
   blog: {
     root: "/blog",
     blogs: "/blogs",
+    
     blog_detail: "/blogdetail",
   },
 };
