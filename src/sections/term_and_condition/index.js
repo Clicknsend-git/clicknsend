@@ -476,6 +476,7 @@ const TermAndConditionSection = () => {
                 </Stack>
               </CardContent>
             </Card>
+            
           </Box>
         </Box>
       </Container>
