@@ -738,7 +738,6 @@ const PrivacyPolicySection = () => {
                         when you return to our Platforms. This enables us to
                         personalise our content for you, greet you by name, and
                         remember your preferences, for example, your choice of
-                        
                         language or region.
                       </li>
                       <li>
