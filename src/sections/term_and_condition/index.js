@@ -352,7 +352,7 @@ const TermAndConditionSection = () => {
     <li>Any refund of pre-paid subscription fees before the expiration of the subscription is solely at the discretion of Click N Send Limited.</li>
     <li>To complete your subscription to Click N Send Limited, you will need to upload your insurance details, including your vehicle/fleet policy showing for Hire & Reward or equivalent, your Goods In Transit (GIT) policy or equivalent, and if applicable, policies such as Public and Employers Liability. Identification documentation such as driving licences may also be required for some subscribers and legal documentation for others depending upon the subscriber’s position.</li>
     <li>Click N Send Limited reserves the right to refuse subscription membership if we are not satisfied with the documents provided or to revoke subscriptions at any time should concerns arise regarding documentation provided.</li>
-    <li>In the event you are running a vehicle/fleet which requires an operator's licence, this document will need to be uploaded.</li>
+    <li>In the event you are running a vehicle/fleet which requires an operators licence, this document will need to be uploaded.</li>
     <li>In the event that you fail to deliver any of these documents, Click N Send Limited reserves the right to refuse or revoke membership subscriptions. This includes if documents cannot be verified, are removed from the site, our code of conduct or terms are breached, or if any member acts in an inappropriate way or for any other reasons the directors see fit.</li>
     <li>Click N Send Limited reserves the right to accept or decline any membership requests, as well as suspend or revoke membership for any reason we deem appropriate.</li>
   </ul>
@@ -395,11 +395,7 @@ const TermAndConditionSection = () => {
 </ul>
 
                   </Typography>
-                  <Typography
-                    component="p"
-                    variant="subtitle2"
-                    fontWeight={400}
-                  >
+                  <Typography component="p" variant="subtitle2" fontWeight={400}>
                  14. Availability of our site
                  <ul>
   <li>Click N Send Limited shall use its reasonable endeavours to ensure continuous accessibility of our site and associated services but does not accept any liability arising from any errors, omissions, interruptions or delays, or any ongoing obligation to operate our site and associated services, howsoever caused.</li>

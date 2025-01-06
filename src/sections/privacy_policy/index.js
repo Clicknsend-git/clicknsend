@@ -391,12 +391,12 @@ const PrivacyPolicySection = () => {
                           Us to do so. Other than as set out above, and save
                           insofar as is necessary in order for Us to carry out
                           our obligations arising from any contracts entered
-                          into between you and Us, We will not share your data
+                          into between you and Us We will not share your data
                           with third parties unless We have procured your
                           express consent to do so. This Policy applies to all
-                          users of Mobile Applications (each referred to herein
-                          as the “Mobile App”) developed by the Click n Send
-                          Limited Your privacy is important to us, so we've
+                          users of Mobile Applications each referred to herein
+                          as the Mobile App developed by the Click n Send
+                          Limited Your privacy is important to us so we ve
                           created a policy that covers how we collect, use and
                           store your personal data. Please take a moment to
                           familiarise yourself with our privacy practices.
@@ -405,20 +405,20 @@ const PrivacyPolicySection = () => {
                     </ul>
                     Where you are authorised to use the Mobile App by an
                     organisation that has engaged you to perform courier or
-                    other services ("Authorising Company"), in addition to Our
-                    use of your personal data as set out herein, we may process
-                    your personal data on behalf of the Authorising Company (in
-                    this case we are a data processor). You should contact the
+                    other services Authorising Company, in addition to Our use
+                    of your personal data as set out herein, we may process your
+                    personal data on behalf of the Authorising Company in this
+                    case we are a data processor. You should contact the
                     Authorising Company to find out what they do with your
                     personal data. Click n Send Limited, which shall include but
-                    not be limited to Clicknsend.co.uk (“We“, “Us”) is committed
-                    to protecting and respecting your privacy. This Privacy and
-                    Cookies Policy (“Policy”) (together with and any other
-                    documents referred to therein) sets out the basis on which
-                    the personal data collected from you, or that you provide to
-                    Us will be processed by Us. Please read the following
-                    carefully to understand our views and practices regarding
-                    your personal data and how We will treat it.
+                    not be limited to Clicknsend.co.uk We ,Us is committed to
+                    protecting and respecting your privacy. This Privacy and
+                    Cookies Policy Policy together with and any other documents
+                    referred to therein sets out the basis on which the personal
+                    data collected from you, or that you provide to Us will be
+                    processed by Us. Please read the following carefully to
+                    understand our views and practices regarding your personal
+                    data and how We will treat it.
                   </Typography>
 
                   <Typography
@@ -427,10 +427,10 @@ const PrivacyPolicySection = () => {
                     fontWeight={400}
                   >
                     Click n Send Limited, which shall include but not be limited
-                    to Clicknsend.co.uk (“We“, “Us”) is committed to protecting
-                    and respecting your privacy. This Privacy and Cookies Policy
-                    (“Policy”) (together with and any other documents referred
-                    to therein) sets out the basis on which the personal data
+                    to Clicknsend.co.uk We ,Us is committed to protecting and
+                    respecting your privacy. This Privacy and Cookies Policy
+                    Policy together with and any other documents referred to
+                    therein sets out the basis on which the personal data
                     collected from you, or that you provide to Us will be
                     processed by Us. Please read the following carefully to
                     understand our views and practices regarding your personal
@@ -442,8 +442,8 @@ const PrivacyPolicySection = () => {
                     fontWeight={400}
                   >
                     For the purpose of the General Data Protection Regulation
-                    and the Data Protection Act 2018 (collectively the “Data
-                    Protection Laws”) the Data Controller is Transport Exchange
+                    and the Data Protection Act 2018 collectively the “Data
+                    Protection Laws the Data Controller is Transport Exchange
                     Group Ltd.
                   </Typography>
                   <Typography
@@ -458,10 +458,9 @@ const PrivacyPolicySection = () => {
                       <li>
                         Information provided in connection with the registration
                         of your account either by you or by an organisation that
-                        has authorised you to use our Mobile App ("Authorising
-                        Company"). This includes:
+                        has authorised you to use our Mobile App Authorising
+                        Company. This includes:
                         <ul>
-                          {" "}
                           <li> Name</li>
                           <li> Email address</li>
                           <li> Telephone number</li>
@@ -486,7 +485,6 @@ const PrivacyPolicySection = () => {
                         which includes the following:
                         <ul>
                           <li>
-                            {" "}
                             Location data - We use GPS technology, cellular data
                             and IP addresses to determine your current or
                             approximate location. Some of our location-enabled
@@ -514,10 +512,10 @@ const PrivacyPolicySection = () => {
                           </li>
                           <li>
                             Usage data - how you interact with our services
-                            (including analytics that we or third parties, such
-                            as Google Firebase, conduct to improve our
-                            services), dates and times you access the Mobile
-                            App, or other system activity.
+                            including analytics that we or third parties, such
+                            as Google Firebase, conduct to improve our services,
+                            dates and times you access the Mobile App, or other
+                            system activity.
                           </li>
                         </ul>
                       </li>
@@ -529,7 +527,7 @@ const PrivacyPolicySection = () => {
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                    6. Storing your personal data We take appropriate measures
+                    6. Storing your personal data We take appropriate measures
                     to ensure that any personal data is kept secure, including
                     security measures to prevent personal data from being
                     accidentally lost, or used or accessed in an unauthorised
@@ -538,15 +536,15 @@ const PrivacyPolicySection = () => {
                     information will do so only in an authorised manner and are
                     subject to a duty of confidentiality. Where We process
                     payment transactions, these will be encrypted using SSL
-                    technology. Where We have given you (or where you have
-                    chosen) a password which enables you to access certain parts
-                    of the websites/applications, you are responsible for
-                    keeping this password confidential. We also have procedures
-                    in place to deal with any suspected data security breach. We
-                    will notify you (by email) and any applicable regulator via
-                    the correct channels of a data security breach where We are
-                    legally required to do so. Unfortunately, the transmission
-                    of information via the internet is not completely secure.
+                    technology. Where We have given you or where you have chosen
+                    a password which enables you to access certain parts of the
+                    websites/applications, you are responsible for keeping this
+                    password confidential. We also have procedures in place to
+                    deal with any suspected data security breach. We will notify
+                    you by email and any applicable regulator via the correct
+                    channels of a data security breach where We are legally
+                    required to do so. Unfortunately, the transmission of
+                    information via the internet is not completely secure.
                     Although We will do our best to protect your personal data,
                     We cannot guarantee the security of your data transmitted to
                     the website or our application; any transmission is at your
@@ -599,25 +597,25 @@ const PrivacyPolicySection = () => {
                     service providers to deliver its services. This may involve
                     storing or transferring your personal data outside of the UK
                     and the EEA. When we transfer or store the information that
-                    We collect from you at a destination outside the European
-                    Economic Area (“EEA”),it is processed by staff operating
-                    outside the EEA who work for Us or for one of our suppliers.
-                    Such staff maybe engaged in, among other things, fulfilling
+                    we collect from you at a destination outside the European
+                    Economic Area (EEA), it is processed by staff operating
+                    outside the EEA who work for us or for one of our suppliers.
+                    Such staff may be engaged in, among other things, fulfilling
                     your orders, undertaking compliance checks, processing your
-                    payment details and providing support services. By
+                    payment details, and providing support services. By
                     submitting your personal data, you agree to this transfer,
-                    storing or processing. In countries that do not have the
+                    storing, or processing. In countries that do not have the
                     same data protection laws as the United Kingdom and EEA, we
                     ensure that any personal data being transferred has an
                     adequate level of data protection similar to that which
                     applies in the United Kingdom and EEA, and any transfer of
                     your personal data is subject to an agreement with these
-                    third parties approved by the UK Information Commissioner’s
+                    third parties approved by the UK Information Commissioners
                     Office. If you would like further information, please
-                    contact Us (see ‘Contact’ below). We will not otherwise
+                    contact us (see Contact below). We will not otherwise
                     transfer your personal data outside of the United Kingdom or
-                    EEA or to any organisation (or subordinate bodies) governed
-                    by public international law or which is set up under any
+                    EEA or to any organisation or subordinate bodies governed by
+                    public international law or which is set up under any
                     agreement between two or more countries.
                   </Typography>
                   <Typography
@@ -625,9 +623,9 @@ const PrivacyPolicySection = () => {
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                    10.Your rights Under the General Data Protection
-                    Regulation you have a number of important rights free of
-                    charge. In summary, those include rights to:
+                    10.Your rights Under the General Data Protection Regulation
+                    you have a number of important rights free of charge. In
+                    summary, those include rights to:
                     <ul>
                       <li>
                         access to your personal data and to certain other
@@ -666,25 +664,19 @@ const PrivacyPolicySection = () => {
                         in certain circumstances
                       </li>
                       <li>
-                        claim compensation for damages caused by our breach of
-                        any data protection laws For further information on each
-                        of those rights, including the circumstances in which
-                        they apply, see the Guidance from the UK Information
-                        Commissioner’s Office (ICO) on individuals rights under
-                        the General Data Protection Regulation.  If you would
-                        like to exercise any of those rights, please:
+                      Claim compensation for damages caused by our breach of any data protection laws. For further information on each of those rights, including the circumstances in which they apply, see the Guidance from the UK Information Commissioner&apos;s Office (ICO) on individuals&apos; rights under the General Data Protection Regulation. If you would like to exercise any of those rights, please:
                         <ul>
                           <li>
-                            email, call or write to us (see ‘Contact’ below)
+                          email, call or write to us see Contact below
                           </li>
                           <li>
                             let us have enough information to identify you for
                             example member ID, user name, registration details.
                           </li>
                           <li>
-                            let us have proof of your identity and address (a
-                            copy of your driving licence or passport and a
-                            recent utility or credit card bill), and
+                            Let us have proof of your identity and address, a
+                            copy of your driving licence or passport, and a
+                            recent utility or credit card bill.
                           </li>
                           <li>
                             let us know the information to which your request
@@ -702,14 +694,14 @@ const PrivacyPolicySection = () => {
                   >
                     11. Making a formal complaint We hope that We can resolve
                     any query or concern you raise about our use of your
-                    information. The General Data Protection Regulation also
+                    information. The General Data Protection Regulation also
                     gives you right to lodge a complaint with a supervisory
-                    authority, in particular in the European Union (or European
-                    Economic Area) state where you work, normally live or where
+                    authority, in particular in the European Union or European
+                    Economic Area state where you work, normally live or where
                     any alleged infringement of data protection laws occurred.
                     The supervisory authority in the UK is the Information
-                    Commissioner who may be contacted
-                    at https://ico.org.uk/concerns/ or telephone 0303 123 1113.
+                    Commissioner who may be contacted at
+                    https://ico.org.uk/concerns/ or telephone 0303 123 1113.
                   </Typography>
                   <Typography
                     component="p"
@@ -728,24 +720,9 @@ const PrivacyPolicySection = () => {
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                    13. Cookies and IP addresses We may collect information
-                    about your mobile phone, computer or other device from which
-                    you access the Platforms including where available your IP
-                    address, operating system, screen size and resolution, and
-                    browser type, for systems administration and to report
-                    aggregate information to third parties affiliates. This is
-                    statistical data about our users’ browsing actions and
-                    patterns, and does not identify any individual. We may,
-                    however, use such information in conjunction with the data
-                    We have about you in order to track your usage of our
-                    services. A cookie is a small file of letters and numbers
-                    that We store on your browser or the hard drive of your
-                    computer if you agree. Cookies contain information that is
-                    transferred to your computer’s hard drive. The cookies We
-                    use include:
+                  13. Cookies and IP addresses We may collect information about your mobile phone, computer, or other device from which you access the Platforms, including, where available, your IP address, operating system, screen size and resolution, and browser type, for systems administration and to report aggregate information to third parties and affiliates. This is statistical data about our users&apos; browsing actions and patterns and does not identify any individual. We may, however, use such information in conjunction with the data we have about you in order to track your usage of our services. A cookie is a small file of letters and numbers that we store on your browser or the hard drive of your computer if you agree. Cookies contain information that is transferred to your computer&apos;s hard drive. The cookies we use include:
                     <ul>
                       <li>
-                        {" "}
                         Analytical cookies. They allow Us to recognise and count
                         the number of visitors and to see how visitors move
                         around the Platforms when they are using it. This helps
@@ -754,29 +731,18 @@ const PrivacyPolicySection = () => {
                         for easily.
                       </li>
                       <li>
-                        Strictly necessary cookies. These are cookies that are
-                        required for the operation of our Platforms. They
-                        include, for example, cookies that enable you to log
-                        into secure areas of our Platforms, or cookies that let
-                        us know you have accepted this privacy policy.
+                      Strictly necessary cookies. These are cookies that are required for the operation of our Platforms. They include, for example, cookies that enable you to log into secure areas of our Platforms, or cookies that let us know you have accepted this privacy policy.
                       </li>
                       <li>
-                        Functionality cookies. These are used to recognise you
-                        when you return to our Platforms. This enables Us to
-                        personalise our content for you, greet you by name and
-                        remember your preferences (for example, your choice of
-                        language or region).
+                        Functionality cookies These are used to recognise you
+                        when you return to our Platforms. This enables us to
+                        personalise our content for you, greet you by name, and
+                        remember your preferences, for example, your choice of
+                        language or region.
                       </li>
                       <li>
-                        Targeting cookies. These cookies record your visit to
-                        our Platforms, the pages you have visited and the links
-                        you have followed to our affiliates websites. We will
-                        use this information to make our Platforms, offers
-                        e-mailed to you and the advertising displayed on it more
-                        relevant to your interests. We may also share this
-                        information with third parties for this purpose. Please
-                        note that third party affiliates may also use cookies,
-                        over which We have no control.
+                        Targeting cookies. These cookies record your visit to our Platforms, the pages you have visited and the links you have followed to our affiliates websites. We will use this information to make our Platforms, offers e-mailed to you and the advertising displayed on it more relevant to your interests. We may also share this information with third parties for this purpose. Please note that third party affiliates may also use cookies, over which we have no control.
+
                       </li>
                       <li>
                         More information about the cookies we include and how to
@@ -793,32 +759,43 @@ const PrivacyPolicySection = () => {
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                   Cookies which are strictly necessary for the core functionality of the Platforms are enabled by default, and set automatically at the point you access the Platforms.
-Any cookies which are not strictly necessary for the functioning of the Platforms will not be set unless you expressly consent to them through the cookie banner by clicking “accept”.
-You may block cookies by activating the setting on your browser that allows you to refuse the setting of all or some cookies. However, if you use your browser settings to block all cookies (including essential cookies) you may not be able to access all or parts of the Platform. Unless you have adjusted your browser setting so that it will refuse cookies, our system will issue cookies as soon as you visit our Platforms.
+                    Cookies which are strictly necessary for the core
+                    functionality of the Platforms are enabled by default, and
+                    set automatically at the point you access the Platforms. Any
+                    cookies which are not strictly necessary for the functioning
+                    of the Platforms will not be set unless you expressly
+                    consent to them through the cookie banner by clicking
+                    “accept”. You may block cookies by activating the setting on
+                    your browser that allows you to refuse the setting of all or
+                    some cookies. However, if you use your browser settings to
+                    block all cookies including essential cookies you may not be
+                    able to access all or parts of the Platform. Unless you have
+                    adjusted your browser setting so that it will refuse
+                    cookies, our system will issue cookies as soon as you visit
+                    our Platforms.
                   </Typography>
                   <Typography
                     component="p"
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                    14. Contact
-                    All questions, comments and requests regarding this privacy policy should be addressed to Click n Send Limited at the following address, or via
+                    14. Contact All questions, comments and requests regarding
+                    this privacy policy should be addressed to Click n Send
+                    Limited at the following address, or via
                   </Typography>
                   <Typography
                     component="p"
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                   admin@clicknsend.co.uk
+                    admin@clicknsend.co.uk
                   </Typography>
                   <Typography
                     component="p"
                     variant="subtitle2"
                     fontWeight={400}
                   >
-                 51 Hillside Drive, Portlethen, Aberdeen. AB12 4TG
-                 
+                    51 Hillside Drive, Portlethen, Aberdeen. AB12 4TG
                   </Typography>
                 </Stack>
               </CardContent>

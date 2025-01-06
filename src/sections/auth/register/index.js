@@ -1033,7 +1033,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                                 color="primary"
                                 ml={0.5}
                                 component="span"
-                                onClick={() => router.push("/termandcondition")}
+                                onClick={() => router.push("/term_and_condition")}
                               >
                                 terms & Condition
                               </Typography>{" "}
