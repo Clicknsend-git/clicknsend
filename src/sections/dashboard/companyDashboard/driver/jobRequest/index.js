@@ -1131,6 +1131,9 @@ const DashboardJobRequest = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
+    //  pass for distance filiter
+    const [distance, setDistance] = useState(5);
+
   const [layout, setLayout] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [select, setSelect] = React.useState("new");
@@ -1478,12 +1481,16 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
           <Box py={5}>
             <DashboardCard jobalert={data?.length} />
           </Box>
-          <Box py={2}>
+          
+          <Box py={2} 
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center">
             {loader ? (
               <SkeletonLoader />
             ) : (
               <Grid container spacing={2}>
-                <Grid item md={12}>
+                <Grid item md={6}>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <Typography
                       fontSize="1.75rem"
@@ -1517,9 +1524,47 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                     </Box>
                   </Stack>
                 </Grid>
+                {/* add for Filter with distance */}
+                <Grid item md={6}>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography
+                      fontSize="1.50rem"
+                      fontWeight={300}
+                      color="primary"
+                    >
+                      Filter with distance
+                    </Typography>
+
+                    {/* Dropdown */}
+                    <FormControl fullWidth>
+                      <InputLabel id="distance-filter-label">
+                        Select Distance
+                      </InputLabel>
+                      <Select
+                        labelId="distance-filter-label"
+                        value={distance}
+                        label="Select Distance"
+                        onChange={(e) => setDistance(e.target.value)}
+                      >
+                        <MenuItem value={1}>1 miles</MenuItem>
+                        <MenuItem value={2}>2 miles</MenuItem>
+                        <MenuItem value={5}>5 miles</MenuItem>
+                        <MenuItem value={10}>10 miles</MenuItem>
+                        <MenuItem value={12}>12 miles</MenuItem>
+                        <MenuItem value={15}>15 miles</MenuItem>
+                        <MenuItem value={22}>22 miles</MenuItem>
+                        <MenuItem value={30}>30 miles</MenuItem>
+                        <MenuItem value={40}>40 miles</MenuItem>
+                        <MenuItem value={50}>50 miles</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Stack>
+                </Grid>
               </Grid>
             )}
           </Box>
+
+
           {!isCheckedDocument ? (
           <Box py={2} sx={{ background: " " }}>
             <Grid container rowSpacing={0} justifyContent="center">
