@@ -70,14 +70,14 @@ const Register = ({ formik, open, handleOpenClose }) => {
   const [validateOTP, setValidateOTP] = React.useState(true);
   const [successMessage, setSuccessMessage] = React.useState(false);
 
-  const [selectedCoutry, setSelectedCountry] = React.useState('+44');
+  const [selectedCoutry, setSelectedCountry] = React.useState("+44");
+  console.log(formik, 'formik');
+  useEffect(() => {
+    setIsButtonDisabled(false);
+  }, [formik.values.mobile.length]);
 
-  useEffect(()=>{
-    setIsButtonDisabled(false)
-  },[formik.values.mobile.length])
-
-// for otp validation 17/5
-  const [dial_code, setDial_code] = React.useState()
+  // for otp validation 17/5
+  const [dial_code, setDial_code] = React.useState();
 
   const customLabels = {
     GB: { primary: "UK", secondary: "+44" },
@@ -151,7 +151,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
   const reformik = useFormik({
     initialValues: {
       email: formik && formik?.values?.mobile ? formik?.values?.mobile : "",
-      otp: loginOTP,
+      otp: '',
       type: "mobile",
     },
     validate: (values) => {},
@@ -164,20 +164,18 @@ const Register = ({ formik, open, handleOpenClose }) => {
 
         const url = "/api/user/send-otp";
         const formData = {
+          // email: `${selectedCoutry}${newPhoneNumber}`,
 
-        // email: `${selectedCoutry}${newPhoneNumber}`,
+          // for otp validation 17/5
 
-        // for otp validation 17/5
-
-        email: `${newPhoneNumber}`,
-        dial_code: `${selectedCoutry}`  ,
-        type: "mobile",
-        logged: "no",
-
+          email: `${newPhoneNumber}`,
+          dial_code: `${selectedCoutry}`,
+          type: "mobile",
+          logged: "no",
         };
 
         const response = await axiosInstance.post(url, formData);
-        console.log("response API :",response?.status);
+        console.log("response API :", response?.status);
 
         if (response?.status === 200) {
           // Handle successful response
@@ -209,10 +207,11 @@ const Register = ({ formik, open, handleOpenClose }) => {
           setShowResend(true);
           setOpens(true);
           setShowOTP(true);
-          setLoginOTP(response?.data?.verification_code);
+
+          // setLoginOTP(response?.data?.verification_code);
           // console.log("response?.data?.verification_code", response?.data?.verification_code);
 
-          formik.setFieldValue("otp", response?.data?.verification_code);
+          // formik.setFieldValue("otp", response?.data?.verification_code);
           // Resetformik.setFieldValue("otp", values?.otp);
           // Resetformik.setFieldValue("email", values?.email);
           // Rest of your logic goes here
@@ -247,7 +246,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
         }
       } catch (error) {
         console.error("Error occurred:", error);
-        if(error.response.status===409){
+        if (error.response.status === 409) {
           enqueueSnackbar(
             <Alert
               style={{
@@ -276,9 +275,6 @@ const Register = ({ formik, open, handleOpenClose }) => {
         }
         // Handle any errors that occurred during the request
       }
-
-
-
     },
   });
 
@@ -290,14 +286,13 @@ const Register = ({ formik, open, handleOpenClose }) => {
     //   "Mobile Number Before Rendering",
     //   `${selectedCoutry}${formik.values.mobile}`
     // );
-    console.log(formik?.values,"formikvalues")
+    console.log(formik?.values, "formikvalues");
     const formData = {
       email: formik?.values?.mobile,
       otp: formik?.values?.otp,
     };
     const apiEndpoint = "api/user/validate-otp";
     try {
-
       // let newPhoneNumber = formik?.values?.mobile?.replace('0', '');
       // console.log(newPhoneNumber);
 
@@ -330,7 +325,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
           }
         );
         setShowResend(false);
-        setOpens(false);  // Open the dialog when response status is 200
+        setOpens(false); // Open the dialog when response status is 200
         setValidateOTP(false);
         setLoginOTPData(response);
         setSuccessMessage(true);
@@ -338,7 +333,6 @@ const Register = ({ formik, open, handleOpenClose }) => {
         // formik.setFieldValue("otp", response?.data?.verification_code);
         // Resetformik.setFieldValue("otp", values?.otp);
         // Resetformik.setFieldValue("email", values?.email);
-
       } else {
         enqueueSnackbar(
           <Alert
@@ -749,8 +743,10 @@ const Register = ({ formik, open, handleOpenClose }) => {
                         <Button
                           variant="contained"
                           color="primary"
-
-                          disabled={isButtonDisabled || formik.values.mobile.length !== 11} // Set disabled state
+                          disabled={
+                            isButtonDisabled ||
+                            formik.values.mobile.length !== 11
+                          } // Set disabled state
                           sx={{ width: "110px", marginLeft: "10px" }}
                           onClick={() => {
                             reformik.handleSubmit();
@@ -767,8 +763,6 @@ const Register = ({ formik, open, handleOpenClose }) => {
                       </Box>
                     }
                   </Box>
-
-
 
                   <Box>
                     <PasswordBox
@@ -1033,7 +1027,9 @@ const Register = ({ formik, open, handleOpenClose }) => {
                                 color="primary"
                                 ml={0.5}
                                 component="span"
-                                onClick={() => router.push("/term_and_condition")}
+                                onClick={() =>
+                                  router.push("/term_and_condition")
+                                }
                               >
                                 terms & Condition
                               </Typography>{" "}
@@ -1131,7 +1127,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
           {/* <Box component="form" onSubmit={formik.handleSubmit}> */}
           <DialogHeader
             // onClose={on Close}
-            title={"OTP Verification 11"}
+            title={"OTP Verification"}
             showResend={showResend}
             // handleClose={handleClose}
           />
@@ -1153,7 +1149,12 @@ const Register = ({ formik, open, handleOpenClose }) => {
                 }`}
               </Typography>
             </Stack>
-            <OTPForm formik={formik} showOTP={showOTP} onOtpChange={handleOtpChange} />
+            <OTPForm
+              formik={formik}
+              showOTP={showOTP}
+              onOtpChange={handleOtpChange}
+              autoComplete="off" 
+            />
 
             <Box>
               <Typography sx={{ fontSize: "16px" }}>
@@ -1196,7 +1197,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
             <Button
               variant="contained"
               color="dark"
-              onClick={() =>setOpens(false) }
+              onClick={() => setOpens(false)}
             >
               Close
             </Button>

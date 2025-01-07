@@ -1056,6 +1056,9 @@
 
 // export default DashboardJobRequest;
 
+
+
+
 import { SelectBox, TextBox } from "@/components/form";
 import Iconify from "@/components/iconify/Iconify";
 import { Add } from "@mui/icons-material";
@@ -1098,6 +1101,9 @@ import Alert from "@mui/material/Alert";
 import { useDispatch, useSelector } from "@/redux/store";
 import { getJobAlert, setJobAlertPage } from "@/redux/slices/job/driver";
 import { includes, some } from "lodash";
+
+import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+
 import {
   Timeline,
   TimelineConnector,
@@ -1118,6 +1124,8 @@ const DashboardJobRequest = () => {
   const driverId = user?.id;
 
   const { enqueueSnackbar } = useSnackbar();
+  //  pass for distance filiter
+  const [distance, setDistance] = useState(5);
 
   const [layout, setLayout] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -1137,21 +1145,26 @@ const DashboardJobRequest = () => {
   const [applyOpenViewJob, setApplyOpenViewJob] = React.useState(false);
   const [jobRequestDetails, setJobRequestDetails] = useState([]);
 
-  const handleOpenView = (amount,description) => {
-  setApplyOpenViewJob(true);
-  setJobRequestDetails({ requestAmount: amount,
-    requestDescription: description,})
-}
+  const handleOpenView = (amount, description) => {
+    setApplyOpenViewJob(true);
+    setJobRequestDetails({
+      requestAmount: amount,
+      requestDescription: description,
+    });
+  };
 
-const handleCloseViewJob = () => setApplyOpenViewJob(false);
-const [applyOpenEditJob, setApplyOpenEditJob] = React.useState(false);
+  const handleCloseViewJob = () => setApplyOpenViewJob(false);
+  const [applyOpenEditJob, setApplyOpenEditJob] = React.useState(false);
 
-const handleOpenEditView = (amount,description,request_id) => {
-  setApplyOpenEditJob(true);
-setJobRequestDetails({ requestAmount: amount,
-  requestDescription: description,requestId: request_id});
-}
-const handleCloseEditJob = () => setApplyOpenEditJob(false);
+  const handleOpenEditView = (amount, description, request_id) => {
+    setApplyOpenEditJob(true);
+    setJobRequestDetails({
+      requestAmount: amount,
+      requestDescription: description,
+      requestId: request_id,
+    });
+  };
+  const handleCloseEditJob = () => setApplyOpenEditJob(false);
 
   const handleOpen = (id) => setApplyopen(id);
   const handleClose = () => setApplyopen(false);
@@ -1162,9 +1175,11 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
   };
 
   // Add for filter
+
   const addressDetail = {
     address: [{ type: "pickup" }, { type: "delivery" }],
   };
+
   // Check if addressDetail is defined before accessing its properties.
   const pickupAddresses = addressDetail?.address?.filter(
     (addressItem) => addressItem.type === "pickup"
@@ -1181,8 +1196,8 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
     );
   }, [page]);
 
-
   const getData = async () => {
+
     // setLoader(true);
     // await axiosInstance
     //   .get("api/auth/jobs/list", {
@@ -1333,19 +1348,25 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
           <Box py={5}>
             <DashboardCard jobalert={data?.length} />
           </Box>
-          <Box py={2}>
+
+          <Box
+            py={2}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             {loader ? (
               <SkeletonLoader />
             ) : (
-              <Grid container spacing={2}>
-                <Grid item md={12}>
+              <Grid container spacing={2} justifyContent="space-between">
+                <Grid item md={6}>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <Typography
                       fontSize="1.75rem"
                       fontWeight={500}
                       color="primary"
                     >
-                      Jobs For You
+                      Jobs For You 11
                     </Typography>
 
                     <Box
@@ -1364,7 +1385,7 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                         <CountUp
                           start={0}
                           duration={1}
-                          end={ isCheckedDocument ? data?.length : '0'}
+                          end={isCheckedDocument ? data?.length : "0"}
                           enableScrollSpy={true}
                           scrollSpyDelay={200}
                         />
@@ -1372,30 +1393,71 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                     </Box>
                   </Stack>
                 </Grid>
+{/* add for Filter with distance */}
+
+                <Grid item md={6}>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography
+                      fontSize="1.50rem"
+                      fontWeight={300}
+                      color="primary"
+                    >
+                      Filter with distance
+                    </Typography>
+
+                    {/* Dropdown */}
+                    <FormControl fullWidth>
+                      <InputLabel id="distance-filter-label">
+                        Select Distance
+                      </InputLabel>
+                      <Select
+                        labelId="distance-filter-label"
+                        value={distance}
+                        label="Select Distance"
+                        onChange={(e) => setDistance(e.target.value)}
+                      >
+                        <MenuItem value={1}>1 miles</MenuItem>
+                        <MenuItem value={2}>2 miles</MenuItem>
+                        <MenuItem value={5}>5 miles</MenuItem>
+                        <MenuItem value={10}>10 miles</MenuItem>
+                        <MenuItem value={12}>12 miles</MenuItem>
+                        <MenuItem value={15}>15 miles</MenuItem>
+                        <MenuItem value={22}>22 miles</MenuItem>
+                        <MenuItem value={30}>30 miles</MenuItem>
+                        <MenuItem value={40}>40 miles</MenuItem>
+                        <MenuItem value={50}>50 miles</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Stack>
+                </Grid>
+                
               </Grid>
             )}
           </Box>
-          {isCheckedDocument ? (
-          <Box py={2} sx={{ background: " " }}>
-            <Grid container rowSpacing={0} justifyContent="center">
-              {data && data?.length > 0 ? (
-                data.map((item, index) => {
-                  let productDetail =
-                    item?.items && item?.items?.length > 0 && item?.items[0];
-                  let addressDetail =
-                    item?.items && item?.items?.length > 0 && item?.items[0];
 
-                    let request_amount = 0
-                    let request_description = null
+          {isCheckedDocument ? (
+            <Box py={2} sx={{ background: " " }}>
+              <Grid container rowSpacing={0} justifyContent="center">
+                {data && data?.length > 0 ? (
+                  data.map((item, index) => {
+                    let productDetail =
+                      item?.items && item?.items?.length > 0 && item?.items[0];
+                    let addressDetail =
+                      item?.items && item?.items?.length > 0 && item?.items[0];
+
+                    let request_amount = 0;
+                    let request_description = null;
                     let request_id;
                     item.job_requests.forEach((jobRequest) => {
-              if (user.id === jobRequest.driver_id  ) {
-                request_amount = jobRequest.ammount
-                request_description = jobRequest.description || request_description;            
-                request_id= jobRequest.id || request_id;       
-              }});
-                  return (
-                    <React.Fragment key={index}>
+                      if (user.id === jobRequest.driver_id) {
+                        request_amount = jobRequest.ammount;
+                        request_description =
+                          jobRequest.description || request_description;
+                        request_id = jobRequest.id || request_id;
+                      }
+                    });
+                    return (
+                      <React.Fragment key={index}>
                         <Grid container rowSpacing={0}>
                           <Grid item md={12}>
                             <Card
@@ -1749,7 +1811,7 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                                           .filter((ds) => ds.type === "pickup")
                                           ?.map((addressItem, index) => (
                                             <TimelineItem
-                                            key={index}
+                                              key={index}
                                               sx={{
                                                 "&.MuiTimelineItem-root": {
                                                   minHeight: "50px",
@@ -1873,7 +1935,10 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                                         display: "flex",
                                         alignItems: "flex-start",
                                       }}
-                                    >{request_amount > 0 &&" Bid Amount: " +request_amount}</Typography>
+                                    >
+                                      {request_amount > 0 &&
+                                        " Bid Amount: " + request_amount}
+                                    </Typography>
                                     <Stack direction="row" spacing={1}>
                                       {/* View Job Button */}
                                       <Box>
@@ -1894,37 +1959,48 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                                         </Button>
                                       </Box>
                                       {some(item?.job_requests, {
-                                            driver_id: driverId,
-                                          })
-                                          && 
-                                      <Box>
-                                        <Button
-                                          fullWidth
-                                          variant="contained"
-                                          onClick={() => {handleOpenView( request_amount,request_description)}}
-                                          sx={{
-                                            fontWeight: 500,
-                                          }}
-                                        >
-                                         View Bid
-                                        </Button>
-                                      </Box>}
+                                        driver_id: driverId,
+                                      }) && (
+                                        <Box>
+                                          <Button
+                                            fullWidth
+                                            variant="contained"
+                                            onClick={() => {
+                                              handleOpenView(
+                                                request_amount,
+                                                request_description
+                                              );
+                                            }}
+                                            sx={{
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            View Bid
+                                          </Button>
+                                        </Box>
+                                      )}
                                       {some(item?.job_requests, {
-                                            driver_id: driverId,
-                                          })
-                                          && 
-                                      <Box>
-                                        <Button
-                                          fullWidth
-                                          variant="contained"
-                                          onClick={() => {handleOpenEditView( request_amount,request_description,request_id)}}
-                                          sx={{
-                                            fontWeight: 500,
-                                          }}
-                                        >
-                                         Edit Bid
-                                        </Button>
-                                      </Box>}
+                                        driver_id: driverId,
+                                      }) && (
+                                        <Box>
+                                          <Button
+                                            fullWidth
+                                            variant="contained"
+                                            onClick={() => {
+                                              handleOpenEditView(
+                                                request_amount,
+                                                request_description,
+                                                request_id
+                                              );
+                                            }}
+                                            sx={{
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            Edit Bid
+                                          </Button>
+                                        </Box>
+                                      )}
                                       {/* Apply Job Button */}
                                       <Box>
                                         <Button
@@ -1982,64 +2058,64 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                             </Card>
                           </Grid>
                         </Grid>
-                    </React.Fragment>
-                  );
-                })
-              ) : (
-                <>{!loader && <JobSekelton title="No active Jobs..." />}</>
-              )}
-            </Grid>
-            <Box>
-              <Stack alignItems="center" justifyContent="center">
-                <Pagination
-                  count={pageCount}
-                  color="primary"
-                  page={page}
-                  onChange={handlePageChange}
-                  variant="outlined"
-                  shape="rounded"
-                  renderItem={(item) => (
-                    <PaginationItem
-                      slots={{
-                        previous: () => {
-                          return (
-                            <Stack
-                              direction="row"
-                              spacing={0.5}
-                              alignItems="center"
-                            >
-                              <NavigateBeforeIcon />
-                            </Stack>
-                          );
-                        },
-                        next: () => {
-                          return (
-                            <Stack
-                              direction="row"
-                              spacing={0.5}
-                              alignItems="center"
-                            >
-                              <NavigateNextIcon />
-                            </Stack>
-                          );
-                        },
-                      }}
-                      {...item}
-                    />
-                  )}
-                />
-              </Stack>
+                      </React.Fragment>
+                    );
+                  })
+                ) : (
+                  <>{!loader && <JobSekelton title="No active Jobs..." />}</>
+                )}
+              </Grid>
+              <Box>
+                <Stack alignItems="center" justifyContent="center">
+                  <Pagination
+                    count={pageCount}
+                    color="primary"
+                    page={page}
+                    onChange={handlePageChange}
+                    variant="outlined"
+                    shape="rounded"
+                    renderItem={(item) => (
+                      <PaginationItem
+                        slots={{
+                          previous: () => {
+                            return (
+                              <Stack
+                                direction="row"
+                                spacing={0.5}
+                                alignItems="center"
+                              >
+                                <NavigateBeforeIcon />
+                              </Stack>
+                            );
+                          },
+                          next: () => {
+                            return (
+                              <Stack
+                                direction="row"
+                                spacing={0.5}
+                                alignItems="center"
+                              >
+                                <NavigateNextIcon />
+                              </Stack>
+                            );
+                          },
+                        }}
+                        {...item}
+                      />
+                    )}
+                  />
+                </Stack>
+              </Box>
             </Box>
-          </Box>
-            ) : (
-                        <Box>
-                          {/* because this is map multipal time so comm */}
+          ) : (
+            <Box>
+              {/* because this is map multipal time so comm */}
 
-                          <Typography variant="h4" textAlign="left">
-                            Please Fill all documents for apply jobs
-                          </Typography>
-                        </Box>
-                      )}
+              <Typography variant="h4" textAlign="left">
+                Please Fill all documents for apply jobs
+              </Typography>
+            </Box>
+          )}
         </Container>
 
         <Box>

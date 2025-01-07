@@ -26,11 +26,12 @@ import { PasswordBox } from "@/components/form";
 
 export const OTPForm = ({ formik, showOTP, onOtpChange = () => {} }) => {
   const handleOtpChange = (e) => {
+    console.log('otp onchange', e)
     formik.setFieldValue("otp", e);
     onOtpChange(e); // Safely call the provided function
   };
 
-
+  console.log(showOTP,formik, 'formik' )
   return (
     <React.Fragment>
    { !showOTP ? 
