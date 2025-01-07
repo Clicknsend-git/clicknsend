@@ -1260,6 +1260,8 @@ const DashboardJobRequest = () => {
     // }
   }, []);
 
+
+
   // Update local state with driver data
   useEffect(() => {
     if (driverData) {
@@ -1328,6 +1330,12 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
       getJobAlert({ user_id: user?.id, type: user?.user_type, lat: 0, long: 0 })
     );
   }, [page]);
+
+   React.useEffect(() => {
+      dispatch(
+        getJobAlert({ user_id: user?.id, type: user?.user_type, lat: 0, long: 0 ,distance:distance})
+      );
+    }, [page,distance]);
 
 
   const getData = async () => {
@@ -1524,18 +1532,15 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                     </Box>
                   </Stack>
                 </Grid>
-                {/* add for Filter with distance */}
                 <Grid item md={6}>
                   <Stack direction="row" spacing={1} alignItems="center">
-                    <Typography
+                    {/* <Typography
                       fontSize="1.50rem"
                       fontWeight={300}
                       color="primary"
                     >
-                      Filter with distance
-                    </Typography>
-
-                    {/* Dropdown */}
+                      Filter with distance1
+                    </Typography> */}
                     <FormControl fullWidth>
                       <InputLabel id="distance-filter-label">
                         Select Distance
@@ -1558,6 +1563,10 @@ const handleCloseEditJob = () => setApplyOpenEditJob(false);
                         <MenuItem value={50}>50 miles</MenuItem>
                       </Select>
                     </FormControl>
+
+                    
+
+
                   </Stack>
                 </Grid>
               </Grid>

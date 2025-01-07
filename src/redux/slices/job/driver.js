@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "@/utils/axios";
+import { distance } from "framer-motion";
 
 // ----------------------------------------------------------------------
 
@@ -130,9 +131,12 @@ export const {
 export const getJobAlert = (params) => {
   return async (dispatch) => {
     dispatch(slice.actions.startJobAlertLoading());
+    console.log(params,"dispatch")
     try {
       const response = await axiosInstance.get("api/auth/jobs/list", {
         params: {
+          // distance: "5",
+          distance: "",
           status: "pending",
           type: "driver",
           ...params,
@@ -171,6 +175,7 @@ export const getJobHistory = (params) => {
           status: "history",
           type: "driver",
           ...params,
+          
         },
       });
       dispatch(slice.actions.setJobHistory(response?.data?.view_data));
