@@ -309,8 +309,12 @@ const Profile = ({ data, formik, loader, Content = null }) => {
                                         e
                                       );
                                     }}
-    onSelect={(address, lat, long) => {
-      console.log("onSelect:", address, lat, long);
+    onSelect={(address, lat, long, city, state, country, zipCode) => {
+      console.log("onSelect:", address, lat, long, city, state, country, zipCode);
+      formik.setFieldValue("city", city);
+      formik.setFieldValue("state", state);
+      formik.setFieldValue("country", country);
+      formik.setFieldValue("zipCode", zipCode);
       formik.setFieldValue("address", address);
       formik.setFieldValue("lat", lat); // Set lat if needed
       formik.setFieldValue("long", long); // Set long if needed

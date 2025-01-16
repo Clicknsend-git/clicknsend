@@ -74,24 +74,63 @@ const GoogleAutocomplete = (props) => {
 
 
   const handleSelect = async (value) => {
-    let address, lat, long;
+    let address, lat, long, city, state, country, zipCode;
+  
     address = value;
-    await geocodeByAddress(address)
-      .then((results) => {
-        return getLatLng(results[0]);
-      })
-      .then((latLng) => {
-        lat = latLng?.lat;
-        long = latLng?.lng;
-        console.log("latLng", latLng);
-      })
-      .catch((error) => {
-        address = "";
-        // latLongValue = "";
-        console.error("Error", error);
+  
+    try {
+      const results = await geocodeByAddress(address);
+      console.log("Geocode results:", results);
+  
+      const latLng = await getLatLng(results[0]);
+      lat = latLng?.lat;
+      long = latLng?.lng;
+      console.log("latLng:", latLng);
+  
+      // Extract additional address details
+      const addressComponents = results[0]?.address_components || [];
+      let localityFound = false;
+      let postalCodeFound = false;
+  
+      addressComponents.forEach((component) => {
+        if (component.types.includes("locality")) {
+          city = component.long_name;
+          localityFound = true;
+        }
+        if (component.types.includes("sublocality")) {
+          city = city || component.long_name; // Fallback to sublocality
+        }
+        if (component.types.includes("administrative_area_level_1")) {
+          state = component.long_name;
+        }
+        if (component.types.includes("country")) {
+          country = component.long_name;
+        }
+        if (component.types.includes("postal_code")) {
+          zipCode = component.long_name;
+          postalCodeFound = true;
+        }
       });
-    await onSelect(address, lat, long);
+  
+      // Handle cases where locality or postal code is missing
+      if (!localityFound) {
+        city = "City not available";
+      }
+      if (!postalCodeFound) {
+        zipCode = "ZIP/Postal Code not available";
+      }
+  
+      console.log("City:", city, "State:", state, "Country:", country, "ZIP Code:", zipCode);
+    } catch (error) {
+      address = "";
+      console.error("Error:", error);
+    }
+  
+    await onSelect(address, lat, long, city, state, country, zipCode);
   };
+  
+  
+  
 
   return (
     <Box sx={{ my: 0, width: "100%", position: "relative"}}>
@@ -100,13 +139,13 @@ const GoogleAutocomplete = (props) => {
         onChange={(e) => props.onChange(e)}
         onSelect={(e) => handleSelect(e)}
 
-        // searchOptions={{
-        //   componentRestrictions: { country: "uk" }, // Restrict to UK
-        // }}
-
         searchOptions={{
-          componentRestrictions: { country: "ind" }, // Restrict to ind
+          componentRestrictions: { country: "uk" }, // Restrict to UK
         }}
+
+        // searchOptions={{
+        //   componentRestrictions: { country: "ind" }, // Restrict to ind
+        // }}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
 {/* 

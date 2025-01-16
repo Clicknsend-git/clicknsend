@@ -26,6 +26,7 @@ function TrackGoogleMaps({ data = [] }) {
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
   });
+  
   // const initialCenter = { lat: 0, lng: 0 };
   // const [state, setState] = React.useState({
   //   defaultZoom: 5,

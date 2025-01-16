@@ -10,7 +10,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
         <link rel="icon" href="/faviconweb.png" />
-
         <script
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}&libraries=places`}
         ></script>
