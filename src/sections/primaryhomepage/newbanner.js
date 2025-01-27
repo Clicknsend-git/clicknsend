@@ -212,7 +212,7 @@ const NewBanner = () => {
                       Solution
                     </Typography>
                     <Typography color="common.black" fontSize={25}>
-                      For Business, For Client & For Driver{"'"}s
+                      For Single Use, For Member Companies & For Driver and Driver companies{"'"}s
                     </Typography>
                   </Box>
                 </Stack>
@@ -246,7 +246,7 @@ const NewBanner = () => {
                             }}
                           >
                             <Typography fontWeight={500}>
-                              For Clients
+                              Single Use
                             </Typography>
                           </Button>
                         </Box>
@@ -270,7 +270,7 @@ const NewBanner = () => {
                             href="/auth/register"
                           >
                             <Typography fontWeight={500}>
-                              For Businesses
+                              Member Compaines
                             </Typography>
                           </Button>
                         </Box>
@@ -293,7 +293,7 @@ const NewBanner = () => {
                             color="dark"
                             size="large"
                           >
-                            <Typography fontWeight={500}>For Driver</Typography>
+                            <Typography fontWeight={500}>Driver & Driver Companies</Typography>
                           </Button>
                         </Box>
                       </Stack>
