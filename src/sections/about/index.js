@@ -111,7 +111,7 @@ const AboutUs = () => {
                             }}
                           >
                             <Typography fontWeight={500}>
-                              For Clients
+                              Single Use
                             </Typography>
                           </Button>
                         </Box>
@@ -135,7 +135,7 @@ const AboutUs = () => {
                             href="auth/register"
                           >
                             <Typography fontWeight={500}>
-                              For Businesses
+                              Member Companies
                             </Typography>
                           </Button>
                         </Box>
@@ -158,7 +158,7 @@ const AboutUs = () => {
                             color="dark"
                             size="large"
                           >
-                            <Typography fontWeight={500}>For Driver</Typography>
+                            <Typography fontWeight={500}>Driver and Driver companies</Typography>
                           </Button>
                         </Box>
                 </Stack>
