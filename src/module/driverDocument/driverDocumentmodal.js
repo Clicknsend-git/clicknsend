@@ -150,7 +150,7 @@
 //                         URL.createObjectURL(e.target.files[0])
 //                       );
 //                     }}
-                  
+
 //                   />
 //                 )}
 
@@ -243,7 +243,7 @@
 //                         URL.createObjectURL(e.target.files[0])
 //                       );
 //                     }}
-                   
+
 //                   />
 //                 )}
 
@@ -465,7 +465,7 @@
 //                             <Close fontSize="small" />
 //                           </IconButton>
 //                         </Card>
-//                       </Box>                  
+//                       </Box>
 //                        <Box
 //                                 style={{ margin: "10px" }}
 //                                 width="150px"
@@ -882,7 +882,6 @@
 //               </Stack>
 //             </Grid>{" "}  */}
 
-
 //             <Grid item md={4}>
 //               <Stack textAlign={"center"}>
 //                 <Typography textAlign="left" variant="p">
@@ -1201,11 +1200,6 @@
 
 // export default DocumentModal;
 
-
-
-
-
-
 import { TextBox } from "@/components/form";
 import Iconify from "@/components/iconify/Iconify";
 import { Close } from "@mui/icons-material";
@@ -1217,6 +1211,7 @@ import {
   CardContent,
   FormHelperText,
   Grid,
+  TextField,
   IconButton,
   Stack,
   Modal,
@@ -1231,6 +1226,7 @@ import ModalOverflow from "@mui/joy/ModalOverflow";
 
 const DocumentModal = ({ formik }) => {
   const [open, setOpen] = React.useState(false);
+  const [openAddress, setOpenAddress] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -1242,7 +1238,7 @@ const DocumentModal = ({ formik }) => {
     formik.setFieldValue("transit_cert", "");
     formik.setFieldValue("liability_cert", "");
     formik.setFieldValue("vehicle_cert", "");
-    formik.setFieldValue("v5c_cert", "");
+    formik.setFieldValue("vehicle_cert", "");
     formik.setFieldValue("dvia_cert", "");
     formik.setFieldValue("nationality_cert", "");
     formik.setFieldValue("profile_img_url", "");
@@ -1258,6 +1254,9 @@ const DocumentModal = ({ formik }) => {
     formik.setFieldValue("nationality_cert_url", "");
   };
 
+  const handleOpenAddress = () => setOpenAddress(true);
+  const handleCloseAddress = () => setOpenAddress(false);
+
   const addImage = () => {
     setOpen(false);
     if (
@@ -1269,7 +1268,7 @@ const DocumentModal = ({ formik }) => {
       formik.values.transit_cert &&
       formik.values.liability_cert &&
       formik.values.vehicle_cert &&
-      formik.values.v5c_cert &&
+      formik.values.vehicle_cert &&
       formik.values.dvia_cert &&
       formik.values.nationality_cert
     ) {
@@ -1295,6 +1294,16 @@ const DocumentModal = ({ formik }) => {
       >
         Add Documents
       </Button>
+      <Button
+        fullWidth
+        variant="outlined"
+        color="primary"
+        sx={{ mt: 2 }}
+        onClick={handleOpenAddress}
+      >
+        Add Address
+      </Button>
+
       {formik.touched.document && formik.errors.document && (
         <FormHelperText error={formik.errors.document}>
           Document is required
@@ -1997,96 +2006,41 @@ const DocumentModal = ({ formik }) => {
             <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
-                  V5c Certificate
+                  Vehicle Certificate
                 </Typography>
-                {!formik.values.v5c_cert && (
-                  <TextBox
-                    fullWidth
-                    isAdditional={true}
-                    textBoxSx={{
-                      "& .MuiInput-root:after": {
-                        borderBottom: "0px !important",
-                      },
-                      "& .MuiInput-root:before": {
-                        borderBottom: "0px !important",
-                        content: '""',
-                      },
-                    }}
-                    type="file"
-                    size="small"
-                    value=""
-                    name="v5c_cert"
-                    onChange={(e) => {
-                      formik.setFieldValue("v5c_cert", e.target.files[0]);
-                      formik.setFieldValue(
-                        "v5c_cert_url",
-                        URL.createObjectURL(e.target.files[0])
-                      );
-                    }}
-                    helperText={
-                      formik.touched.v5c_cert && formik.errors.v5c_cert
-                    }
-                  />
-                )}
 
-                {formik.values.v5c_cert_url && (
-                  <Card sx={{ width: "max-content" }}>
-                    <CardContent
-                      sx={{
-                        pb: "10px !important",
-                        pt: "30px !important",
-                        px: "10px !important",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          top: 5,
-                          right: 6,
-                        }}
-                      >
-                        <Card sx={{ borderRadius: "50%" }}>
-                          <IconButton
-                            size="small"
-                            onClick={() => {
-                              formik.setFieldValue("v5c_cert", "");
-                              formik.setFieldValue("v5c_cert_url", "");
-                            }}
-                          >
-                            <Close fontSize="small" />
-                          </IconButton>
-                        </Card>
-                      </Box>
-                      <Box
-                        style={{ margin: "10px" }}
-                        width="150px"
-                        height="150px"
-                        thumbnail
-                      >
-                        {formik.values.v5c_cert.name
-                          .toLowerCase()
-                          .endsWith(".pdf") ? (
-                          <embed
-                            src={formik.values.v5c_cert_url}
-                            type="application/pdf"
-                            width="100%"
-                            height="100%"
-                          />
-                        ) : (
-                          <img
-                            src={formik.values.v5c_cert_url}
-                            alt={formik.values.v5c_cert.name}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
-                          />
-                        )}
-                      </Box>
-                    </CardContent>
-                  </Card>
-                )}
+                <TextBox
+                  fullWidth
+                  isAdditional
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        border: "none",
+                      },
+                      "&:hover fieldset": {
+                        border: "none",
+                      },
+                      "&.Mui-focused fieldset": {
+                        border: "none",
+                      },
+                    },
+                  }}
+                  type="text"
+                  size="small"
+                  value={formik.values.vehicle_cert || ""}
+                  name="vehicle_cert"
+                  onChange={(e) =>
+                    formik.setFieldValue("vehicle_cert", e.target.value)
+                  }
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.vehicle_cert &&
+                    Boolean(formik.errors.vehicle_cert)
+                  }
+                  helperText={
+                    formik.touched.vehicle_cert && formik.errors.vehicle_cert
+                  }
+                />
               </Stack>
             </Grid>
             <Grid item md={4}>
@@ -2187,100 +2141,42 @@ const DocumentModal = ({ formik }) => {
             <Grid item md={4}>
               <Stack textAlign={"center"}>
                 <Typography textAlign="left" variant="p">
-                  National insurance number certificate
+                  National Insurance Number Certificate
                 </Typography>
-                {!formik.values.nationality_cert && (
-                  <TextBox
-                    fullWidth
-                    isAdditional={true}
-                    textBoxSx={{
-                      "& .MuiInput-root:after": {
-                        borderBottom: "0px !important",
-                      },
-                      "& .MuiInput-root:before": {
-                        borderBottom: "0px !important",
-                        content: '""',
-                      },
-                    }}
-                    type="file"
-                    size="small"
-                    value=""
-                    name="nationality_cert"
-                    onChange={(e) => {
-                      formik.setFieldValue(
-                        "nationality_cert",
-                        e.target.files[0]
-                      );
-                      formik.setFieldValue(
-                        "nationality_cert_url",
-                        URL.createObjectURL(e.target.files[0])
-                      );
-                    }}
-                    helperText={
-                      formik.touched.nationality_cert &&
-                      formik.errors.nationality_cert
-                    }
-                  />
-                )}
 
-                {formik.values.nationality_cert_url && (
-                  <Card sx={{ width: "max-content" }}>
-                    <CardContent
-                      sx={{
-                        pb: "10px !important",
-                        pt: "30px !important",
-                        px: "10px !important",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          top: 5,
-                          right: 6,
-                        }}
-                      >
-                        <Card sx={{ borderRadius: "50%" }}>
-                          <IconButton
-                            size="small"
-                            onClick={() => {
-                              formik.setFieldValue("nationality_cert", "");
-                              formik.setFieldValue("nationality_cert_url", "");
-                            }}
-                          >
-                            <Close fontSize="small" />
-                          </IconButton>
-                        </Card>
-                      </Box>
-                      <Box
-                        style={{ margin: "10px" }}
-                        width="150px"
-                        height="150px"
-                        thumbnail
-                      >
-                        {formik.values.nationality_cert.name
-                          .toLowerCase()
-                          .endsWith(".pdf") ? (
-                          <embed
-                            src={formik.values.nationality_cert_url}
-                            type="application/pdf"
-                            width="100%"
-                            height="100%"
-                          />
-                        ) : (
-                          <img
-                            src={formik.values.nationality_cert_url}
-                            alt={formik.values.nationality_cert.name}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
-                          />
-                        )}
-                      </Box>
-                    </CardContent>
-                  </Card>
-                )}
+                <TextBox
+                  fullWidth
+                  isAdditional
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        border: "none",
+                      },
+                      "&:hover fieldset": {
+                        border: "none",
+                      },
+                      "&.Mui-focused fieldset": {
+                        border: "none",
+                      },
+                    },
+                  }}
+                  type="text"
+                  size="small"
+                  value={formik.values.nationality_cert || ""}
+                  name="nationality_cert"
+                  onChange={(e) =>
+                    formik.setFieldValue("nationality_cert", e.target.value)
+                  }
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.nationality_cert &&
+                    Boolean(formik.errors.nationality_cert)
+                  }
+                  helperText={
+                    formik.touched.nationality_cert &&
+                    formik.errors.nationality_cert
+                  }
+                />
               </Stack>
             </Grid>
           </Grid>
@@ -2304,6 +2200,84 @@ const DocumentModal = ({ formik }) => {
         </Box>
         {/* </ModalDialog>
         </ModalOverflow> */}
+      </Modal>
+      <Modal open={openAddress} onClose={handleCloseAddress}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "50%",
+            p: 3,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            borderRadius: "10px",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Typography variant="h6" textAlign="center" mb={2}>
+            Enter Address
+          </Typography>
+
+          <Stack spacing={2}>
+            <TextField
+              fullWidth
+              label="Address"
+              name="address"
+              value={formik.values.address || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.address && Boolean(formik.errors.address)}
+              helperText={formik.touched.address && formik.errors.address}
+            />
+
+            <TextField
+              fullWidth
+              label="State"
+              name="state"
+              value={formik.values.state || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.state && Boolean(formik.errors.state)}
+              helperText={formik.touched.state && formik.errors.state}
+            />
+
+            <TextField
+              fullWidth
+              label="City"
+              name="city"
+              value={formik.values.city || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.city && Boolean(formik.errors.city)}
+              helperText={formik.touched.city && formik.errors.city}
+            />
+
+            <TextField
+              fullWidth
+              label="Zip Code"
+              name="zip_code"
+              value={formik.values.zip_code || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.zip_code && Boolean(formik.errors.zip_code)}
+              helperText={formik.touched.zip_code && formik.errors.zip_code}
+            />
+          </Stack>
+
+          <Stack alignItems="end" direction="row" spacing={2} mt={3}>
+            <Button variant="outlined" onClick={handleCloseAddress}>
+              Save
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={handleCloseAddress}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </Box>
       </Modal>
     </Box>
   );

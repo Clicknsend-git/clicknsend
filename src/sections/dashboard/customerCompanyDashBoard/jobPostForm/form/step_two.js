@@ -590,7 +590,6 @@ const StepTwo = ({
                       productItem?.address?.length > 0 &&
                       productItem?.address
                         .sort((a, b) => {
-                          
                           // Sorting logic: "drop" type comes first
                           if (a.type !== "drop" && b.type === "drop") {
                             return -1; // a comes first
@@ -602,7 +601,7 @@ const StepTwo = ({
                         })
                         .map((addressItem, addressIndex) => (
                           <Box key={productIndex} sx={{ mt: 4 }}>
-                            {console.log(productItem,addressItem,"df")}
+                            {console.log(productItem, addressItem, "df")}
                             <Card
                               sx={{
                                 borderRadius: "0px",
@@ -681,7 +680,11 @@ const StepTwo = ({
                                     />
                                   </Box>
                                 </Grid>
-                                {console.log('productIndex productIndex',productIndex,addressIndex)}
+                                {console.log(
+                                  "productIndex productIndex",
+                                  productIndex,
+                                  addressIndex
+                                )}
 
                                 <Grid item md={12}>
                                   <GoogleAutocomplete
@@ -743,7 +746,9 @@ const StepTwo = ({
                                   />
                                 </Grid>
                               </Grid>
-                              {addressItem?.type == "drop" && (productItem?.address?.length-1 === addressIndex) ? (
+                              {addressItem?.type == "drop" &&
+                              productItem?.address?.length - 1 ===
+                                addressIndex ? (
                                 <Button
                                   variant="contained"
                                   color="primary"
@@ -756,7 +761,12 @@ const StepTwo = ({
                               ) : (
                                 addressItem?.null
                               )}
-                              {addressItem?.type == "pickup"&&((productItem?.address?.filter(flr=>flr.type==="pickup").length-1 === addressIndex))  ? (
+                              {addressItem?.type == "pickup" &&
+                              productItem?.address?.filter(
+                                (flr) => flr.type === "pickup"
+                              ).length -
+                                1 ===
+                                addressIndex ? (
                                 <Button
                                   variant="contained"
                                   color="primary"

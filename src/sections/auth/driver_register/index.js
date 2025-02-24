@@ -160,7 +160,6 @@
 //     setIsButtonDisabled(false)
 //   },[formik.values.mobile.length])
 
-
 //   useEffect(() => {
 //     const timer = setTimeout(() => {
 //       setShowResendLink(true);
@@ -263,7 +262,7 @@
 //               icon={false}
 //               severity="success"
 //             >
-            
+
 //               {response?.data?.message}
 //             </Alert>,
 //             {
@@ -393,7 +392,7 @@
 //         // formik.setFieldValue("otp", response?.data?.verification_code);
 //         // Resetformik.setFieldValue("otp", values?.otp);
 //         // Resetformik.setFieldValue("email", values?.email);
-        
+
 //       } else {
 //         enqueueSnackbar(
 //           <Alert
@@ -541,7 +540,7 @@
 //               <Box sx={{marginTop: "60px"}} style={{position: "sticky", top:"100px"}}>
 //                 <Box src="/login/bro.png" component="img" />
 //               </Box>
-              
+
 //             </Grid>
 
 //             <Grid item md={5} sm={12} xs={12}>
@@ -1316,7 +1315,7 @@
 //               variant="contained"
 //               color="dark"
 //               onClick={() => {
-//                 setOpens(true);              
+//                 setOpens(true);
 //               }}
 //             >
 //               Close
@@ -1330,9 +1329,6 @@
 // };
 
 // export default DriverRegister;
-
-
-
 
 // import { useEffect } from "react";
 // import { useAuthContext } from "@/auth/useAuthContext";
@@ -1496,7 +1492,6 @@
 //     setIsButtonDisabled(false)
 //   },[formik.values.mobile.length])
 
-
 //   useEffect(() => {
 //     const timer = setTimeout(() => {
 //       setShowResendLink(true);
@@ -1599,7 +1594,7 @@
 //               icon={false}
 //               severity="success"
 //             >
-            
+
 //               {response?.data?.message}
 //             </Alert>,
 //             {
@@ -1729,7 +1724,7 @@
 //         // formik.setFieldValue("otp", response?.data?.verification_code);
 //         // Resetformik.setFieldValue("otp", values?.otp);
 //         // Resetformik.setFieldValue("email", values?.email);
-        
+
 //       } else {
 //         enqueueSnackbar(
 //           <Alert
@@ -1877,7 +1872,7 @@
 //               <Box sx={{marginTop: "60px"}} style={{position: "sticky", top:"100px"}}>
 //                 <Box src="/login/bro.png" component="img" />
 //               </Box>
-              
+
 //             </Grid>
 
 //             <Grid item md={5} sm={12} xs={12}>
@@ -2652,7 +2647,7 @@
 //               variant="contained"
 //               color="dark"
 //               onClick={() => {
-//                 setOpens(true);              
+//                 setOpens(true);
 //               }}
 //             >
 //               Close
@@ -2667,21 +2662,14 @@
 
 // export default DriverRegister;
 
-
-
-
-
-
-
-import { useEffect, useState ,useCallback } from "react";
-import axios from "axios"; 
+import { useEffect, useState, useCallback } from "react";
+import axios from "axios";
 import { useAuthContext } from "@/auth/useAuthContext";
 import OTPDialogBox from "@/components/dialog/otpModal";
 import { PasswordBox, SelectBox, TextBox } from "@/components/form";
 import Iconify from "@/components/iconify/Iconify";
 import { OTPForm } from "../../../components/dialog/forgetPasswordModal/otpForm";
 import { DialogHeader } from "../../../components/dialog/forgetPasswordModal/header";
-
 import DocumentModal from "@/module/driverDocument/driverDocumentmodal";
 import { Close } from "@mui/icons-material";
 import {
@@ -2718,8 +2706,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) => {
-  
+const DriverRegister = ({
+  formik,
+  open,
+  handleOpenClose,
+  setOTPSubmitVerified,
+}) => {
   const VehicleTypeTruck = [
     {
       label: "7.5t",
@@ -2812,7 +2804,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
   const [selected, setSelected] = React.useState("GB");
   const [validateOTP, setValidateOTP] = React.useState(true);
   const [successMessage, setSuccessMessage] = React.useState(false);
-  const [selectedCoutry, setSelectedCountry] = React.useState('+44');
+  const [selectedCoutry, setSelectedCountry] = React.useState("+44");
 
   //ButtonDisabled
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
@@ -2820,17 +2812,11 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
   const [showResendLink, setShowResendLink] = React.useState(false);
   const [secondsRemaining, setSecondsRemaining] = React.useState(60);
 
-// add for vehicle-type option
+  // add for vehicle-type option
 
   const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
   const [vehicleOptions, setVehicleOptions] = useState([]);
   const [loading, setLoading] = useState(false);
-
-
-  
-
-
-
 
   useEffect(() => {
     // Fetch vehicle types from API
@@ -2838,22 +2824,23 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
       .get("https://evsexpres.com/api/auth/default/vehicle-type")
       .then((response) => {
         console.log("API Response:", response);
-        if (response.data?.view_data && Array.isArray(response.data.view_data)) {
+        if (
+          response.data?.view_data &&
+          Array.isArray(response.data.view_data)
+        ) {
           const options = response.data.view_data.map((item) => ({
             label: item,
             value: item.toLowerCase().replace(/ /g, "_"),
           }));
-          setVehicleTypeOptions(options); 
+          setVehicleTypeOptions(options);
         } else {
           console.error("Invalid data format from API");
         }
       })
       .catch((error) => {
-        console.error("Error fetching vehicle types:", error); 
+        console.error("Error fetching vehicle types:", error);
       });
   }, []);
-
-
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -2881,9 +2868,9 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
       setLoading(false);
     }
   }, []);
-  const setVechlle=async (types)=>{
-    console.log(types,"sdk")
-     
+  const setVechlle = async (types) => {
+    console.log(types, "sdk");
+
     setLoading(true);
     try {
       const responses = await Promise.all([
@@ -2905,21 +2892,14 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-
-
-
-
-  
-
   const customLabels = {
     GB: { primary: "UK", secondary: "+44" },
-    IN: { primary: "IN", secondary: "+91" },
   };
   const handleSelect = (countryCode) => {
     const selectedCountry = countryCode.toUpperCase();
@@ -2930,10 +2910,9 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
     setSelected(selectedCountry);
   };
 
-  useEffect(()=>{
-    setIsButtonDisabled(false)
-  },[formik.values.mobile.length])
-
+  useEffect(() => {
+    setIsButtonDisabled(false);
+  }, [formik.values.mobile.length]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -3009,7 +2988,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
 
       try {
         let newPhoneNumber = formik?.values?.mobile?.replace(/^0+/, "");
-        console.log('newPhoneNumber',newPhoneNumber);
+        console.log("newPhoneNumber", newPhoneNumber);
         const url = "/api/user/send-otp";
         const formData = {
           email: `${newPhoneNumber}`,
@@ -3037,7 +3016,6 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
               icon={false}
               severity="success"
             >
-            
               {response?.data?.message}
             </Alert>,
             {
@@ -3090,7 +3068,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
         }
       } catch (error) {
         console.error("Error occurred:", error);
-        if(error.response.status===409){
+        if (error.response.status === 409) {
           enqueueSnackbar(
             <Alert
               style={{
@@ -3167,7 +3145,6 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
         // formik.setFieldValue("otp", response?.data?.verification_code);
         // Resetformik.setFieldValue("otp", values?.otp);
         // Resetformik.setFieldValue("email", values?.email);
-        
       } else {
         enqueueSnackbar(
           <Alert
@@ -3310,12 +3287,13 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
       <Box sx={{ pb: 4, py: 12 }}>
         <Container>
           <Grid sx={{ justifyContent: "center" }} container spacing={0}>
-
-            <Grid item md={6} >
-              <Box sx={{marginTop: "60px"}} style={{position: "sticky", top:"100px"}}>
+            <Grid item md={6}>
+              <Box
+                sx={{ marginTop: "60px" }}
+                style={{ position: "sticky", top: "100px" }}
+              >
                 <Box src="/login/bro.png" component="img" />
               </Box>
-              
             </Grid>
 
             <Grid item md={5} sm={12} xs={12}>
@@ -3480,7 +3458,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                       <ReactFlagsSelect
                         selected={selected}
                         onSelect={handleSelect}
-                        countries={["GB", "IN"]}
+                        countries={["GB"]}
                         customLabels={customLabels}
                         selectedSize={10}
                         className="menu-flags"
@@ -3561,7 +3539,10 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                         <Button
                           variant="contained"
                           color="primary"
-                          disabled={isButtonDisabled || formik.values.mobile.length !== 11} // Set disabled state
+                          disabled={
+                            isButtonDisabled ||
+                            formik.values.mobile.length !== 11
+                          } // Set disabled state
                           sx={{ width: "110px", marginLeft: "10px" }}
                           onClick={() => {
                             reformik.handleSubmit();
@@ -3650,36 +3631,40 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                     />
                   </Box> */}
 
-<Box mt={2}>
-      <SelectBox
-        fullWidth
-        label="Vehicle Type"
-        value={formik.values?.vehical_type}
-        name="vehicle_type"
-        options={vehicleTypeOptions} // Use the fetched options
-        onChange={(e) => {
-          const selectedValue = e.target.value;
-          formik.setFieldValue("vehicle_type", selectedValue);
-          formik.setFieldValue("vehicle", "");
-          setVechlle(vehicleTypeOptions?.find((data)=>data.value===e.target.value));
+                  <Box mt={2}>
+                    <SelectBox
+                      fullWidth
+                      label="Vehicle Type"
+                      value={formik.values?.vehical_type}
+                      name="vehicle_type"
+                      options={vehicleTypeOptions} // Use the fetched options
+                      onChange={(e) => {
+                        const selectedValue = e.target.value;
+                        formik.setFieldValue("vehicle_type", selectedValue);
+                        formik.setFieldValue("vehicle", "");
+                        setVechlle(
+                          vehicleTypeOptions?.find(
+                            (data) => data.value === e.target.value
+                          )
+                        );
 
-          // Update vehicle options based on selected vehicle type
-          if (selectedValue === "van") {
-            setVehicle(VehicleTypeVan);
-          } else if (selectedValue === "truck") {
-            setVehicle(VehicleTypeTruck);
-          } else {
-            setVehicle([]);
-          }
-        }}
-        helperText={
-          formik.touched.vehical_type && formik.errors.vehical_type
-        }
-        size="small"
-        vehicle="small"
-      />
-    </Box>
-
+                        // Update vehicle options based on selected vehicle type
+                        if (selectedValue === "van") {
+                          setVehicle(VehicleTypeVan);
+                        } else if (selectedValue === "truck") {
+                          setVehicle(VehicleTypeTruck);
+                        } else {
+                          setVehicle([]);
+                        }
+                      }}
+                      helperText={
+                        formik.touched.vehical_type &&
+                        formik.errors.vehical_type
+                      }
+                      size="small"
+                      vehicle="small"
+                    />
+                  </Box>
 
                   {/* <Box mb={2}>
                     <SelectBox
@@ -3697,25 +3682,34 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                     />
                   </Box> */}
 
-                  
-<form onSubmit={formik.handleSubmit}>
-      {/* Vehicle SelectBox */}
-      <Box mb={2}>
-        <SelectBox
-          fullWidth
-          label="vehicle_body"
-          value={formik.values?.vehicle_body}
-          name="vehicle_body"
-          options={loading ? [] : [{ label: "Select Vehicle", value: "" }, ...vehicleOptions]} // Add default option
-          onChange={(e) =>{  formik.setFieldValue("vehicle_body", e.target.value)}} // Update Formik state
-          helperText={formik.touched.vehicle && formik.errors.vehicle}
-          size="small"
-          disabled={loading} // Disable dropdown while loading
-        />
-      </Box>
-    </form>     
+                  <form onSubmit={formik.handleSubmit}>
+                    {/* Vehicle SelectBox */}
+                    <Box mb={2}>
+                      <SelectBox
+                        fullWidth
+                        label="vehicle_body"
+                        value={formik.values?.vehicle_body}
+                        name="vehicle_body"
+                        options={
+                          loading
+                            ? []
+                            : [
+                                { label: "Select Vehicle", value: "" },
+                                ...vehicleOptions,
+                              ]
+                        } // Add default option
+                        onChange={(e) => {
+                          formik.setFieldValue("vehicle_body", e.target.value);
+                        }} // Update Formik state
+                        helperText={
+                          formik.touched.vehicle && formik.errors.vehicle
+                        }
+                        size="small"
+                        disabled={loading} // Disable dropdown while loading
+                      />
+                    </Box>
+                  </form>
 
-                  
                   {formik.values.user_type === "driver" ? (
                     <Box textAlign="center">
                       <DocumentModal formik={formik} />
@@ -3725,7 +3719,6 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                   )}
 
                   {formik.values.user_type === "company" ? (
-
                     <Box>
                       <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
                         {/* Company Certificate */}
@@ -3733,103 +3726,36 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                           <Typography textAlign="left" variant="p">
                             Company Certificate
                           </Typography>
-                          {!formik.values.company_certificate && (
-                            <TextBox
-                              variant="standard"
-                              fullWidth
-                              type="file"
-                              size="small"
-                              value=""
-                              name="company_certificate"
-                              onChange={(e) => {
-                                formik.setFieldValue(
-                                  "company_certificate",
-                                  e.target.files[0]
-                                );
-                                formik.setFieldValue(
-                                  "company_certificate_url",
-                                  URL.createObjectURL(e.target.files[0])
-                                );
-                              }}
-                              helperText={
-                                formik.touched.company_certificate &&
-                                formik.errors.company_certificate
-                              }
-                              isAdditional={true}
-                              textBoxSx={{
-                                "& .MuiInput-root:after": {
-                                  borderBottom: "0px !important",
-                                },
-                                "& .MuiInput-root:before": {
-                                  borderBottom: "0px !important",
-                                  content: '""',
-                                },
-                              }}
-                            />
-                          )}
-                          {formik.values.company_certificate_url && (
-                            <Card sx={{ width: "max-content" }}>
-                              <CardContent>
-                                <Box sx={{ position: "relative" }}>
-                                  <IconButton
-                                    size="small"
-                                    sx={{
-                                      position: "absolute",
-                                      top: 0,
-                                      right: 0,
-                                    }}
-                                    onClick={() => {
-                                      formik.setFieldValue(
-                                        "company_certificate",
-                                        ""
-                                      );
-                                      formik.setFieldValue(
-                                        "company_certificate_url",
-                                        ""
-                                      );
-                                    }}
-                                  >
-                                    <Close fontSize="small" />
-                                  </IconButton>
-                                  <Box
-                                    style={{
-                                      margin: "10px",
-                                      width: "150px",
-                                      height: "150px",
-                                    }}
-                                    thumbnail
-                                  >
-                                    {formik.values.company_certificate.name
-                                      .toLowerCase()
-                                      .endsWith(".pdf") ? (
-                                      <embed
-                                        src={
-                                          formik.values.company_certificate_url
-                                        }
-                                        type="application/pdf"
-                                        width="100%"
-                                        height="100%"
-                                      />
-                                    ) : (
-                                      <img
-                                        src={
-                                          formik.values.company_certificate_url
-                                        }
-                                        alt={
-                                          formik.values.company_certificate.name
-                                        }
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "cover",
-                                        }}
-                                      />
-                                    )}
-                                  </Box>
-                                </Box>
-                              </CardContent>
-                            </Card>
-                          )}
+
+                          <TextBox
+                            fullWidth
+                            isAdditional
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                "& fieldset": { border: "none" },
+                                "&:hover fieldset": { border: "none" },
+                                "&.Mui-focused fieldset": { border: "none" },
+                              },
+                            }}
+                            type="text"
+                            size="small"
+                            name="company_certificate"
+                            value={formik.values.company_certificate || ""}
+                            onChange={(e) => {
+                              formik.setFieldValue(
+                                "company_certificate",
+                                e.target.value
+                              );
+                            }}
+                            error={
+                              formik.touched.company_certificate &&
+                              Boolean(formik.errors.company_certificate)
+                            }
+                            helperText={
+                              formik.touched.company_certificate &&
+                              formik.errors.company_certificate
+                            }
+                          />
                         </Stack>
 
                         {/* Company VAT Certificate */}
@@ -3837,95 +3763,36 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                           <Typography textAlign="left" variant="p">
                             Company VAT Certificate
                           </Typography>
-                          {!formik.values.company_vat && (
-                            <TextBox
-                              variant="standard"
-                              fullWidth
-                              type="file"
-                              size="small"
-                              value=""
-                              name="company_vat"
-                              onChange={(e) => {
-                                formik.setFieldValue(
-                                  "company_vat",
-                                  e.target.files[0]
-                                );
-                                formik.setFieldValue(
-                                  "company_vat_url",
-                                  URL.createObjectURL(e.target.files[0])
-                                );
-                              }}
-                              helperText={
-                                formik.touched.company_vat &&
-                                formik.errors.company_vat
-                              }
-                              isAdditional={true}
-                              textBoxSx={{
-                                "& .MuiInput-root:after": {
-                                  borderBottom: "0px !important",
-                                },
-                                "& .MuiInput-root:before": {
-                                  borderBottom: "0px !important",
-                                  content: '""',
-                                },
-                              }}
-                            />
-                          )}
 
-                          {formik.values.company_vat_url && (
-                            <Card sx={{ width: "max-content" }}>
-                              <CardContent>
-                                <Box sx={{ position: "relative" }}>
-                                  <IconButton
-                                    size="small"
-                                    sx={{
-                                      position: "absolute",
-                                      top: 0,
-                                      right: 0,
-                                    }}
-                                    onClick={() => {
-                                      formik.setFieldValue("company_vat", "");
-                                      formik.setFieldValue(
-                                        "company_vat_url",
-                                        ""
-                                      );
-                                    }}
-                                  >
-                                    <Close fontSize="small" />
-                                  </IconButton>
-                                  <Box
-                                    style={{
-                                      margin: "10px",
-                                      width: "150px",
-                                      height: "150px",
-                                    }}
-                                    thumbnail
-                                  >
-                                    {formik.values.company_vat.name
-                                      .toLowerCase()
-                                      .endsWith(".pdf") ? (
-                                      <embed
-                                        src={formik.values.company_vat_url}
-                                        type="application/pdf"
-                                        width="100%"
-                                        height="100%"
-                                      />
-                                    ) : (
-                                      <img
-                                        src={formik.values.company_vat_url}
-                                        alt={formik.values.company_vat.name}
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "cover",
-                                        }}
-                                      />
-                                    )}
-                                  </Box>
-                                </Box>
-                              </CardContent>
-                            </Card>
-                          )}
+                          <TextBox
+                            fullWidth
+                            isAdditional
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                "& fieldset": { border: "none" },
+                                "&:hover fieldset": { border: "none" },
+                                "&.Mui-focused fieldset": { border: "none" },
+                              },
+                            }}
+                            type="text"
+                            size="small"
+                            name="company_vat"
+                            value={formik.values.company_vat || ""}
+                            onChange={(e) => {
+                              formik.setFieldValue(
+                                "company_vat",
+                                e.target.value
+                              );
+                            }}
+                            error={
+                              formik.touched.company_vat &&
+                              Boolean(formik.errors.company_vat)
+                            }
+                            helperText={
+                              formik.touched.company_vat &&
+                              formik.errors.company_vat
+                            }
+                          />
                         </Stack>
                       </Stack>
                     </Box>
@@ -4143,7 +4010,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
               variant="contained"
               color="dark"
               onClick={() => {
-                setOpens(true);              
+                setOpens(true);
               }}
             >
               Close

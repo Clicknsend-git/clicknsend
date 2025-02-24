@@ -16,10 +16,12 @@ import {
   Checkbox,
   Divider,
   Container,
+  Modal,
   FormControl,
   FormControlLabel,
   FormHelperText,
   Grid,
+  TextField,
   IconButton,
   Radio,
   Stack,
@@ -49,6 +51,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
 
   const [opens, setOpens] = React.useState(false);
   const [value, setValue] = React.useState();
+  const [openAddress, setOpenAddress] = React.useState(false);
 
   const { signUpWithGoogle, user, signUpWithFacebook } = useAuthContext();
   const [showResend, setShowResend] = React.useState(false);
@@ -71,7 +74,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
   const [successMessage, setSuccessMessage] = React.useState(false);
 
   const [selectedCoutry, setSelectedCountry] = React.useState("+44");
-  console.log(formik, 'formik');
+  console.log(formik, "formik");
   useEffect(() => {
     setIsButtonDisabled(false);
   }, [formik.values.mobile.length]);
@@ -81,7 +84,6 @@ const Register = ({ formik, open, handleOpenClose }) => {
 
   const customLabels = {
     GB: { primary: "UK", secondary: "+44" },
-    IN: { primary: "IN", secondary: "+91" },
   };
 
   const handleSelect = (countryCode) => {
@@ -151,7 +153,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
   const reformik = useFormik({
     initialValues: {
       email: formik && formik?.values?.mobile ? formik?.values?.mobile : "",
-      otp: '',
+      otp: "",
       type: "mobile",
     },
     validate: (values) => {},
@@ -482,6 +484,8 @@ const Register = ({ formik, open, handleOpenClose }) => {
 
   // console.log("loginOTP", loginOTP);
   // console.log("reformik", reformik);
+  const handleOpenAddress = () => setOpenAddress(true);
+  const handleCloseAddress = () => setOpenAddress(false);
 
   return (
     <React.Fragment>
@@ -679,7 +683,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                       <ReactFlagsSelect
                         selected={selected}
                         onSelect={handleSelect}
-                        countries={["GB", "IN"]}
+                        countries={["GB"]}
                         customLabels={customLabels}
                         selectedSize={10}
                         className="menu-flags"
@@ -795,6 +799,16 @@ const Register = ({ formik, open, handleOpenClose }) => {
                       size="small"
                     />
                   </Box>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    sx={{ mt: 2 }}
+                    onClick={handleOpenAddress}
+                  >
+                    Add Address
+                  </Button>
+
                   {formik.values.user_type === "company" && (
                     <Box>
                       <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
@@ -804,104 +818,35 @@ const Register = ({ formik, open, handleOpenClose }) => {
                             Company Certificate
                           </Typography>
 
-                          {!formik.values.company_certificate && (
-                            <TextBox
-                              variant="standard"
-                              fullWidth
-                              type="file"
-                              size="small"
-                              value=""
-                              name="company_certificate"
-                              onChange={(e) => {
-                                formik.setFieldValue(
-                                  "company_certificate",
-                                  e.target.files[0]
-                                );
-                                formik.setFieldValue(
-                                  "company_certificate_url",
-                                  URL.createObjectURL(e.target.files[0])
-                                );
-                              }}
-                              helperText={
-                                formik.touched.company_certificate &&
-                                formik.errors.company_certificate
-                              }
-                              isAdditional={true}
-                              textBoxSx={{
-                                "& .MuiInput-root:after": {
-                                  borderBottom: "0px !important",
-                                },
-                                "& .MuiInput-root:before": {
-                                  borderBottom: "0px !important",
-                                  content: '""',
-                                },
-                              }}
-                            />
-                          )}
-
-                          {formik.values.company_certificate_url && (
-                            <Card sx={{ width: "max-content" }}>
-                              <CardContent>
-                                <Box sx={{ position: "relative" }}>
-                                  <IconButton
-                                    size="small"
-                                    sx={{
-                                      position: "absolute",
-                                      top: 0,
-                                      right: 0,
-                                    }}
-                                    onClick={() => {
-                                      formik.setFieldValue(
-                                        "company_certificate",
-                                        ""
-                                      );
-                                      formik.setFieldValue(
-                                        "company_certificate_url",
-                                        ""
-                                      );
-                                    }}
-                                  >
-                                    <Close fontSize="small" />
-                                  </IconButton>
-                                  <Box
-                                    style={{
-                                      margin: "10px",
-                                      width: "150px",
-                                      height: "150px",
-                                    }}
-                                    thumbnail
-                                  >
-                                    {formik.values.company_certificate.name
-                                      .toLowerCase()
-                                      .endsWith(".pdf") ? (
-                                      <embed
-                                        src={
-                                          formik.values.company_certificate_url
-                                        }
-                                        type="application/pdf"
-                                        width="100%"
-                                        height="100%"
-                                      />
-                                    ) : (
-                                      <img
-                                        src={
-                                          formik.values.company_certificate_url
-                                        }
-                                        alt={
-                                          formik.values.company_certificate.name
-                                        }
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "cover",
-                                        }}
-                                      />
-                                    )}
-                                  </Box>
-                                </Box>
-                              </CardContent>
-                            </Card>
-                          )}
+                          <TextBox
+                            fullWidth
+                            isAdditional
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                "& fieldset": { border: "none" },
+                                "&:hover fieldset": { border: "none" },
+                                "&.Mui-focused fieldset": { border: "none" },
+                              },
+                            }}
+                            type="text"
+                            size="small"
+                            name="company_certificate"
+                            value={formik.values.company_certificate || ""}
+                            onChange={(e) => {
+                              formik.setFieldValue(
+                                "company_certificate",
+                                e.target.value
+                              );
+                            }}
+                            error={
+                              formik.touched.company_certificate &&
+                              Boolean(formik.errors.company_certificate)
+                            }
+                            helperText={
+                              formik.touched.company_certificate &&
+                              formik.errors.company_certificate
+                            }
+                          />
                         </Stack>
 
                         {/* Company VAT Certificate */}
@@ -909,95 +854,36 @@ const Register = ({ formik, open, handleOpenClose }) => {
                           <Typography textAlign="left" variant="p">
                             Company VAT Certificate
                           </Typography>
-                          {!formik.values.company_vat && (
-                            <TextBox
-                              variant="standard"
-                              fullWidth
-                              type="file"
-                              size="small"
-                              value=""
-                              name="company_vat"
-                              onChange={(e) => {
-                                formik.setFieldValue(
-                                  "company_vat",
-                                  e.target.files[0]
-                                );
-                                formik.setFieldValue(
-                                  "company_vat_url",
-                                  URL.createObjectURL(e.target.files[0])
-                                );
-                              }}
-                              helperText={
-                                formik.touched.company_vat &&
-                                formik.errors.company_vat
-                              }
-                              isAdditional={true}
-                              textBoxSx={{
-                                "& .MuiInput-root:after": {
-                                  borderBottom: "0px !important",
-                                },
-                                "& .MuiInput-root:before": {
-                                  borderBottom: "0px !important",
-                                  content: '""',
-                                },
-                              }}
-                            />
-                          )}
 
-                          {formik.values.company_vat_url && (
-                            <Card sx={{ width: "max-content" }}>
-                              <CardContent>
-                                <Box sx={{ position: "relative" }}>
-                                  <IconButton
-                                    size="small"
-                                    sx={{
-                                      position: "absolute",
-                                      top: 0,
-                                      right: 0,
-                                    }}
-                                    onClick={() => {
-                                      formik.setFieldValue("company_vat", "");
-                                      formik.setFieldValue(
-                                        "company_vat_url",
-                                        ""
-                                      );
-                                    }}
-                                  >
-                                    <Close fontSize="small" />
-                                  </IconButton>
-                                  <Box
-                                    style={{
-                                      margin: "10px",
-                                      width: "150px",
-                                      height: "150px",
-                                    }}
-                                    thumbnail
-                                  >
-                                    {formik.values.company_vat.name
-                                      .toLowerCase()
-                                      .endsWith(".pdf") ? (
-                                      <embed
-                                        src={formik.values.company_vat_url}
-                                        type="application/pdf"
-                                        width="100%"
-                                        height="100%"
-                                      />
-                                    ) : (
-                                      <img
-                                        src={formik.values.company_vat_url}
-                                        alt={formik.values.company_vat.name}
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "cover",
-                                        }}
-                                      />
-                                    )}
-                                  </Box>
-                                </Box>
-                              </CardContent>
-                            </Card>
-                          )}
+                          <TextBox
+                            fullWidth
+                            isAdditional
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                "& fieldset": { border: "none" },
+                                "&:hover fieldset": { border: "none" },
+                                "&.Mui-focused fieldset": { border: "none" },
+                              },
+                            }}
+                            type="text"
+                            size="small"
+                            name="company_vat"
+                            value={formik.values.company_vat || ""}
+                            onChange={(e) => {
+                              formik.setFieldValue(
+                                "company_vat",
+                                e.target.value
+                              );
+                            }}
+                            error={
+                              formik.touched.company_vat &&
+                              Boolean(formik.errors.company_vat)
+                            }
+                            helperText={
+                              formik.touched.company_vat &&
+                              formik.errors.company_vat
+                            }
+                          />
                         </Stack>
                       </Stack>
                     </Box>
@@ -1153,7 +1039,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
               formik={formik}
               showOTP={showOTP}
               onOtpChange={handleOtpChange}
-              autoComplete="off" 
+              autoComplete="off"
             />
 
             <Box>
@@ -1205,6 +1091,84 @@ const Register = ({ formik, open, handleOpenClose }) => {
           {/* </Box> */}
         </Dialog>
       )}
+      <Modal open={openAddress} onClose={handleCloseAddress}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "50%",
+            p: 3,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            borderRadius: "10px",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Typography variant="h6" textAlign="center" mb={2}>
+            Enter Address
+          </Typography>
+
+          <Stack spacing={2}>
+            <TextField
+              fullWidth
+              label="Address"
+              name="address"
+              value={formik.values.address || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.address && Boolean(formik.errors.address)}
+              helperText={formik.touched.address && formik.errors.address}
+            />
+
+            <TextField
+              fullWidth
+              label="State"
+              name="state"
+              value={formik.values.state || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.state && Boolean(formik.errors.state)}
+              helperText={formik.touched.state && formik.errors.state}
+            />
+
+            <TextField
+              fullWidth
+              label="City"
+              name="city"
+              value={formik.values.city || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.city && Boolean(formik.errors.city)}
+              helperText={formik.touched.city && formik.errors.city}
+            />
+
+            <TextField
+              fullWidth
+              label="Zip Code"
+              name="zip_code"
+              value={formik.values.zip_code || ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.zip_code && Boolean(formik.errors.zip_code)}
+              helperText={formik.touched.zip_code && formik.errors.zip_code}
+            />
+          </Stack>
+
+          <Stack alignItems="end" direction="row" spacing={2} mt={3}>
+            <Button variant="outlined" onClick={handleCloseAddress}>
+              Save
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={handleCloseAddress}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
     </React.Fragment>
   );
 };

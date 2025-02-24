@@ -20,7 +20,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import { LocationOnOutlined } from "@mui/icons-material";
 import FormControl from "./formControl";
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 const GoogleAutocomplete = (props) => {
   const {
     name,
@@ -69,29 +69,27 @@ const GoogleAutocomplete = (props) => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-
+  const id = open ? "simple-popover" : undefined;
 
   const handleSelect = async (value) => {
     let address, lat, long, city, state, country, zipCode;
-  
+
     address = value;
-  
+
     try {
       const results = await geocodeByAddress(address);
       console.log("Geocode results:", results);
-  
+
       const latLng = await getLatLng(results[0]);
       lat = latLng?.lat;
       long = latLng?.lng;
       console.log("latLng:", latLng);
-  
+
       // Extract additional address details
       const addressComponents = results[0]?.address_components || [];
       let localityFound = false;
       let postalCodeFound = false;
-  
+
       addressComponents.forEach((component) => {
         if (component.types.includes("locality")) {
           city = component.long_name;
@@ -111,7 +109,7 @@ const GoogleAutocomplete = (props) => {
           postalCodeFound = true;
         }
       });
-  
+
       // Handle cases where locality or postal code is missing
       if (!localityFound) {
         city = "City not available";
@@ -119,36 +117,42 @@ const GoogleAutocomplete = (props) => {
       if (!postalCodeFound) {
         zipCode = "ZIP/Postal Code not available";
       }
-  
-      console.log("City:", city, "State:", state, "Country:", country, "ZIP Code:", zipCode);
+
+      console.log(
+        "City:",
+        city,
+        "State:",
+        state,
+        "Country:",
+        country,
+        "ZIP Code:",
+        zipCode
+      );
     } catch (error) {
       address = "";
       console.error("Error:", error);
     }
-  
+
     await onSelect(address, lat, long, city, state, country, zipCode);
   };
-  
-  
-  
 
   return (
-    <Box sx={{ my: 0, width: "100%", position: "relative"}}>
+    <Box sx={{ my: 0, width: "100%", position: "relative" }}>
       <PlacesAutocomplete
         value={value}
         onChange={(e) => props.onChange(e)}
         onSelect={(e) => handleSelect(e)}
+        searchOptions={{
+          componentRestrictions: { country: "uk" }, // Restrict to UK
+        }}
 
         // searchOptions={{
-        //   componentRestrictions: { country: "uk" }, // Restrict to UK
+        //   componentRestrictions: { country: "ind" }, // Restrict to ind
         // }}
-
-        searchOptions={{
-          componentRestrictions: { country: "ind" }, // Restrict to ind
-        }}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
-{/* 
+          {
+            /* 
           suggestions.push({
             description: "nfksdakj"
           })
@@ -167,10 +171,10 @@ const GoogleAutocomplete = (props) => {
           })
           suggestions.push({
             description: "nfksdakj"
-          }) */}
+          }) */
+          }
           return (
             <Box component="div">
-
               <FormControl
                 key={`key${name}`}
                 error={helperText ? true : false}
@@ -181,7 +185,6 @@ const GoogleAutocomplete = (props) => {
                 }}
                 size={size}
               >
-
                 <TextField
                   {...rest}
                   fullWidth={fullWidth}
@@ -191,11 +194,11 @@ const GoogleAutocomplete = (props) => {
                   sx={
                     !isBackgroundColor
                       ? {
-                        "& .MuiOutlinedInput-input": {
-                          background: (theme) => theme.palette.common.white,
-                          borderRadius: "0.25rem",
-                        },
-                      }
+                          "& .MuiOutlinedInput-input": {
+                            background: (theme) => theme.palette.common.white,
+                            borderRadius: "0.25rem",
+                          },
+                        }
                       : { ...textBoxSx }
                   }
                   label={label}
@@ -233,7 +236,9 @@ const GoogleAutocomplete = (props) => {
                     startAdornment: (
                       <>
                         {startIcon && (
-                          <InputAdornment position={inputStartAdornmentPosition}>
+                          <InputAdornment
+                            position={inputStartAdornmentPosition}
+                          >
                             {startIcon}
                           </InputAdornment>
                         )}
@@ -250,18 +255,23 @@ const GoogleAutocomplete = (props) => {
                 </Box>
               </FormControl>
 
-              <Box sx={{
-                // position: 'absolute',
-                // backgroundColor: 'white',
-                // // zIndex: 1300,
-                // inset: "0px auto auto 0px",
-                // transform: "translate3d(0px, 36px, 0px)",
-                // listView: {
-                //   position: 'absolute',
-                //   backgroundColor: 'white',
-                //   zIndex: 1300,
-                // }
-              }} className="autocomplete-dropdown-container">
+              <Box
+                sx={
+                  {
+                    // position: 'absolute',
+                    // backgroundColor: 'white',
+                    // // zIndex: 1300,
+                    // inset: "0px auto auto 0px",
+                    // transform: "translate3d(0px, 36px, 0px)",
+                    // listView: {
+                    //   position: 'absolute',
+                    //   backgroundColor: 'white',
+                    //   zIndex: 1300,
+                    // }
+                  }
+                }
+                className="autocomplete-dropdown-container"
+              >
                 <Paper
                   elevation={5}
                   sx={{
@@ -269,10 +279,10 @@ const GoogleAutocomplete = (props) => {
                     maxHeight: "200px",
                     overflow: "hidden",
                     overflowY: "scroll",
-                    background: (theme) => theme.palette.common.white
+                    background: (theme) => theme.palette.common.white,
                   }}
                 >
-                  <Box >
+                  <Box>
                     {loading && <Box>Loading...</Box>}
                     {!loading &&
                       suggestions.map((suggestion, index) => {
@@ -311,7 +321,7 @@ const GoogleAutocomplete = (props) => {
                 </Paper>
               </Box>
             </Box>
-          )
+          );
         }}
       </PlacesAutocomplete>
     </Box>

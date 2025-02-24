@@ -237,410 +237,425 @@ const BidList = () => {
     setShowPayment(true);
   };
 
-
   return (
     <React.Fragment>
       <Box py={4} sx={{ mt: 10 }} pb={12}>
         <Container>
-        {!showPayment ? (
-          <>
-          <Grid container spacing={2}>
-            {loading ? (
-              <Grid item md={6}>
-                <SkeletonLoader />
-              </Grid>
-            ) : (
-              <Grid item md={6}>
-                <Stack sx={{ height: "100%" }} justifyContent="space-between">
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
+          {!showPayment ? (
+            <>
+              <Grid container spacing={2}>
+                {loading ? (
+                  <Grid item md={6}>
+                    <SkeletonLoader />
+                  </Grid>
+                ) : (
+                  <Grid item md={6}>
                     <Stack
-                      direction="row"
+                      sx={{ height: "100%" }}
                       justifyContent="space-between"
-                      alignItems="center"
                     >
                       <Stack
+                        direction="row"
+                        justifyContent="space-between"
                         alignItems="center"
-                        onClick={() =>
-                          router.push("/dashboard/customer/job_posted")
-                        }
-                        mr={2}
-                        sx={{
-                          cursor: "pointer",
-                          border: (theme) =>
-                            `2px solid ${theme.palette.primary.main}`,
-                          borderRadius: "50%",
-                        }}
-                        width={30}
-                        height={30}
                       >
-                        <Iconify
-                          icon="ep:back"
-                          width={30}
-                          color={(theme) => theme.palette.primary.main}
-                        />
-                      </Stack>
-                      <Box>
-                        <Typography
-                          fontSize={28}
-                          color="primary"
-                          fontWeight={600}
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="center"
                         >
-                          Applied Bids
-                        </Typography>
-                      </Box>
-                    </Stack>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={2}
-                      className="flexDirection"
-                    >
-                      <Box>
-                        <SelectBox
-                          formSx={{ marginBottom: 0 }}
-                          sx={{
-                            borderRadius: "3em",
-                            height: "26px",
-                            fontSize: "12px",
-                            fontWeight: 500,
-                          }}
-                          fullWidth
-                          size="small"
-                          color="#fff"
-                          value={sort}
-                          onChange={(e) => setSort(e.target.value)}
-                          options={sortBy}
-                        />
-                      </Box>
+                          <Stack
+                            alignItems="center"
+                            onClick={() =>
+                              router.push("/dashboard/customer/job_posted")
+                            }
+                            mr={2}
+                            sx={{
+                              cursor: "pointer",
+                              border: (theme) =>
+                                `2px solid ${theme.palette.primary.main}`,
+                              borderRadius: "50%",
+                            }}
+                            width={30}
+                            height={30}
+                          >
+                            <Iconify
+                              icon="ep:back"
+                              width={30}
+                              color={(theme) => theme.palette.primary.main}
+                            />
+                          </Stack>
+                          <Box>
+                            <Typography
+                              fontSize={28}
+                              color="primary"
+                              fontWeight={600}
+                            >
+                              Applied Bids
+                            </Typography>
+                          </Box>
+                        </Stack>
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          spacing={2}
+                          className="flexDirection"
+                        >
+                          <Box>
+                            <SelectBox
+                              formSx={{ marginBottom: 0 }}
+                              sx={{
+                                borderRadius: "3em",
+                                height: "26px",
+                                fontSize: "12px",
+                                fontWeight: 500,
+                              }}
+                              fullWidth
+                              size="small"
+                              color="#fff"
+                              value={sort}
+                              onChange={(e) => setSort(e.target.value)}
+                              options={sortBy}
+                            />
+                          </Box>
 
-                      <Box>
-                        <Iconify
-                          onClick={handleFilterClick}
-                          aria-describedby={id}
-                          icon="lucide:filter"
-                          width={24}
-                          sx={{ cursor: "pointer" }}
-                          color={(theme) => theme.palette.primary.main}
-                        />
-                        <Popover
-                          id={id}
-                          open={filterOpen}
-                          anchorEl={anchorEl}
-                          onClose={handleFilterClose}
-                          anchorReference="anchorPosition"
-                          sx={{ width: "40em" }}
-                          anchorPosition={{ top: 150, left: 370 }}
-                          anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "left",
-                          }}
-                          transformOrigin={{
-                            vertical: "top",
-                            horizontal: "left",
-                          }}
-                        >
-                          <Box px={2} py={2}>
-                            <Stack direction="column" spacing={2}>
-                              <Stack spacing={2}>
-                                <Box>
-                                  <TextBox
-                                    fullWidth
-                                    size="small"
-                                    value={search}
-                                    endIcon={
-                                      <Iconify icon="iconamoon:search-bold" />
-                                    }
-                                    placeholder="Search"
-                                    onChange={(e) => setSearch(e.target.value)}
-                                  />
-                                </Box>
-                                <Box>
-                                  <Stack
-                                    direction="row"
-                                    justifyContent="space-between"
-                                  >
+                          <Box>
+                            <Iconify
+                              onClick={handleFilterClick}
+                              aria-describedby={id}
+                              icon="lucide:filter"
+                              width={24}
+                              sx={{ cursor: "pointer" }}
+                              color={(theme) => theme.palette.primary.main}
+                            />
+                            <Popover
+                              id={id}
+                              open={filterOpen}
+                              anchorEl={anchorEl}
+                              onClose={handleFilterClose}
+                              anchorReference="anchorPosition"
+                              sx={{ width: "40em" }}
+                              anchorPosition={{ top: 150, left: 370 }}
+                              anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "left",
+                              }}
+                              transformOrigin={{
+                                vertical: "top",
+                                horizontal: "left",
+                              }}
+                            >
+                              <Box px={2} py={2}>
+                                <Stack direction="column" spacing={2}>
+                                  <Stack spacing={2}>
                                     <Box>
-                                      <Typography
-                                        fontSize={14}
-                                        fontWeight={500}
-                                      >
-                                        Price
-                                      </Typography>
-                                    </Box>
-                                    <Box>
-                                      <Typography
-                                        fontSize={14}
-                                        fontWeight={500}
-                                      >
-                                        £{filterPrice}
-                                      </Typography>
-                                    </Box>
-                                  </Stack>
-                                  <Slider
-                                    size="large"
-                                    value={
-                                      typeof filterPrice === "number"
-                                        ? filterPrice
-                                        : 0
-                                    }
-                                    onChange={handleInputChange}
-                                  />
-                                </Box>
-                                <Box>
-                                  <Box mb={0.6}>
-                                    <Typography fontSize={14} fontWeight={500}>
-                                      Rating
-                                    </Typography>
-                                  </Box>
-                                  <Box>
-                                    <Box>
-                                      <Rating
-                                        sx={{
-                                          color: "#FBBC04",
-                                        }}
+                                      <TextBox
+                                        fullWidth
+                                        size="small"
+                                        value={search}
+                                        endIcon={
+                                          <Iconify icon="iconamoon:search-bold" />
+                                        }
+                                        placeholder="Search"
+                                        onChange={(e) =>
+                                          setSearch(e.target.value)
+                                        }
                                       />
                                     </Box>
-                                  </Box>
-                                </Box>
-                              </Stack>
-                            </Stack>
-                            <Divider sx={{ my: 2 }} />
-                            <Stack
-                              direction="row"
-                              spacing={1}
-                              justifyContent="end"
-                            >
-                              <Button color="dark" onClick={handleFilterClose}>
-                                Cancel
-                              </Button>
-                              <Button variant="contained">Filter</Button>
-                            </Stack>
-                          </Box>
-                        </Popover>
-                      </Box>
-                    </Stack>
-                  </Stack>
-                  <Box sx={{ flexGrow: data && data.length > 0 ? 1 : 0 }}>
-                    {data && data.length > 0 ? (
-                      data.map((elem, index) => {
-                        const amount = parseFloat(elem?.ammount)
-                        const extra = (10 / 100) * amount;
-                            const finalAmount =    amount + extra;
-                            const vat = (20 / 100) * finalAmount;
-                            const total = finalAmount + vat;
-                        return (
-                          <Box key={index}>
-                            <Divider sx={{ my: 2 }} />
-
-                            <Grid
-                              className="dashboard_driverBid_Grid_responsive"
-                              container
-                              spacing={2}
-                            >
-                              <Grid item md={2}>
-                                <Box
-                                  component="img"
-                                  alt={elem?.driver?.profile_img}
-                                  src={`${elem?.driver?.base_url}${elem?.driver?.profile_img}`}
-                                  sx={{
-                                    borderRadius: "50%",
-                                    width: "65px",
-                                    objectFit: "cover",
-                                    height: "65px",
-                                    border: "1px solid #f2f2f2",
-                                  }}
-                                />
-                              </Grid>
-                              <Grid item md={10}>
-                                <Stack direction="column">
-                                  <Box pb={0.3}>
-                                    <Stack
-                                      direction="row"
-                                      alignItems="center"
-                                      justifyContent="space-between"
-                                    >
-                                      <Box>
+                                    <Box>
+                                      <Stack
+                                        direction="row"
+                                        justifyContent="space-between"
+                                      >
+                                        <Box>
+                                          <Typography
+                                            fontSize={14}
+                                            fontWeight={500}
+                                          >
+                                            Price
+                                          </Typography>
+                                        </Box>
+                                        <Box>
+                                          <Typography
+                                            fontSize={14}
+                                            fontWeight={500}
+                                          >
+                                            £{filterPrice}
+                                          </Typography>
+                                        </Box>
+                                      </Stack>
+                                      <Slider
+                                        size="large"
+                                        value={
+                                          typeof filterPrice === "number"
+                                            ? filterPrice
+                                            : 0
+                                        }
+                                        onChange={handleInputChange}
+                                      />
+                                    </Box>
+                                    <Box>
+                                      <Box mb={0.6}>
                                         <Typography
-                                          fontSize={16}
+                                          fontSize={14}
                                           fontWeight={500}
                                         >
-                                          {elem?.driver?.user_name}
+                                          Rating
+                                        </Typography>
+                                      </Box>
+                                      <Box>
+                                        <Box>
+                                          <Rating
+                                            sx={{
+                                              color: "#FBBC04",
+                                            }}
+                                          />
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Stack>
+                                </Stack>
+                                <Divider sx={{ my: 2 }} />
+                                <Stack
+                                  direction="row"
+                                  spacing={1}
+                                  justifyContent="end"
+                                >
+                                  <Button
+                                    color="dark"
+                                    onClick={handleFilterClose}
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button variant="contained">Filter</Button>
+                                </Stack>
+                              </Box>
+                            </Popover>
+                          </Box>
+                        </Stack>
+                      </Stack>
+                      <Box sx={{ flexGrow: data && data.length > 0 ? 1 : 0 }}>
+                        {data && data.length > 0 ? (
+                          data.map((elem, index) => {
+                            const amount = parseFloat(elem?.ammount);
+                            const extra = (10 / 100) * amount;
+                            const finalAmount = amount + extra;
+                            const vat = (20 / 100) * finalAmount;
+                            const total = finalAmount + vat;
+                            return (
+                              <Box key={index}>
+                                <Divider sx={{ my: 2 }} />
+
+                                <Grid
+                                  className="dashboard_driverBid_Grid_responsive"
+                                  container
+                                  spacing={2}
+                                >
+                                  <Grid item md={2}>
+                                    <Box
+                                      component="img"
+                                      alt={elem?.driver?.profile_img}
+                                      src={`${elem?.driver?.base_url}${elem?.driver?.profile_img}`}
+                                      sx={{
+                                        borderRadius: "50%",
+                                        width: "65px",
+                                        objectFit: "cover",
+                                        height: "65px",
+                                        border: "1px solid #f2f2f2",
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid item md={10}>
+                                    <Stack direction="column">
+                                      <Box pb={0.3}>
+                                        <Stack
+                                          direction="row"
+                                          alignItems="center"
+                                          justifyContent="space-between"
+                                        >
+                                          <Box>
+                                            <Typography
+                                              fontSize={16}
+                                              fontWeight={500}
+                                            >
+                                              {elem?.driver?.user_name}
+                                            </Typography>
+                                          </Box>
+                                          <Box>
+                                            <Typography
+                                              fontSize={16}
+                                              fontWeight={600}
+                                            >
+                                              £ {elem?.ammount}
+                                            </Typography>
+                                          </Box>
+                                          <Stack direction="row" spacing={1}>
+                                            <Button
+                                              sx={{
+                                                cursor:
+                                                  elem?.status === 4
+                                                    ? "not-allowed"
+                                                    : "pointer",
+                                              }}
+                                              icon={
+                                                <Iconify icon="material-symbols:check-circle" />
+                                              }
+                                              variant="contained"
+                                              onClick={() =>
+                                                elem?.status !== 1 &&
+                                                elem?.status !== 4 &&
+                                                elem?.status !== 2 &&
+                                                elem?.status !== 3 &&
+                                                setStartChat(elem?.id)
+                                              }
+                                            >
+                                              {elem?.status === 1 ? (
+                                                "Accepted"
+                                              ) : elem?.status === 4 ? (
+                                                "Declined"
+                                              ) : elem?.status === 2 &&
+                                                elem?.job?.is_paid === 0 ? (
+                                                <Box>
+                                                  <Button
+                                                    // color="secondary"
+                                                    fullWidth
+                                                    variant="contained"
+                                                    onClick={() =>
+                                                      handleCheckoutPayment(
+                                                        elem
+                                                      )
+                                                    }
+                                                    sx={{
+                                                      fontWeight: 500,
+                                                    }}
+                                                  >
+                                                    Pay
+                                                  </Button>
+                                                </Box>
+                                              ) : elem?.status === 2 &&
+                                                elem?.job?.is_paid === 1 ? (
+                                                "Paid"
+                                              ) : (
+                                                "Accept"
+                                              )}
+                                            </Button>
+                                          </Stack>
+                                        </Stack>
+                                      </Box>
+                                      <Box>
+                                        <Rating
+                                          value={elem?.rating}
+                                          readOnly
+                                          size="small"
+                                          sx={{
+                                            color: "#FBBC04",
+                                          }}
+                                        />
+                                      </Box>
+                                    </Stack>
+                                  </Grid>
+                                </Grid>
+                                <Stack
+                                  direction="row"
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                  pt={2}
+                                >
+                                  <Stack>
+                                    <Stack direction="row" spacing={0.4}>
+                                      <Box>
+                                        <Typography
+                                          color="#5D5D5D"
+                                          fontSize={14}
+                                          fontWeight={400}
+                                        >
+                                          Job Success Rate :
                                         </Typography>
                                       </Box>
                                       <Box>
                                         <Typography
-                                          fontSize={16}
+                                          color="#5D5D5D"
+                                          fontSize={14}
                                           fontWeight={600}
+                                          g
                                         >
-                                          £ {elem?.ammount}
+                                          {elem?.jobpercent} %
                                         </Typography>
                                       </Box>
-                                      <Stack direction="row" spacing={1}>
-                                        <Button
-                                          sx={{
-                                            cursor:
-                                              elem?.status === 4
-                                                ? "not-allowed"
-                                                : "pointer",
-                                          }}
-                                          icon={
-                                            <Iconify icon="material-symbols:check-circle" />
-                                          }
-                                          variant="contained"
-                                          onClick={() =>
-                                            elem?.status !== 1 &&
-                                            elem?.status !== 4 &&
-                                            elem?.status !== 2 &&
-                                            elem?.status !== 3 &&
-                                            setStartChat(elem?.id)
-                                          }
-                                        >
-                                           {elem?.status === 1 
-  ? "Accepted"
-  : elem?.status === 4
-  ? "Declined"
-  : elem?.status === 2 && elem?.job?.is_paid === 0
-  ? <Box>
-                                          <Button
-                                            // color="secondary"
-                                            fullWidth
-                                            variant="contained"
-                                            onClick={() =>
-                                              handleCheckoutPayment(elem)
-                                            }
-                                            sx={{
-                                              fontWeight: 500,
-                                            }}
-                                          >
-                                            Pay
-                                          </Button>
-                                         </Box>
-  : elem?.status === 2 && elem?.job?.is_paid === 1
-  ? "Paid"
-  : "Accept"
-}
-                                        </Button>
-                                      </Stack>
                                     </Stack>
-                                  </Box>
-                                  <Box>
-                                    <Rating
-                                      value={elem?.rating}
-                                      readOnly
-                                      size="small"
-                                      sx={{
-                                        color: "#FBBC04",
-                                      }}
-                                    />
-                                  </Box>
+                                    <Box>
+                                      <LinearProgress
+                                        variant="determinate"
+                                        value={elem?.jobpercent}
+                                      />
+                                    </Box>
+                                  </Stack>
                                 </Stack>
-                              </Grid>
-                            </Grid>
-                            <Stack
-                              direction="row"
-                              justifyContent="space-between"
-                              alignItems="center"
-                              pt={2}
-                            >
-                              <Stack>
-                                <Stack direction="row" spacing={0.4}>
-                                  <Box>
-                                    <Typography
-                                      color="#5D5D5D"
-                                      fontSize={14}
-                                      fontWeight={400}
-                                    >
-                                      Job Success Rate :
-                                    </Typography>
-                                  </Box>
-                                  <Box>
-                                    <Typography
-                                      color="#5D5D5D"
-                                      fontSize={14}
-                                      fontWeight={600}
-                                      g
-                                    >
-                                      {elem?.jobpercent} %
-                                    </Typography>
-                                  </Box>
-                                </Stack>
-                                <Box>
-                                  <LinearProgress
-                                    variant="determinate"
-                                    value={elem?.jobpercent}
-                                  />
-                                </Box>
-                              </Stack>
-                            </Stack>
-                            <Divider sx={{ my: 2 }} />
+                                <Divider sx={{ my: 2 }} />
+                              </Box>
+                            );
+                          })
+                        ) : (
+                          <Box textAlign="center" py={6}>
+                            <Typography variant="h4">No Bids Yet !</Typography>
                           </Box>
-                        );
-                      })
-                    ) : (
-                      <Box textAlign="center" py={6}>
-                        <Typography variant="h4">No Bids Yet !</Typography>
-                      </Box>
-                    )}
-                  </Box>
-                  <Box>
-                    <Stack alignItems="center" justifyContent="center">
-                      <Pagination
-                        count={pageCount}
-                        color="primary"
-                        page={page}
-                        onChange={handlePageChange}
-                        variant="outlined"
-                        shape="rounded"
-                        renderItem={(item) => (
-                          <PaginationItem
-                            slots={{
-                              previous: () => {
-                                return (
-                                  <Stack
-                                    direction="row"
-                                    spacing={0.5}
-                                    alignItems="center"
-                                  >
-                                    <NavigateBeforeIcon />
-                                  </Stack>
-                                );
-                              },
-                              next: () => {
-                                return (
-                                  <Stack
-                                    direction="row"
-                                    spacing={0.5}
-                                    alignItems="center"
-                                  >
-                                    <NavigateNextIcon />
-                                  </Stack>
-                                );
-                              },
-                            }}
-                            {...item}
-                          />
                         )}
-                      />
+                      </Box>
+                      <Box>
+                        <Stack alignItems="center" justifyContent="center">
+                          <Pagination
+                            count={pageCount}
+                            color="primary"
+                            page={page}
+                            onChange={handlePageChange}
+                            variant="outlined"
+                            shape="rounded"
+                            renderItem={(item) => (
+                              <PaginationItem
+                                slots={{
+                                  previous: () => {
+                                    return (
+                                      <Stack
+                                        direction="row"
+                                        spacing={0.5}
+                                        alignItems="center"
+                                      >
+                                        <NavigateBeforeIcon />
+                                      </Stack>
+                                    );
+                                  },
+                                  next: () => {
+                                    return (
+                                      <Stack
+                                        direction="row"
+                                        spacing={0.5}
+                                        alignItems="center"
+                                      >
+                                        <NavigateNextIcon />
+                                      </Stack>
+                                    );
+                                  },
+                                }}
+                                {...item}
+                              />
+                            )}
+                          />
+                        </Stack>
+                      </Box>
                     </Stack>
+                  </Grid>
+                )}
+                <Grid item md={6}>
+                  <Box sx={{ position: "sticky", top: 75, display: "block" }}>
+                    <TrackGoogleMaps data={mapData} />
                   </Box>
-                </Stack>
+                </Grid>
               </Grid>
-            )}
-            <Grid item md={6}>
-              <Box sx={{ position: "sticky", top: 75, display: "block" }}>
-                <TrackGoogleMaps data={mapData} />
-              </Box>
-            </Grid>
-          </Grid>
-          </>
+            </>
           ) : (
             <CardPaymentForm
               paymentDetails={datas}
-            amountDetails={amountDetails}
+              amountDetails={amountDetails}
               setShowPayment={setShowPayment}
             /> // Render the PaymentPage component when showPayment is true
           )}

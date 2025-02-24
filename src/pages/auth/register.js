@@ -89,7 +89,7 @@
 //     },
 //     onSubmit: async (values, { setErrors }) => {
 //       let url, formData;
-    
+
 //       if (values.user_type === "customer") {
 //         url = "/api/user/cust-register";
 //         let customerData = new FormData();
@@ -101,7 +101,7 @@
 //         customerData.append("password", values?.password);
 //         // Add this
 //         customerData.append("company_type", 'customer');
-    
+
 //         customerData.append(
 //           "password_confirmation",
 //           values?.password_confirmation
@@ -127,7 +127,6 @@
 //         formData = companyData;
 //       }
 
-      
 //       await axiosInstance
 //         .post(url, formData)
 //         .then((response) => {
@@ -228,7 +227,7 @@
 //           }
 //         });
 //     },
-    
+
 //   });
 
 //   return (
@@ -243,9 +242,6 @@
 // };
 // export default RegisterPage;
 
-
-
-
 import GuestGuard from "@/auth/GuestGuard";
 import { useAuthContext } from "@/auth/useAuthContext";
 import { PrimaryWebLayout } from "@/layout";
@@ -253,7 +249,8 @@ import Register from "@/sections/auth/register";
 import axiosInstance from "@/utils/axios";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import React from "react";
 
 const RegisterPage = () => {
@@ -278,6 +275,10 @@ const RegisterPage = () => {
       company_certificate_url: "",
       company_vat: "",
       company_vat_url: "",
+      address: "",
+      state: "",
+      city: "",
+      zip_code: "",
     },
     validate: (values) => {
       const errors = {};
@@ -336,62 +337,79 @@ const RegisterPage = () => {
       return errors;
     },
     onSubmit: async (values, { setErrors }) => {
-      let url, formData;
-    
-      if (values.user_type === "customer") {
-        url = "/api/user/cust-register";
-        let customerData = new FormData();
-        customerData.append("user_name", values?.user_name);
-        customerData.append("user_type", values?.user_type);
-        customerData.append("email", values?.email);
-        customerData.append("mobile", values?.mobile);
-        customerData.append("term", values?.term);
-        customerData.append("password", values?.password);
-        // Add this
-        customerData.append("company_type", 'customer');
-    
-        customerData.append(
-          "password_confirmation",
-          values?.password_confirmation
-        );
-        formData = customerData;
-      } else {
-        url = "/api/user/company-register";
-        let companyData = new FormData();
-        companyData.append("user_name", values?.user_name);
-        companyData.append("user_type", values?.user_type);
-        companyData.append("email", values?.email);
-        // Corrected line
-        companyData.append("company_type", 'customer');
-        companyData.append("mobile", values?.mobile);
-        companyData.append("term", values?.term);
-        companyData.append("password", values?.password);
-        companyData.append(
-          "password_confirmation",
-          values?.password_confirmation
-        );
-        companyData.append("company_certificate", values?.company_certificate);
-        companyData.append("company_vat", values?.company_vat);
-        formData = companyData;
-      }
+      try {
+        let url, formData;
 
-      
-      await axiosInstance
-        .post(url, formData)
-        .then((response) => {
-          if (response?.status === 200) {
-            formik.resetForm();
-            router.push("/auth/login");
-            enqueueSnackbar(
+        if (values.user_type === "customer") {
+          url = "/api/user/cust-register";
+          let customerData = new FormData();
+          customerData.append("user_name", values?.user_name);
+          customerData.append("user_type", values?.user_type);
+          customerData.append("email", values?.email);
+          customerData.append("mobile", values?.mobile);
+          customerData.append("term", values?.term);
+          customerData.append("password", values?.password);
+          customerData.append("company_type", "customer");
+          customerData.append(
+            "password_confirmation",
+            values?.password_confirmation
+          );
+          formData = customerData;
+        } else {
+          url = "/api/user/company-register";
+          let companyData = new FormData();
+          companyData.append("user_name", values?.user_name);
+          companyData.append("user_type", values?.user_type);
+          companyData.append("email", values?.email);
+          companyData.append("company_type", "company"); // Fixed here
+          companyData.append("mobile", values?.mobile);
+          companyData.append("term", values?.term);
+          companyData.append("password", values?.password);
+          companyData.append(
+            "password_confirmation",
+            values?.password_confirmation
+          );
+          companyData.append(
+            "company_certificate",
+            values?.company_certificate
+          );
+          companyData.append("company_vat", values?.company_vat);
+          formData = companyData;
+        }
+
+        // 🔹 First API Call - User Registration
+        const response = await axiosInstance.post(url, formData);
+
+        if (response?.status === 200) {
+          const userId = response?.data?.user?.user_id; // Fixed the user ID extraction
+
+          // 🔹 Second API Call - Update Address
+          const addressUrl = `https://evsexpres.com/public/api/auth/profile/update-address/${userId}`;
+
+          const addressParams = new URLSearchParams({
+            address: values.address,
+            state: values.state,
+            city: values.city,
+            zip_code: values.zip_code,
+            lat: "23.789",
+            long: "65.7643",
+          }).toString();
+
+          await axiosInstance.post(`${addressUrl}?${addressParams}`);
+
+          formik.resetForm();
+          router.push("/auth/login");
+
+          enqueueSnackbar(
             <Alert
               style={{
                 width: "100%",
                 padding: "30px",
                 backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
+                background: "#ff7533",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -407,76 +425,46 @@ const RegisterPage = () => {
               },
             }
           );
-          } else {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
-          }
-        })
-        .catch((error) => {
-          const { response } = error;
-          if (response.status === 422) {
-            // eslint-disable-next-line no-unused-vars
-            for (const [key, value] of Object.entries(values)) {
-              if (response.data.error[key]) {
-                setErrors({ [key]: response.data.error[key][0] });
-              }
+        } else {
+          throw new Error(response?.data?.error || "Registration failed");
+        }
+      } catch (error) {
+        const { response } = error;
+        if (response?.status === 422) {
+          for (const key in values) {
+            if (response?.data?.error?.[key]) {
+              setErrors({ [key]: response.data.error[key][0] });
             }
           }
-          if (response?.data?.status === 406) {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
-          }
-        });
+        } else {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error || "An error occurred"}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        }
+      }
     },
-    
   });
 
   return (
@@ -490,4 +478,3 @@ RegisterPage.getLayout = function getLayout(page) {
   return <PrimaryWebLayout>{page}</PrimaryWebLayout>;
 };
 export default RegisterPage;
-

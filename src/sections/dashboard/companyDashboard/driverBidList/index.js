@@ -7,7 +7,10 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import {
   Box,
-  Button, Container, Divider, Grid,
+  Button,
+  Container,
+  Divider,
+  Grid,
   LinearProgress,
   Modal,
   Pagination,
@@ -16,10 +19,11 @@ import {
   Rating,
   Slider,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import React, { useEffect, useState } from "react";
 
 const BidList = () => {
@@ -154,10 +158,10 @@ const BidList = () => {
                 width: "100%",
                 padding: "30px",
                 backdropFilter: "blur(8px)",
-                background: "#ff7533 ", 
+                background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -174,32 +178,32 @@ const BidList = () => {
             }
           );
         } else {
-              // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          // error
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: blur("8px"),
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
       })
       .catch((error) => {
@@ -443,7 +447,8 @@ const BidList = () => {
                                           fontSize={16}
                                           fontWeight={600}
                                         >
-                                          <Iconify icon="bi:currency-pound" />{elem?.ammount}
+                                          <Iconify icon="bi:currency-pound" />
+                                          {elem?.ammount}
                                         </Typography>
                                       </Box>
                                       <Stack direction="row" spacing={1}>
@@ -470,7 +475,8 @@ const BidList = () => {
                                           {elem?.status === 1 ||
                                           elem?.status === 2 ||
                                           elem?.status === 3 ||
-                                          elem?.status === 4  ? "Accepted"
+                                          elem?.status === 4
+                                            ? "Accepted"
                                             : elem?.status === 5
                                             ? "Declined"
                                             : "Accept"}
