@@ -146,9 +146,6 @@
 //   );
 // };
 
-
-
-
 import { SelectBox, TextBox } from "@/components/form";
 import Iconify from "@/components/iconify/Iconify";
 import { Close } from "@mui/icons-material";
@@ -167,11 +164,7 @@ import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import { find } from "lodash";
 import ReactFlagsSelect from "react-flags-select";
 
-export const ForgetForm = ({
-  formik,
-  handleSelect,
-  customLabels,
-}) => {
+export const ForgetForm = ({ formik, handleSelect, customLabels }) => {
   const OTPSelect = [
     {
       label: "Email",
@@ -197,7 +190,6 @@ export const ForgetForm = ({
         fullWidth
       >
         <Stack direction="row">
-
           <Autocomplete
             sx={{ mb: 0 }}
             size="small"
@@ -241,36 +233,33 @@ export const ForgetForm = ({
         />
       )}
       {formik.values.type == "mobile" && (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <ReactFlagsSelect
+            selected={selectedCountry} // Use selectedCountry state
+            onSelect={(code) => setSelectedCountry(code)} // Update selectedCountry state
+            countries={["GB"]} // Specify country codes for UK and India
+            customLabels={customLabels}
+            selectedSize={10}
+            style={{
+              marginRight: "10px",
+              border: "1px solid red",
+              fontSize: "25px",
+              borderRadius: "5px",
+              padding: "5px",
+            }}
+          />
 
-<Box sx={{ display: "flex", alignItems: "center" }}>
-<ReactFlagsSelect
-  selected={selectedCountry} // Use selectedCountry state
-  onSelect={(code) => setSelectedCountry(code)} // Update selectedCountry state
-  countries={["GB", "IN"]} // Specify country codes for UK and India
-  customLabels={customLabels}
-  selectedSize={10}
-  style={{
-    marginRight: "10px",
-    border: "1px solid red",
-    fontSize: "25px",
-    borderRadius: "5px",
-    padding: "5px",
-  }}
-/>
-
-<TextBox
-  size="small"
-  fullWidth
-  name={`email`}
-  placeholder="Enter your Registered Contact No"
-  value={formik?.values?.email}
-  onChange={formik.handleChange}
-  error={formik.touched.email && formik.errors.email}
-  helperText={formik.touched.email && formik.errors.email} 
-/>
-
-</Box>
-
+          <TextBox
+            size="small"
+            fullWidth
+            name={`email`}
+            placeholder="Enter your Registered Contact No"
+            value={formik?.values?.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && formik.errors.email}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+        </Box>
       )}
     </React.Fragment>
   );

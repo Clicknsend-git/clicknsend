@@ -8,7 +8,6 @@
 // import React from "react";
 // import CircularProgress from '@mui/material/CircularProgress';
 
-
 // const DriverPage = () => {
 //   const router = useRouter();
 //   const { slug } = router.query;
@@ -16,7 +15,6 @@
 //   const [open, setOpen] = React.useState(false);
 //   const [loading, setLoading] =React.useState(false);
 
-  
 //   const handleOpenClose = () => {
 //     setOpen(!open);
 //   };
@@ -175,9 +173,9 @@
 //       return errors;
 //     },
 //     onSubmit: async (values, { setErrors }) => {
-//       setLoading(true); 
+//       setLoading(true);
 //       let url, formData;
-      
+
 //       if (values.user_type === "driver") {
 //         url = "api/user/driver-register";
 //         let driverFormData = new FormData();
@@ -348,15 +346,6 @@
 // };
 // export default DriverPage;
 
-
-
-
-
-
-
-
-
-
 // import GuestGuard from "@/auth/GuestGuard";
 // import { PrimaryWebLayout } from "@/layout";
 // import DriverRegister from "@/sections/auth/driver_register";
@@ -367,7 +356,6 @@
 // import React from "react";
 // import CircularProgress from '@mui/material/CircularProgress';
 
-
 // const DriverPage = () => {
 //   const router = useRouter();
 //   const { slug } = router.query;
@@ -375,7 +363,6 @@
 //   const [open, setOpen] = React.useState(false);
 //   const [loading, setLoading] =React.useState(false);
 
-  
 //   const handleOpenClose = () => {
 //     setOpen(!open);
 //   };
@@ -464,7 +451,6 @@
 //         errors.password_confirmation = "Password didn't match.";
 //       }
 
-
 //       if (values?.user_type === "company") {
 //         if (!values.company_certificate) {
 //           errors.company_certificate = "Company Certificate is required";
@@ -484,9 +470,9 @@
 //       return errors;
 //     },
 //     onSubmit: async (values, { setErrors }) => {
-//       setLoading(true); 
+//       setLoading(true);
 //       let url, formData;
-      
+
 //       if (values.user_type === "driver") {
 //         url = "api/user/driver-register";
 //         let driverFormData = new FormData();
@@ -658,29 +644,24 @@
 // };
 // export default DriverPage;
 
-
-
-
-
 import GuestGuard from "@/auth/GuestGuard";
 import { PrimaryWebLayout } from "@/layout";
 import DriverRegister from "@/sections/auth/driver_register";
 import axiosInstance from "@/utils/axios";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import React from "react";
-import CircularProgress from '@mui/material/CircularProgress';
-
+import CircularProgress from "@mui/material/CircularProgress";
 
 const DriverPage = () => {
   const router = useRouter();
   const { slug } = router.query;
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] =React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
-  
   const handleOpenClose = () => {
     setOpen(!open);
   };
@@ -725,6 +706,10 @@ const DriverPage = () => {
       register_number: "",
       vehicle_body: 0,
       vehicle_type: 0,
+      address: "",
+      state: "",
+      city: "",
+      zip_code: "",
     },
     validate: (values) => {
       const errors = {};
@@ -769,7 +754,6 @@ const DriverPage = () => {
         errors.password_confirmation = "Password didn't match.";
       }
 
-
       if (values?.user_type === "company") {
         if (!values.company_certificate) {
           errors.company_certificate = "Company Certificate is required";
@@ -789,9 +773,9 @@ const DriverPage = () => {
       return errors;
     },
     onSubmit: async (values, { setErrors }) => {
-      setLoading(true); 
+      setLoading(true);
       let url, formData;
-      
+
       if (values.user_type === "driver") {
         url = "api/user/driver-register";
         let driverFormData = new FormData();
@@ -802,8 +786,8 @@ const DriverPage = () => {
         driverFormData.append("term", values?.term);
         driverFormData.append("password", values?.password);
         driverFormData.append("driver_type", values?.driver_type);
-        driverFormData.append("register_type", 'web');
-        driverFormData.append("company_type", 'driver');
+        driverFormData.append("register_type", "web");
+        driverFormData.append("company_type", "driver");
         driverFormData.append(
           "password_confirmation",
           values?.password_confirmation
@@ -816,6 +800,7 @@ const DriverPage = () => {
         driverFormData.append("transit_cert", values?.transit_cert);
         driverFormData.append("liability_cert", values?.liability_cert);
         driverFormData.append("vehicle_cert", values?.vehicle_cert);
+        driverFormData.append("nationality_cert", values?.nationality_cert);
         driverFormData.append("v5c_cert", values?.v5c_cert);
         driverFormData.append("vehicle_type", values?.vehicle_type);
         driverFormData.append("vehicle_body", values?.vehicle_body);
@@ -827,7 +812,7 @@ const DriverPage = () => {
         formDatas.append("user_type", values?.user_type);
         formDatas.append("email", values?.email);
         formDatas.append("mobile", values?.mobile);
-        formDatas.append("company_type", 'driver');
+        formDatas.append("company_type", "driver");
         formDatas.append("term", values?.term);
         formDatas.append("password", values?.password);
         formDatas.append(
@@ -836,16 +821,32 @@ const DriverPage = () => {
         );
         formDatas.append("company_certificate", values?.company_certificate);
         formDatas.append("company_vat", values?.company_vat);
-        formDatas.append("company_certificate", values?.company_certificate);
-        formDatas.append("company_vat", values?.company_vat);
         formData = formDatas;
       }
-      await axiosInstance
-        .post(url, formData)
-        .then((response) => {
-          setLoading(false);
-          if (response?.status === 200) {
-            enqueueSnackbar(
+
+      try {
+        const registerResponse = await axiosInstance.post(url, formData);
+        setLoading(false);
+
+        if (registerResponse?.status === 200) {
+          const userId = registerResponse?.data.user?.user_id; // Extracting the user ID
+
+          // Call the update address API
+          console.log(userId, "user_id");
+          const addressUrl = `https://evsexpres.com/public/api/auth/profile/update-address/${userId}`;
+
+          const addressParams = new URLSearchParams({
+            address: values.address,
+            state: values.state,
+            city: values.city,
+            zip_code: values.zip_code,
+            lat: "23.789", // Ensure values are strings
+            long: "65.7643",
+          }).toString();
+
+          await axiosInstance.post(`${addressUrl}?${addressParams}`);
+
+          enqueueSnackbar(
             <Alert
               style={{
                 width: "100%",
@@ -854,12 +855,12 @@ const DriverPage = () => {
                 background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
             >
-              {response?.data?.message}
+              {registerResponse?.data?.message}
             </Alert>,
             {
               variant: "success",
@@ -870,77 +871,76 @@ const DriverPage = () => {
               },
             }
           );
-            // handleOpenClose();
-            formik.resetForm();
-            router.push("/auth/login");
-          } else {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
-          }
-        })
-        .catch((error) => {
-          const { response } = error;
-          if (response.status === 422) {
-            // eslint-disable-next-line no-unused-vars
-            for (const [key, value] of Object.entries(values)) {
-              if (response.data.error[key]) {
-                setErrors({ [key]: response.data.error[key][0] });
-              }
+
+          formik.resetForm();
+          router.push("/auth/login");
+        } else {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {registerResponse?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        }
+      } catch (error) {
+        setLoading(false);
+        const { response } = error;
+
+        if (response?.status === 422) {
+          for (const [key, value] of Object.entries(values)) {
+            if (response?.data?.error?.[key]) {
+              setErrors({ [key]: response.data.error[key][0] });
             }
           }
-          if (response?.data?.status === 406) {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
-          }
-        });
+        }
+
+        if (response?.data?.status === 406) {
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        }
+      }
     },
   });
 
@@ -951,8 +951,15 @@ const DriverPage = () => {
         handleOpenClose={handleOpenClose}
         formik={formik}
       />
-        {loading && (
-        <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
           <CircularProgress />
         </div>
       )}

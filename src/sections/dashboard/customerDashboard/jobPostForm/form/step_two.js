@@ -590,7 +590,6 @@ const StepTwo = ({
                       productItem?.address?.length > 0 &&
                       productItem?.address
                         .sort((a, b) => {
-                          
                           // Sorting logic: "drop" type comes first
                           if (a.type !== "drop" && b.type === "drop") {
                             return -1; // a comes first
@@ -602,7 +601,7 @@ const StepTwo = ({
                         })
                         .map((addressItem, addressIndex) => (
                           <Box key={productIndex} sx={{ mt: 4 }}>
-                            {console.log(productItem,addressItem,"df")}
+                            {console.log(productItem, addressItem, "df")}
                             <Card
                               sx={{
                                 borderRadius: "0px",
@@ -681,7 +680,11 @@ const StepTwo = ({
                                     />
                                   </Box>
                                 </Grid>
-                                {console.log('productIndex productIndex',productIndex,addressIndex)}
+                                {console.log(
+                                  "productIndex productIndex",
+                                  productIndex,
+                                  addressIndex
+                                )}
 
                                 <Grid item md={12}>
                                   <GoogleAutocomplete
@@ -691,19 +694,15 @@ const StepTwo = ({
                                     name={`items[${productIndex}].address[${addressIndex}].address`}
                                     value={addressItem?.address}
                                     onSelect={(address, lat, long) => {
-                                      {addressItem?.type == "pickup" &&
-                                        console.log('lat',lat,long)
+                                      {
+                                        addressItem?.type == "pickup" &&
+                                          console.log("lat", lat, long);
 
-
-                      // for lat long contation                   
-             if(addressItem?.type !== "drop"){
-              formik.setFieldValue(`lat`,lat)
-              formik.setFieldValue(`long`,long)
-             }
-                                     
-
-
-
+                                        // for lat long contation
+                                        if (addressItem?.type !== "drop") {
+                                          formik.setFieldValue(`lat`, lat);
+                                          formik.setFieldValue(`long`, long);
+                                        }
                                       }
                                       formik.setFieldValue(
                                         `items[${productIndex}].address[${addressIndex}].address`,
@@ -785,8 +784,6 @@ const StepTwo = ({
                                     />
                                   </Box>
                                 </Grid>
-
-                                
                               </Grid>
                               {addressItem?.type == "drop" &&
                               productItem?.address?.length - 1 ===

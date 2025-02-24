@@ -86,12 +86,12 @@
 //       addressFormData.append("zip_code", values.zip_code);
 //       addressFormData.append("lat", values.lat);
 //       addressFormData.append("long", values.long);
-  
+
 //       try {
 
 //         const profileResponse = await axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData)
 //         console.log("profileResponse", profileResponse);
-  
+
 //         if (profileResponse?.status === 200) {
 //           // succes
 //           console.log("profileResponse 3", profileResponse);
@@ -149,8 +149,8 @@
 //           }
 //         );
 //         }
-  
-//         await axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData);     
+
+//         await axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData);
 //         getProfile();
 //       } catch (error) {
 //         const { response } = error;
@@ -317,7 +317,7 @@
 //     getProfile();
 //   }, [user, user?.id]);
 
-//   // console.log("formik.values.licence_front", formik.values.licence_front.name)                                   
+//   // console.log("formik.values.licence_front", formik.values.licence_front.name)
 
 //   const Content = () => {
 //     return (
@@ -385,7 +385,6 @@
 //                       </IconButton>
 //                     </Card>
 //                   </Box>
-                 
 
 //                         <Box
 //                                 style={{ margin: "10px" }}
@@ -412,7 +411,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -481,8 +480,7 @@
 //                       </IconButton>
 //                     </Card>
 //                   </Box>
-                 
-                  
+
 //                   <Box
 //                                 style={{ margin: "10px" }}
 //                                 width="150px"
@@ -694,7 +692,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -788,7 +786,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -882,7 +880,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -976,7 +974,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -1159,7 +1157,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -1254,7 +1252,7 @@
 //                                   />
 //                                 )}
 //                               </Box>
-                  
+
 //                 </CardContent>
 //               </Card>
 //             )}
@@ -1281,13 +1279,6 @@
 // };
 // export default MyProfilePage;
 
-
-
-
-
-
-
-
 import AuthGuard from "@/auth/AuthGuard";
 import { useAuthContext } from "@/auth/useAuthContext";
 import SubscriptionDialog from "@/components/dialog/subscriptionDialog";
@@ -1306,7 +1297,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import React from "react";
 
 const MyProfilePage = () => {
@@ -1324,7 +1316,7 @@ const MyProfilePage = () => {
       address: "",
       state: "",
       city: "",
-      zip_code:"",
+      zip_code: "",
       company_certificate: "",
       company_certificate_url: "",
       company_vat: "",
@@ -1375,16 +1367,18 @@ const MyProfilePage = () => {
       const addressFormData = new FormData();
       addressFormData.append("address", values.address);
       addressFormData.append("state", values.state);
-      addressFormData.append("city", values.city||"dfgf");
+      addressFormData.append("city", values.city || "dfgf");
       addressFormData.append("zip_code", values.zipCode);
       addressFormData.append("lat", values.lat);
       addressFormData.append("long", values.long);
-  
-      try {
 
-        const profileResponse = await axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData)
+      try {
+        const profileResponse = await axiosInstance.post(
+          `/api/auth/profile/update-driver-profile/${user?.id}`,
+          formData
+        );
         console.log("profileResponse", profileResponse);
-  
+
         if (profileResponse?.status === 200) {
           // succes
           console.log("profileResponse 3", profileResponse);
@@ -1397,7 +1391,7 @@ const MyProfilePage = () => {
                 background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -1414,36 +1408,39 @@ const MyProfilePage = () => {
             }
           );
         } else {
-              // error
+          // error
           console.log("profileResponse 2", profileResponse);
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: "blur(8px)",
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {profileResponse?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {profileResponse?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
-  
-        await axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData);     
+
+        await axiosInstance.post(
+          `/api/auth/profile/update-address/${user?.id}`,
+          addressFormData
+        );
         getProfile();
       } catch (error) {
         const { response } = error;
@@ -1457,32 +1454,32 @@ const MyProfilePage = () => {
           }
         }
         if (response?.data?.status === 406) {
-              // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          // error
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: blur("8px"),
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
       }
     },
@@ -1610,7 +1607,7 @@ const MyProfilePage = () => {
     getProfile();
   }, [user, user?.id]);
 
-  // console.log("formik.values.licence_front", formik.values.licence_front.name)                                   
+  // console.log("formik.values.licence_front", formik.values.licence_front.name)
 
   const Content = () => {
     return (
@@ -1678,34 +1675,34 @@ const MyProfilePage = () => {
                       </IconButton>
                     </Card>
                   </Box>
-                 
 
-                        <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.licence_front?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.licence_front_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.licence_front_url}
-                                    alt={formik.values.licence_front.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+                  <Box
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.licence_front?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.licence_front_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.licence_front_url}
+                        alt={formik.values.licence_front.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -1774,33 +1771,34 @@ const MyProfilePage = () => {
                       </IconButton>
                     </Card>
                   </Box>
-                 
-                  
+
                   <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.licence_back?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.licence_back_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.licence_back_url}
-                                    alt={formik.values.licence_back.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.licence_back?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.licence_back_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.licence_back_url}
+                        alt={formik.values.licence_back.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -1869,31 +1867,33 @@ const MyProfilePage = () => {
                       </IconButton>
                     </Card>
                   </Box>
-                   <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.address_proof?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.address_proof_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.address_proof_url}
-                                    alt={formik.values.address_proof.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
+                  <Box
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.address_proof?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.address_proof_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.address_proof_url}
+                        alt={formik.values.address_proof.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -1963,31 +1963,32 @@ const MyProfilePage = () => {
                     </Card>
                   </Box>
                   <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.insurance_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.insurance_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.insurance_cert_url}
-                                    alt={formik.values.insurance_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.insurance_cert?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.insurance_cert_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.insurance_cert_url}
+                        alt={formik.values.insurance_cert.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -2057,31 +2058,32 @@ const MyProfilePage = () => {
                     </Card>
                   </Box>
                   <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.transit_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.transit_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.transit_cert_url}
-                                    alt={formik.values.transit_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.transit_cert?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.transit_cert_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.transit_cert_url}
+                        alt={formik.values.transit_cert.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -2151,31 +2153,32 @@ const MyProfilePage = () => {
                     </Card>
                   </Box>
                   <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.liability_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.liability_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.liability_cert_url}
-                                    alt={formik.values.liability_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.liability_cert?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.liability_cert_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.liability_cert_url}
+                        alt={formik.values.liability_cert.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -2186,38 +2189,10 @@ const MyProfilePage = () => {
             <Typography textAlign="left" variant="body2" component="p" mb={1}>
               Vehicle Certificate
             </Typography>
-            {!formik.values.vehicle_cert && (
-              <TextBox
-                fullWidth
-                isAdditional={true}
-                textBoxSx={{
-                  "& .MuiInput-root:after": {
-                    borderBottom: "0px !important",
-                  },
-                  "& .MuiInput-root:before": {
-                    borderBottom: "0px !important",
-                    content: '""',
-                  },
-                }}
-                type="file"
-                size="small"
-                value=""
-                name="vehicle_cert"
-                onChange={(e) => {
-                  formik.setFieldValue("vehicle_cert", e.target.files[0]);
-                  formik.setFieldValue(
-                    "vehicle_cert_url",
-                    URL.createObjectURL(e.target.files[0])
-                  );
-                }}
-                helperText={
-                  formik.touched.vehicle_cert && formik.errors.vehicle_cert
-                }
-              />
-            )}
 
-            {formik.values.vehicle_cert && (
-              <Card sx={{ width: "max-content" }}>
+            {/* Show text if vehicle_cert contains text data */}
+            {formik.values.vehicle_cert ? (
+              <Card sx={{ width: "max-content", padding: 2 }}>
                 <CardContent
                   sx={{
                     pb: "10px !important",
@@ -2237,50 +2212,20 @@ const MyProfilePage = () => {
                         size="small"
                         onClick={() => {
                           formik.setFieldValue("vehicle_cert", "");
-                          formik.setFieldValue("vehicle_cert_url", "");
                         }}
                       >
                         <Close fontSize="small" />
                       </IconButton>
                     </Card>
                   </Box>
-                  <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.vehicle_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.vehicle_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.vehicle_cert_url}
-                                    alt={formik.values.vehicle_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+
+                  {/* Display text instead of file preview */}
+                  <Typography variant="body2" color="textSecondary">
+                    {formik.values.vehicle_cert}
+                  </Typography>
                 </CardContent>
               </Card>
-            )}
-          </Stack>
-        </Grid>{" "}
-        <Grid item md={4} sx={4} xs={4}>
-          <Stack textAlign={"center"}>
-            <Typography textAlign="left" variant="body2" component="p" mb={1}>
-              V5c Certificate
-            </Typography>
-            {!formik.values.v5c_cert && (
+            ) : (
               <TextBox
                 fullWidth
                 isAdditional={true}
@@ -2293,76 +2238,17 @@ const MyProfilePage = () => {
                     content: '""',
                   },
                 }}
-                type="file"
+                type="text" // Change type to text
                 size="small"
-                value=""
-                name="v5c_cert"
+                value={formik.values.vehicle_cert || ""}
+                name="vehicle_cert"
                 onChange={(e) => {
-                  formik.setFieldValue("v5c_cert", e.target.files[0]);
-                  formik.setFieldValue(
-                    "v5c_cert_url",
-                    URL.createObjectURL(e.target.files[0])
-                  );
+                  formik.setFieldValue("vehicle_cert", e.target.value);
                 }}
-                helperText={formik.touched.v5c_cert && formik.errors.v5c_cert}
+                helperText={
+                  formik.touched.vehicle_cert && formik.errors.vehicle_cert
+                }
               />
-            )}
-
-            {formik.values.v5c_cert && (
-              <Card sx={{ width: "max-content" }}>
-                <CardContent
-                  sx={{
-                    pb: "10px !important",
-                    pt: "30px !important",
-                    px: "10px !important",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 5,
-                      right: 6,
-                    }}
-                  >
-                    <Card sx={{ borderRadius: "50%" }}>
-                      <IconButton
-                        size="small"
-                        onClick={() => {
-                          formik.setFieldValue("v5c_cert", "");
-                          formik.setFieldValue("v5c_cert_url", "");
-                        }}
-                      >
-                        <Close fontSize="small" />
-                      </IconButton>
-                    </Card>
-                  </Box>
-                    <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.v5c_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.v5c_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.v5c_cert_url}
-                                    alt={formik.values.v5c_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                </CardContent>
-              </Card>
             )}
           </Stack>
         </Grid>
@@ -2428,31 +2314,32 @@ const MyProfilePage = () => {
                     </Card>
                   </Box>
                   <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.dvia_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.dvia_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.dvia_cert_url}
-                                    alt={formik.values.dvia_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+                    style={{ margin: "10px" }}
+                    width="150px"
+                    height="150px"
+                    thumbnail
+                  >
+                    {formik?.values?.dvia_cert?.name
+                      ?.toLowerCase()
+                      ?.endsWith(".pdf") ? (
+                      <embed
+                        src={formik.values.dvia_cert_url}
+                        type="application/pdf"
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <img
+                        src={formik.values.dvia_cert_url}
+                        alt={formik.values.dvia_cert.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
+                  </Box>
                 </CardContent>
               </Card>
             )}
@@ -2463,39 +2350,10 @@ const MyProfilePage = () => {
             <Typography textAlign="left" variant="body2" component="p" mb={1}>
               Nationality Proof Certificate
             </Typography>
-            {!formik.values.nationality_cert && (
-              <TextBox
-                fullWidth
-                isAdditional={true}
-                textBoxSx={{
-                  "& .MuiInput-root:after": {
-                    borderBottom: "0px !important",
-                  },
-                  "& .MuiInput-root:before": {
-                    borderBottom: "0px !important",
-                    content: '""',
-                  },
-                }}
-                type="file"
-                size="small"
-                value=""
-                name="nationality_cert"
-                onChange={(e) => {
-                  formik.setFieldValue("nationality_cert", e.target.files[0]);
-                  formik.setFieldValue(
-                    "nationality_cert_url",
-                    URL.createObjectURL(e.target.files[0])
-                  );
-                }}
-                helperText={
-                  formik.touched.nationality_cert &&
-                  formik.errors.nationality_cert
-                }
-              />
-            )}
 
-            {formik.values.nationality_cert && (
-              <Card sx={{ width: "max-content" }}>
+            {/* Show text instead of file input */}
+            {formik.values.nationality_cert ? (
+              <Card sx={{ width: "max-content", padding: 2 }}>
                 <CardContent
                   sx={{
                     pb: "10px !important",
@@ -2515,41 +2373,44 @@ const MyProfilePage = () => {
                         size="small"
                         onClick={() => {
                           formik.setFieldValue("nationality_cert", "");
-                          formik.setFieldValue("nationality_cert_url", "");
                         }}
                       >
                         <Close fontSize="small" />
                       </IconButton>
                     </Card>
                   </Box>
-                  <Box
-                                style={{ margin: "10px" }}
-                                width="150px"
-                                height="150px"
-                                thumbnail
-                              >
-                                {formik?.values?.nationality_cert?.name?.toLowerCase()?.endsWith(".pdf") ? (
-                                  <embed
-                                    src={formik.values.nationality_cert_url}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                  />
-                                ) : (
-                                  <img
-                                    src={formik.values.nationality_cert_url}
-                                    alt={formik.values.nationality_cert.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                )}
-                              </Box>
-                  
+
+                  {/* Display text instead of file preview */}
+                  <Typography variant="body2" color="textSecondary">
+                    {formik.values.nationality_cert}
+                  </Typography>
                 </CardContent>
               </Card>
+            ) : (
+              <TextBox
+                fullWidth
+                isAdditional={true}
+                textBoxSx={{
+                  "& .MuiInput-root:after": {
+                    borderBottom: "0px !important",
+                  },
+                  "& .MuiInput-root:before": {
+                    borderBottom: "0px !important",
+                    content: '""',
+                  },
+                }}
+                type="text" // Change type to text
+                size="small"
+                value={formik.values.nationality_cert || ""}
+                name="nationality_cert"
+                onChange={(e) => {
+                  formik.setFieldValue("nationality_cert", e.target.value);
+                }}
+                helperText={
+                  formik.touched.nationality_cert &&
+                  formik.errors.nationality_cert
+                }
+              />
             )}
           </Stack>
         </Grid>

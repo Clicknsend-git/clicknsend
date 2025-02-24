@@ -15,7 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import React from "react";
 
 const MyProfilePage = () => {
@@ -45,9 +46,11 @@ const MyProfilePage = () => {
       profileFormData.append("email", values?.email);
       profileFormData.append("mobile", values?.mobile);
       // profileFormData.append("profile_img", values?.profile_img);
-      profileFormData.append("company_certificate", values?.company_certificate);
+      profileFormData.append(
+        "company_certificate",
+        values?.company_certificate
+      );
       profileFormData.append("company_vat", values?.company_vat);
-
 
       const addressFormData = new FormData();
       addressFormData.append("address", values.address);
@@ -56,12 +59,13 @@ const MyProfilePage = () => {
       addressFormData.append("zip_code", values.zip_code);
       addressFormData.append("lat", values.lat);
       addressFormData.append("long", values.long);
-  
 
       try {
+        const profileResponse = await axiosInstance.post(
+          `/api/auth/profile/update-company-profile/${user?.id}`,
+          profileFormData
+        );
 
-        const profileResponse = await axiosInstance.post(`/api/auth/profile/update-company-profile/${user?.id}`, profileFormData)
-  
         if (profileResponse?.status === 200) {
           // succes
           enqueueSnackbar(
@@ -73,7 +77,7 @@ const MyProfilePage = () => {
                 background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -90,37 +94,40 @@ const MyProfilePage = () => {
             }
           );
         } else {
-              // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: "blur(8px)",
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {profileResponse?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          // error
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: "blur(8px)",
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {profileResponse?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
 
-        await axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData);     
+        await axiosInstance.post(
+          `/api/auth/profile/update-address/${user?.id}`,
+          addressFormData
+        );
         getProfile();
-  
+
         // getProfile();
       } catch (error) {
         const { response } = error;
@@ -134,32 +141,32 @@ const MyProfilePage = () => {
           }
         }
         if (response?.data?.status === 406) {
-              // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          // error
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: blur("8px"),
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
       }
     },
@@ -236,16 +243,12 @@ const MyProfilePage = () => {
                   content: '""',
                 },
               }}
-              type="file"
+              type="text"
               size="small"
-              value=""
+              value={formik.values.company_certificate || ""}
               name="company_certificate"
               onChange={(e) => {
-                formik.setFieldValue("company_certificate", e.target.files[0]);
-                formik.setFieldValue(
-                  "company_certificate_url",
-                  URL.createObjectURL(e.target.files[0])
-                );
+                formik.setFieldValue("company_certificate", e.target.value);
               }}
               helperText={
                 formik.touched.company_certificate &&
@@ -254,15 +257,9 @@ const MyProfilePage = () => {
             />
           )}
 
-          {formik.values.company_certificate_url && (
-            <Card sx={{ width: "max-content" }}>
-              <CardContent
-                sx={{
-                  pb: "10px !important",
-                  pt: "30px !important",
-                  px: "10px !important",
-                }}
-              >
+          {formik.values.company_certificate && (
+            <Card sx={{ width: "max-content", p: 2, mt: 1 }}>
+              <CardContent>
                 <Box
                   sx={{
                     position: "absolute",
@@ -275,28 +272,20 @@ const MyProfilePage = () => {
                       size="small"
                       onClick={() => {
                         formik.setFieldValue("company_certificate", "");
-                        formik.setFieldValue("company_certificate_url", "");
                       }}
                     >
                       <Close fontSize="small" />
                     </IconButton>
                   </Card>
                 </Box>
-                <Box
-                  component="img"
-                  style={{ margin: "10px" }}
-
-                  src={formik.values.company_certificate_url}
-                  alt={formik.values?.company_certificate?.name}
-
-                  width="150px"
-                  height="150px"
-                  thumbnail
-                />
+                <Typography variant="body2" sx={{ mt: 2 }}>
+                  {formik.values.company_certificate}
+                </Typography>
               </CardContent>
             </Card>
           )}
         </Stack>
+
         <Stack textAlign={"center"} mt={2}>
           <Typography textAlign="left" variant="p">
             Company VAT Certificate (Optional)
@@ -314,16 +303,12 @@ const MyProfilePage = () => {
                   content: '""',
                 },
               }}
-              type="file"
+              type="text"
               size="small"
-              value=""
+              value={formik.values.company_vat || ""}
               name="company_vat"
               onChange={(e) => {
-                formik.setFieldValue("company_vat", e.target.files[0]);
-                formik.setFieldValue(
-                  "company_vat_url",
-                  URL.createObjectURL(e.target.files[0])
-                );
+                formik.setFieldValue("company_vat", e.target.value);
               }}
               helperText={
                 formik.touched.company_vat && formik.errors.company_vat
@@ -331,15 +316,9 @@ const MyProfilePage = () => {
             />
           )}
 
-          {formik.values.company_vat_url && (
-            <Card sx={{ width: "max-content" }}>
-              <CardContent
-                sx={{
-                  pb: "10px !important",
-                  pt: "30px !important",
-                  px: "10px !important",
-                }}
-              >
+          {formik.values.company_vat && (
+            <Card sx={{ width: "max-content", p: 2, mt: 1 }}>
+              <CardContent>
                 <Box
                   sx={{
                     position: "absolute",
@@ -352,23 +331,15 @@ const MyProfilePage = () => {
                       size="small"
                       onClick={() => {
                         formik.setFieldValue("company_vat", "");
-                        formik.setFieldValue("company_vat_url", "");
                       }}
                     >
                       <Close fontSize="small" />
                     </IconButton>
                   </Card>
                 </Box>
-                {/* demoimagetest */}
-                <Box
-                  component="img"
-                  style={{ margin: "10px" }}
-                  src={formik.values.company_vat_url}
-                  alt={formik.values.company_vat?.name}
-                  width="150px"
-                  height="150px"
-                  thumbnail
-                />
+                <Typography variant="body2" sx={{ mt: 2 }}>
+                  {formik.values.company_vat}
+                </Typography>
               </CardContent>
             </Card>
           )}

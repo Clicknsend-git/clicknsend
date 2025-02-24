@@ -17,7 +17,8 @@ import {
 import { DialogHeader } from "./header";
 import { ForgetForm } from "./forgetForm";
 import { useFormik } from "formik";
-import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 import { OTPForm } from "./otpForm";
 import axiosInstance from "@/utils/axios";
 import { PasswordBox } from "@/components/form";
@@ -41,21 +42,19 @@ const ForgetPasswordDialogBox = ({ keepMounted, onClose, open, title }) => {
     // setPasswordOpen(false);
   };
 
-
   const [selectedCoutry, setSelectedCountry] = React.useState();
-const [selected, setSelected] = React.useState("");
-const customLabels = {
-  GB: { primary: "UK", secondary: "+44" },
-  IN: { primary: "IN", secondary: "+91" },
-};
-const handleSelect = (countryCode) => {
-  const selectedCountry = countryCode.toUpperCase();
-  const { primary, secondary } = customLabels[selectedCountry];
-  // console.log("Primary:", primary);
-  // console.log("Secondary:", secondary);
-  setSelectedCountry(secondary);
-  setSelected(selectedCountry);
-};
+  const [selected, setSelected] = React.useState("");
+  const customLabels = {
+    GB: { primary: "UK", secondary: "+44" },
+  };
+  const handleSelect = (countryCode) => {
+    const selectedCountry = countryCode.toUpperCase();
+    const { primary, secondary } = customLabels[selectedCountry];
+    // console.log("Primary:", primary);
+    // console.log("Secondary:", secondary);
+    setSelectedCountry(secondary);
+    setSelected(selectedCountry);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -63,9 +62,8 @@ const handleSelect = (countryCode) => {
       mobile: "",
       otp: "",
       type: "email",
-      password: '',
-password_confirmation: '',
-
+      password: "",
+      password_confirmation: "",
     },
     validate: (values) => {
       const errors = {};
@@ -73,9 +71,11 @@ password_confirmation: '',
         errors.email = "Mobile no. is required";
       } else if (
         values.type === "mobile" &&
-        (!/^\+?[0-9]{0,13}$/.test(values.email.replace(/\s+/g, '')) || isNaN(parseInt(values.email.replace(/\s+/g, '').replace('+', ''))))
+        (!/^\+?[0-9]{0,13}$/.test(values.email.replace(/\s+/g, "")) ||
+          isNaN(parseInt(values.email.replace(/\s+/g, "").replace("+", ""))))
       ) {
-        errors.email = "Please enter a valid phone number (up to 15 digits) with '+' sign";
+        errors.email =
+          "Please enter a valid phone number (up to 15 digits) with '+' sign";
       }
       if (values.type === "email" && !values.email) {
         errors.email = "Email is required";
@@ -98,9 +98,9 @@ password_confirmation: '',
         url = "/api/user/send-otp";
         formData = {
           email: values?.email || `${selectedCoutry}${values.mobile}`,
-          mobile:`${selectedCoutry}${values.mobile}`,
+          mobile: `${selectedCoutry}${values.mobile}`,
           type: values?.type,
-          logged: 'yes',
+          logged: "yes",
         };
       } else {
         url = "/api/user/reset-password";
@@ -108,8 +108,7 @@ password_confirmation: '',
           email: values?.email,
           otp: values?.otp,
           password: values?.password,
-password_confirmation: values?.password_confirmation
-
+          password_confirmation: values?.password_confirmation,
         };
       }
 
@@ -118,30 +117,30 @@ password_confirmation: values?.password_confirmation
         .then((response) => {
           if (response?.status === 200) {
             enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px"
-              }}
-              icon={false}
-              severity="success"
-            >
-              {response?.data?.message}
-            </Alert>,
-            {
-              variant: "success",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  backdropFilter: "blur(8px)",
+                  background: "#ff7533 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="success"
+              >
+                {response?.data?.message}
+              </Alert>,
+              {
+                variant: "success",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
             if (showResend) {
               handleClose();
               onClose();
@@ -159,38 +158,38 @@ password_confirmation: values?.password_confirmation
               onClose();
             }
           } else {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+            // error
+            enqueueSnackbar(
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  filter: blur("8px"),
+                  background: "#ffe9d5 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="error"
+              >
+                {response?.data?.error}
+              </Alert>,
+              {
+                variant: "error",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
             setShowResend(false);
           }
         })
         .catch((error) => {
           const { response } = error;
-          console.log('formik.values',response) 
+          console.log("formik.values", response);
 
           let status = [406, 404];
           if (response.status === 422) {
@@ -202,42 +201,41 @@ password_confirmation: values?.password_confirmation
             }
           }
           if (status.includes(response?.status)) {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.message}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+            // error
+            enqueueSnackbar(
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  filter: blur("8px"),
+                  background: "#ffe9d5 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="error"
+              >
+                {response?.data?.message}
+              </Alert>,
+              {
+                variant: "error",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
           }
         });
     },
   });
 
-
   const Resetformik = useFormik({
     initialValues: {
-      email:'',
-      otp: '',
+      email: "",
+      otp: "",
       password: "",
       password_confirmation: "",
     },
@@ -261,45 +259,43 @@ password_confirmation: values?.password_confirmation
       return errors;
     },
     onSubmit: async (values, { setErrors }) => {
-
       const formattedEmail = values.email.trim().toLowerCase();
       // Format OTP if necessary
       const formattedOTP = values.otp.trim();
-      console.error(formattedEmail,"Error occurred:", formattedOTP);
+      console.error(formattedEmail, "Error occurred:", formattedOTP);
       // Assign formatted values to formik state
       Resetformik.setFieldValue("email", formattedEmail);
-      Resetformik.setFieldValue("otp", formattedOTP)
-
+      Resetformik.setFieldValue("otp", formattedOTP);
 
       await axiosInstance
         .post("api/user/reset-password", values)
         .then((response) => {
           if (response.status === 200) {
             enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px"
-              }}
-              icon={false}
-              severity="success"
-            >
-              {response?.data?.message}
-            </Alert>,
-            {
-              variant: "success",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  backdropFilter: "blur(8px)",
+                  background: "#ff7533 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="success"
+              >
+                {response?.data?.message}
+              </Alert>,
+              {
+                variant: "success",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
             handleClose();
             handlePasswordClose();
             clearToken();
@@ -310,31 +306,31 @@ password_confirmation: values?.password_confirmation
         .catch((error) => {
           const { response } = error;
           // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: blur("8px"),
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
           if (response.status === 422) {
             // eslint-disable-next-line no-unused-vars
             for (const [key, value] of Object.entries(values)) {
@@ -344,32 +340,32 @@ password_confirmation: values?.password_confirmation
             }
           }
           if (response?.data?.status === 406) {
-             // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+            // error
+            enqueueSnackbar(
+              <Alert
+                style={{
+                  width: "100%",
+                  padding: "30px",
+                  filter: blur("8px"),
+                  background: "#ffe9d5 ",
+                  fontSize: "19px",
+                  fontWeight: 800,
+                  lineHeight: "30px",
+                }}
+                icon={false}
+                severity="error"
+              >
+                {response?.data?.error}
+              </Alert>,
+              {
+                variant: "error",
+                iconVariant: true,
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "center",
+                },
+              }
+            );
           }
         });
     },
@@ -388,8 +384,7 @@ password_confirmation: values?.password_confirmation
     formData = {
       email: formik?.values?.email,
       type: formik?.values?.type,
-      logged: 'yes',
-      
+      logged: "yes",
     };
 
     await axiosInstance
@@ -405,7 +400,7 @@ password_confirmation: values?.password_confirmation
                 background: "#ff7533 ",
                 fontSize: "19px",
                 fontWeight: 800,
-                lineHeight: "30px"
+                lineHeight: "30px",
               }}
               icon={false}
               severity="success"
@@ -425,31 +420,31 @@ password_confirmation: values?.password_confirmation
           formik.setFieldValue("otp", response?.data?.verification_code);
         } else {
           // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: blur("8px"),
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
       })
       .catch((error) => {
@@ -457,31 +452,31 @@ password_confirmation: values?.password_confirmation
         let status = [406, 404];
         if (status.includes(response?.status)) {
           // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
+          enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                filter: blur("8px"),
+                background: "#ffe9d5 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px",
+              }}
+              icon={false}
+              severity="error"
+            >
+              {response?.data?.error}
+            </Alert>,
+            {
+              variant: "error",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
         }
       });
   };
@@ -506,7 +501,7 @@ password_confirmation: values?.password_confirmation
       >
         {/* <Box component="form" onSubmit={formik.handleSubmit}> */}
         <DialogHeader
-          onClose={()=>onClose()}
+          onClose={() => onClose()}
           title={`${!showResend ? title : "OTP Verification"}`}
           showResend={showResend}
           handleClose={handleClose}
@@ -536,9 +531,14 @@ password_confirmation: values?.password_confirmation
           {showResend ? (
             <OTPForm formik={formik} />
           ) : (
-            <ForgetForm formik={formik}  selected={selected}  handleSelect={handleSelect}  customLabels={customLabels} />
+            <ForgetForm
+              formik={formik}
+              selected={selected}
+              handleSelect={handleSelect}
+              customLabels={customLabels}
+            />
           )}
-          
+
           {showResend && (
             <Box>
               <Typography sx={{ fontSize: "16px" }}>
@@ -578,7 +578,6 @@ password_confirmation: values?.password_confirmation
         </DialogActions>
         {/* </Box> */}
       </Dialog>
-     
     </>
   );
 };
